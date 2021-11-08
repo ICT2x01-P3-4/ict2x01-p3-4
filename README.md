@@ -6,9 +6,8 @@ This is a team project for ICT2101/2201.
 
 ### Requirements:
 
-1. Install MySQL Workbench, MySQL Server
-2. Pip
-3. Python
+1. Pip
+2. Python
 
 ### Set up
 
@@ -37,7 +36,7 @@ export FLASK_APP=CarStep
 and
 
 ```
-export FLASK_ENC=development
+export FLASK_ENV=development
 ```
 
 6. Once all these are set up, you just run the and debug the program but typing `flask run` in the terminal
@@ -52,3 +51,4 @@ export FLASK_ENC=development
 
 1. [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/)
 2. [Git CLI guide](https://github.com/alphonsekoh/UltimateGitResource/tree/main)
+3. [Setting up MongoDB with Flask](https://www.mongodb.com/compatibility/setting-up-flask-with-mongodb)
