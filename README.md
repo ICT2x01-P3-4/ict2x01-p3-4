@@ -12,30 +12,18 @@ This is a team project for ICT2101/2201.
 ### Set up
 
 1. git clone the repository
-2. Set up virtual env with `python -m venv venv` on the terminal. IMPT MAKE SURE YOU ARE IN THE CORRECT REPO DIRECTORY WHEN CREATING
+2. Set up virtual env with `python -m venv venv` on the terminal. *IMPT MAKE SURE YOU ARE IN THE CORRECT REPO DIRECTORY WHEN CREATING*
 3. To activate the virtual environment type `venv\Scripts\activate.bat` in your terminal for Windows, and `source venv/bin/activate` for Linux or MacOS
 4. Install the dependencies with `pip install -r requirements.txt`
-5. Copy these 2 commands and execute it in your terminal [For Windows CMD]
+5. Copy these 2 commands and execute it in your terminal
 
 ```
-set FLASK_APP=CarStep
-```
-
-and
-
-```
+// For Windows CMD
+set FLASK_APP=carstep
 set FLASK_ENV=development
-```
 
-5.  Copy these 2 commands and execute it in your terminal [For UNIX-like systems using Bash]
-
-```
-export FLASK_APP=CarStep
-```
-
-and
-
-```
+// For UNIX-like systems using Bash
+export FLASK_APP=carstep
 export FLASK_ENV=development
 ```
 
