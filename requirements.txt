@@ -1,5 +1,6 @@
 click==8.0.1
 colorama==0.4.4
+dnslib==0.9.16
 dnspython==2.1.0
 Flask==2.0.2
 Flask-PyMongo==2.3.0
