@@ -1,3 +1,5 @@
+"""Blueprints for app views"""
+
 from flask import Blueprint
 from ..controllers.app_controller import index
 
