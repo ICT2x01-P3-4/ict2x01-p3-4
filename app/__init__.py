@@ -1,11 +1,12 @@
 import os
 from flask import Flask
-# from flask_pymongo import PyMongo
+from .db import mongo
 from .routes.api_bp import api_bp
 from .routes.app_bp import app_bp
 
 app = Flask(__name__)
-# app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+mongo.init_app(app, tlsAllowInvalidCertificates=True)
 # mongo = PyMongo(app, tlsAllowInvalidCertificates=True)
 # db = mongo.db
 
