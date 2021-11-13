@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..controllers.puzzle import create_puzzle, delete_puzzle, find_puzzles, find_puzzle, update_puzzle
+from ..controllers.puzzle_management import create_puzzle, delete_puzzle, find_puzzles, find_puzzle, update_puzzle
 
 puzzle_bp = Blueprint('puzzle_bp', __name__)
 
