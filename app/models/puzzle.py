@@ -52,7 +52,6 @@ class Puzzle():
         return result.inserted_id
 
     def get_all_puzzles(self):
-        res = self.db.find_one({"id": id}, {"_id": False})
         return list(self.db.find({}, {"_id": False}))
 
     def get_puzzle(self, id):
