@@ -1,6 +1,3 @@
-from ..db import db
-
-
 class Step:
     def __init__(self, step_num, direction):
         self.step_num = step_num

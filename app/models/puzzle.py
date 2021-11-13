@@ -1,6 +1,3 @@
-from ..db import db
-
-
 class Puzzle:
     def __init__(self, id, name, difficulty, puzzle_shape, puzzle_steps):
         self.id = id
