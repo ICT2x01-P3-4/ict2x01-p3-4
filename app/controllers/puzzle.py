@@ -3,14 +3,6 @@ from ..models.step import Step
 from flask import jsonify, request
 
 
-def execute_step_through():
-    try:
-        pass
-    except Exception as e:
-        print(e)
-        return jsonify({"message": "Something went wrong"}), 500
-
-
 def execute_steps(steps):
     """
     Inserts steps into queue in db
@@ -21,7 +13,7 @@ def execute_steps(steps):
     for i, step in enumerate(steps):
         steps_arr_obj.append({"step_num": i+1, "direction": step})
 
-    # Insert steps into queue`
+    # Insert steps into queue
     step = Step()
     step.create_queue(steps_arr_obj)
 
@@ -33,17 +25,27 @@ def execute_steps(steps):
     return True
 
 
-def check_answer(puzzle, steps):
+def check_answer(puzzle, steps, isSolve):
     """
-    Checks if steps is same as answer
+    Checks if answer is correct.
+
+    First checks if user is solving or stepping through.
+    Then checks if user's answer is same as solution.
     """
     answer = puzzle["puzzle_steps"]
 
-    if len(steps) != len(answer):
-        return False
+    if isSolve:
+        if len(steps) != len(answer):
+            return False
 
-    for i, step in enumerate(steps):
-        if step != answer[i]:
+        for i, step in enumerate(steps):
+            if step != answer[i]:
+                return False
+    else:
+        if steps["step_num"] > len(answer):
+            return False
+
+        if steps["direction"] != answer[steps["step_num"]-1]:
             return False
 
     return True
@@ -58,15 +60,45 @@ def solve_puzzle():
         steps = data["steps"]
         puzzle = Puzzle()
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
-        is_correct = check_answer(puzzle_obj, steps)
+        is_correct = check_answer(puzzle_obj, steps, True)
 
         if not is_correct:
             return jsonify({"message": "Incorrect answer"}), 400
 
         done = execute_steps(steps)
-        # TODO: update score
-        # TODO: update stage
+
+        if done:
+            pass
+            # TODO: update score
+            # TODO: update stage
         return jsonify({"message": "Correct answer"}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def step_through():
+    """
+    Insert a step into queue in db
+    """
+    try:
+        # Create step object
+        data = request.get_json()
+        puzzle = Puzzle()
+        puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
+        step_obj = {"step_num": data["step_num"],
+                    "direction": data["direction"]}
+        is_correct = check_answer(puzzle_obj, step_obj, False)
+
+        if not is_correct:
+            return jsonify({"message": "Incorrect answer"}), 400
+
+        done = execute_steps([step_obj])
+        if done:
+            pass
+            # TODO: update score
+            # TODO: update stage
+        return jsonify({"message": "Step executed"}), 200
     except Exception as e:
         print(e)
         return jsonify({"message": "Something went wrong"}), 500

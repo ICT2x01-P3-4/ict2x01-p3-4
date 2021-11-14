@@ -1,6 +1,6 @@
 from flask import Blueprint
 from ..controllers.puzzle_management import create_puzzle, delete_puzzle, find_puzzles, find_puzzle, update_puzzle
-from ..controllers.puzzle import solve_puzzle
+from ..controllers.puzzle import solve_puzzle, step_through
 
 puzzle_bp = Blueprint('puzzle_bp', __name__)
 
@@ -11,3 +11,4 @@ puzzle_bp.route('/<puzzle_id>', methods=['GET'])(find_puzzle)
 puzzle_bp.route('/<puzzle_id>', methods=['DELETE'])(delete_puzzle)
 
 puzzle_bp.route('/solve', methods=['POST'])(solve_puzzle)
+puzzle_bp.route('/step', methods=['POST'])(step_through)
