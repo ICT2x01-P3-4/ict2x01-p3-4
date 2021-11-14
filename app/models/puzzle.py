@@ -2,13 +2,13 @@ from ..db import mongo
 
 
 class Puzzle():
-    def __init__(self, data=None):
-        if data is not None:
-            self.id = data["id"]
-            self.name = data["name"]
-            self.difficulty = data["difficulty"]
-            self.puzzle_shape = data["puzzle_shape"]
-            self.puzzle_steps = data["puzzle_steps"]
+    def __init__(self, puzzle=None):
+        if puzzle is not None:
+            self.id = puzzle["id"]
+            self.name = puzzle["name"]
+            self.difficulty = puzzle["difficulty"]
+            self.puzzle_shape = puzzle["puzzle_shape"]
+            self.puzzle_steps = puzzle["puzzle_steps"]
         self.db = mongo.db.puzzles
 
     def get_id(self):
