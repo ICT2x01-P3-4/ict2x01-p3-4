@@ -67,9 +67,13 @@ def solve_puzzle():
     """
     try:
         data = request.get_json()
-        steps = data["steps"]
+
+        # Retrieve puzzle from db
         puzzle = Puzzle()
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
+
+        # Check answer
+        steps = data["steps"]
         is_correct = check_answer(puzzle_obj, steps, True)
 
         if not is_correct:
@@ -77,6 +81,7 @@ def solve_puzzle():
 
         done = execute_steps(steps)
 
+        # Update user score and stage if completed execution on all steps of puzzle
         if done:
             user = User()
             user.update_score(session["user"])
