@@ -1,7 +1,8 @@
-from flask import jsonify, request, session
+from flask.templating import render_template
 from ..models.puzzle import Puzzle
 from ..models.step import Step
 from ..models.user import User
+from flask import jsonify, request, session
 
 
 def execute_steps(steps):
@@ -117,3 +118,7 @@ def step_through():
     except Exception as e:
         print(e)
         return jsonify({"message": "Something went wrong"}), 500
+
+
+def puzzle_mode():
+    return render_template("puzzle_mode.html")
