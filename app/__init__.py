@@ -3,7 +3,6 @@ from flask import Flask
 
 from .db import mongo
 from .routes.app_bp import app_bp
-# from .routes.api_bp import api_bp
 from .routes.puzzle_bp import puzzle_bp
 
 # Create Flask app and initialize mongodb connection

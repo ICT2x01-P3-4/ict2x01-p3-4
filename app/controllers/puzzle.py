@@ -1,6 +1,7 @@
+from flask import jsonify, request, session
 from ..models.puzzle import Puzzle
 from ..models.step import Step
-from flask import jsonify, request
+from ..models.user import User
 
 
 def execute_steps(steps):
@@ -76,9 +77,9 @@ def solve_puzzle():
         done = execute_steps(steps)
 
         if done:
-            pass
-            # TODO: update score
-            # TODO: update stage
+            user = User()
+            user.update_score(session["user"])
+            user.update_stage(session["user"])
 
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
@@ -108,9 +109,9 @@ def step_through():
 
         # Update user score and stage if completed last step of puzzle
         if done and at_last_step(puzzle_obj, step_obj):
-            pass
-            # TODO: update score
-            # TODO: update stage
+            user = User()
+            user.update_score(session["user"])
+            user.update_stage(session["user"])
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
