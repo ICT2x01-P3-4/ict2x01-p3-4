@@ -9,7 +9,7 @@ class Puzzle():
             self.difficulty = puzzle["difficulty"]
             self.puzzle_shape = puzzle["puzzle_shape"]
             self.puzzle_steps = puzzle["puzzle_steps"]
-        self.db = mongo.db.puzzles
+        self.puzzle_db = mongo.db.puzzles
 
     def get_id(self):
         return self.id
@@ -42,7 +42,7 @@ class Puzzle():
         self.puzzle_steps = puzzle_steps
 
     def create_puzzle(self, puzzle):
-        result = self.db.insert_one({
+        result = self.puzzle_db.insert_one({
             "id": puzzle.id,
             "name": puzzle.name,
             "difficulty": puzzle.difficulty,
@@ -52,13 +52,13 @@ class Puzzle():
         return result.inserted_id
 
     def get_all_puzzles(self):
-        return list(self.db.find({}, {"_id": False}))
+        return list(self.puzzle_db.find({}, {"_id": False}))
 
     def get_puzzle(self, id):
-        return self.db.find_one({"id": id}, {"_id": False})
+        return self.puzzle_db.find_one({"id": id}, {"_id": False})
 
     def update_puzzle(self, puzzle):
-        result = self.db.update_one({"id": puzzle.id}, {
+        result = self.puzzle_db.update_one({"id": puzzle.id}, {
             "$set": {
                 "name": puzzle.name,
                 "difficulty": puzzle.difficulty,
@@ -69,7 +69,7 @@ class Puzzle():
         return result.matched_count
 
     def delete_puzzle(self, id):
-        result = self.db.delete_one({"id": id})
+        result = self.puzzle_db.delete_one({"id": id})
         return result.deleted_count
 
     def generate_shape(self):

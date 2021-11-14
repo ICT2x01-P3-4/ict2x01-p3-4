@@ -25,6 +25,14 @@ def execute_steps(steps):
     return True
 
 
+def at_last_step(puzzle, step):
+    """
+    Checks if user is at last step of puzzle.
+    """
+    total_steps = len(puzzle["puzzle_steps"])
+    return step["step_num"] == total_steps
+
+
 def check_answer(puzzle, steps, isSolve):
     """
     Checks if answer is correct.
@@ -71,6 +79,7 @@ def solve_puzzle():
             pass
             # TODO: update score
             # TODO: update stage
+
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
         print(e)
@@ -82,10 +91,12 @@ def step_through():
     Insert a step into queue in db
     """
     try:
-        # Create step object
         data = request.get_json()
+        # Retrieve puzzle from db
         puzzle = Puzzle()
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
+
+        # Create step object and check answer
         step_obj = {"step_num": data["step_num"],
                     "direction": data["direction"]}
         is_correct = check_answer(puzzle_obj, step_obj, False)
@@ -94,10 +105,13 @@ def step_through():
             return jsonify({"message": "Incorrect answer"}), 400
 
         done = execute_steps([step_obj])
-        if done:
+
+        # Update user score and stage if completed last step of puzzle
+        if done and at_last_step(puzzle_obj, step_obj):
             pass
             # TODO: update score
             # TODO: update stage
+
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
         print(e)
