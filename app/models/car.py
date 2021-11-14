@@ -1,10 +1,16 @@
+from ..db import mongo
+
+
 class Car:
-    def __init__(self, distance, total_distance, is_moving, move, obstacle):
-        self.distance = distance
-        self.total_distance = total_distance
-        self.is_moving = is_moving
-        self.move = move
-        self.obstacle = obstacle
+    def __init__(self, car=None):
+        if car is not None:
+            self.id = car["id"]
+            self.distance = car["distance"]
+            self.total_distance = car["total_distance"]
+            self.is_moving = car["is_moving"]
+            self.move = car["move"]
+            self.obstacle = car["obstacle"]
+        self.db = mongo.db.car
 
     def get_distance(self):
         return self.distance
