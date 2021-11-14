@@ -35,7 +35,7 @@ def at_last_step(puzzle, step):
     return step["step_num"] == total_steps
 
 
-def check_answer(puzzle, steps, isSolve):
+def check_answer(puzzle, steps, is_solve):
     """
     Checks if answer is correct.
 
@@ -44,7 +44,7 @@ def check_answer(puzzle, steps, isSolve):
     """
     answer = puzzle["puzzle_steps"]
 
-    if isSolve:
+    if is_solve:
         if len(steps) != len(answer):
             return False
 
