@@ -1,14 +1,16 @@
-from flask.templating import render_template
 from ..models.puzzle import Puzzle
 from ..models.step import Step
 from ..models.user import User
-from flask import jsonify, request, session
+from flask import jsonify, request, session, render_template
 
 
 def execute_steps(steps):
     """
     Inserts steps into queue in db
     and wait for it to be emptied.
+
+    Args:
+        steps (list): list of steps.
 
     Returns:
         boolean: True when queue is emptied.
@@ -35,8 +37,8 @@ def at_last_step(puzzle, step):
     Checks if user is at last step of puzzle.
 
     Args:
-        puzzle: puzzle object
-        step: step object
+        puzzle (object): puzzle object.
+        step (object): step object.
 
     Returns:
         boolean: True if current steps is last step of puzzle.
@@ -53,9 +55,9 @@ def check_answer(puzzle, steps, is_solve):
     Then checks if user's answer is same as solution.
 
     Args:
-        puzzle: puzzle object
-        steps: steps list/object
-        is_solve: boolean, True if solving puzzle, False if stepping through
+        puzzle (object): puzzle object.
+        steps (list/object): steps to be executed.
+        is_solve (boolean): True if solving puzzle, False if stepping through.
 
     Returns:
         boolean: True for correct answer, False for incorrect answer.
@@ -84,7 +86,7 @@ def solve_puzzle():
     Checks for user's answer and executes all steps if correct.
 
     Returns:
-        json response: message and status code
+        json response: message and status code.
     """
     try:
         data = request.get_json()
@@ -119,7 +121,7 @@ def step_through():
     Checks for user's answer and executes step.
 
     Returns:
-        json response: message and status code
+        json response: message and status code.
     """
     try:
         data = request.get_json()

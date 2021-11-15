@@ -21,13 +21,40 @@ class Step:
         self.direction = direction
 
     def create_queue(self, steps):
+        """
+        Insert a list of steps into the queue.
+
+        Args:
+            steps (list): list of steps to insert into the queue.
+        """
         self.step_queue_db.insert_many(steps)
 
     def get_queue_count(self):
+        """
+        Retrieve the number of steps in the queue.
+
+        Returns:
+            int: number of steps in the queue.
+        """
         return self.step_queue_db.count()
 
     def remove_step(self, step_num):
+        """
+        Remove a step from the queue.
+
+        Args:
+            step_num (int): step number to remove from the queue.
+
+        Returns:
+            object: result of the delete operation.
+        """
         return self.step_queue_db.delete_one({"step_num": step_num})
 
     def clear_queue(self):
+        """
+        Deletes everything in the queue.
+
+        Returns:
+            object: result of the delete operation.
+        """
         return self.step_queue_db.delete_many({})
