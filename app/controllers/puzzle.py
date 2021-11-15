@@ -9,6 +9,9 @@ def execute_steps(steps):
     """
     Inserts steps into queue in db
     and wait for it to be emptied.
+
+    Returns:
+        boolean: True when queue is emptied.
     """
     # Format steps into list of dicts
     steps_arr_obj = []
@@ -30,6 +33,13 @@ def execute_steps(steps):
 def at_last_step(puzzle, step):
     """
     Checks if user is at last step of puzzle.
+
+    Args:
+        puzzle: puzzle object
+        step: step object
+
+    Returns:
+        boolean: True if current steps is last step of puzzle.
     """
     total_steps = len(puzzle["puzzle_steps"])
     return step["step_num"] == total_steps
@@ -41,6 +51,14 @@ def check_answer(puzzle, steps, is_solve):
 
     First checks if user is solving or stepping through.
     Then checks if user's answer is same as solution.
+
+    Args:
+        puzzle: puzzle object
+        steps: steps list/object
+        is_solve: boolean, True if solving puzzle, False if stepping through
+
+    Returns:
+        boolean: True for correct answer, False for incorrect answer.
     """
     answer = puzzle["puzzle_steps"]
 
@@ -63,7 +81,10 @@ def check_answer(puzzle, steps, is_solve):
 
 def solve_puzzle():
     """
-    Solves a puzzle and executes the action.
+    Checks for user's answer and executes all steps if correct.
+
+    Returns:
+        json response: message and status code
     """
     try:
         data = request.get_json()
@@ -95,10 +116,14 @@ def solve_puzzle():
 
 def step_through():
     """
-    Insert a step into queue in db
+    Checks for user's answer and executes step.
+
+    Returns:
+        json response: message and status code
     """
     try:
         data = request.get_json()
+
         # Retrieve puzzle from db
         puzzle = Puzzle()
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
