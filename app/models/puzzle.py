@@ -1,4 +1,5 @@
 from ..db import mongo
+from bson import ObjectId
 
 
 class Puzzle():
@@ -52,7 +53,6 @@ class Puzzle():
             string: id of the newly inserted puzzle.
         """
         result = self.puzzle_db.insert_one({
-            "id": puzzle.id,
             "name": puzzle.name,
             "difficulty": puzzle.difficulty,
             "puzzle_shape": puzzle.puzzle_shape,
@@ -67,7 +67,7 @@ class Puzzle():
         Returns:
             list: all puzzles in the database.
         """
-        return list(self.puzzle_db.find({}, {"_id": False}))
+        return list(self.puzzle_db.find({}))
 
     def get_puzzle(self, id):
         """
@@ -79,7 +79,7 @@ class Puzzle():
         Returns:
             object: puzzle object from the database.
         """
-        return self.puzzle_db.find_one({"id": id}, {"_id": False})
+        return self.puzzle_db.find_one({"_id": ObjectId(id)})
 
     def update_puzzle(self, puzzle):
         """
@@ -91,7 +91,7 @@ class Puzzle():
         Returns:
             int: number of puzzles updated.
         """
-        result = self.puzzle_db.update_one({"id": puzzle.id}, {
+        result = self.puzzle_db.update_one({"_id": ObjectId(puzzle.id)}, {
             "$set": {
                 "name": puzzle.name,
                 "difficulty": puzzle.difficulty,
@@ -111,7 +111,7 @@ class Puzzle():
         Returns:
             int: number of puzzles deleted.
         """
-        result = self.puzzle_db.delete_one({"id": id})
+        result = self.puzzle_db.delete_one({"_id": ObjectId(id)})
         return result.deleted_count
 
     def generate_shape(self):

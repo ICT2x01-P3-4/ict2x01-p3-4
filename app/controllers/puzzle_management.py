@@ -37,6 +37,8 @@ def find_puzzle(puzzle_id):
     try:
         puzzle = Puzzle()
         puzzle_data = puzzle.get_puzzle(puzzle_id)
+        puzzle_data["_id"] = str(puzzle_data["_id"])
+
         return render_template("puzzle.html", puzzle=puzzle_data)
     except Exception as e:
         print(e)
@@ -53,6 +55,11 @@ def find_puzzles():
     try:
         puzzle = Puzzle()
         puzzles = puzzle.get_all_puzzles()
+
+        # Convert object id to string
+        for puzzle in puzzles:
+            puzzle["_id"] = str(puzzle["_id"])
+
         return render_template("puzzles.html", puzzles=puzzles)
     except Exception as e:
         print(e)
@@ -67,7 +74,7 @@ def update_puzzle():
         json response: puzzle data and status code if request method is POST.
         render_template: update_puzzle.html if request method is GET.
     """
-    if request.method == "POST":
+    if request.method == "PUT":
         try:
             data = request.get_json()
             puzzle = Puzzle(data)
