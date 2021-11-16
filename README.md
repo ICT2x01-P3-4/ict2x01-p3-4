@@ -17,16 +17,17 @@ Welcome to Project CarStep! 🚗 🦶🏻
   
 ## Set up
 ### Clone the repository
-1. Navigate to desired directory and open a new terminal window
-2. Run the following command: `git clone https://github.com/ICT2x01-P3-4/ict2x01-p3-4.git`
+1. Navigate to desired directory and open a new terminal window.
+2. Run the following command: `git clone https://github.com/ICT2x01-P3-4/ict2x01-p3-4.git`.
 
 ### Configure project and install dependencies
-1. Navigate to the root directory of the project
+1. Navigate to the root directory of the project.
 2. Set up virtual env with `python -m venv venv` on the terminal.
-3. To activate the virtual environment type `venv\Scripts\activate.bat` in for **Windows**, and `source venv/bin/activate` for **Linux or MacOS**
+3. To activate the virtual environment type `venv\Scripts\activate.bat` in for .**Windows**, and `source venv/bin/activate` for **Linux or MacOS**
 4. Install the dependencies with `pip install -r requirements.txt`
-5. Create a `.env` file and copy other the content from `.env.example` (the values will be shared privately within the group)
-6. Copy these 2 commands and execute it in your terminal
+5. Navigate into app > static and run `npm install` to install tailwindcss.
+6. Create a `.env` file and copy other the content from `.env.example` (the values will be shared privately within the group).
+7. Copy these 2 commands and execute it in your terminal.
 ```
 # For Windows CMD
 set FLASK_APP=carstep
@@ -38,9 +39,9 @@ export FLASK_ENV=development
 ```
 
 ### Run the application
-1. Navigate to the root directory of the project
-2. Execute the command `flask run` in your terminal
-3. Open the browser and navigate to http://localhost:5000
+1. Navigate to the root directory of the project.
+2. Execute the command `flask run` in your terminal.
+3. Open the browser and navigate to http://localhost:5000.
 
 ---
 
