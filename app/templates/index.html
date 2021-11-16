@@ -8,24 +8,26 @@
 </head>
 
 <body>
-    <div class="bg-blue-900 px-3 py-3">
-        <h2 class="text-3xl font-light text-white m-0 text-center">CarStep</h2>
-    </div>
-    <div class="flex justify-center mt-10">
-        <div class="grid gap-8 grid-cols-3 mt-5">
-            <div
-                class="transition duration-500 ease-in-out flex py-28 px-32 text-center bg-blue-300 hover:bg-blue-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
-                <h2 class="text-gray-800 font-bold text-5xl">Audrey</h2>
-            </div>
-            <div
-                class="transition duration-500 ease-in-out flex py-28 px-32 text-center bg-indigo-300 hover:bg-indigo-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
-                <h2 class="text-gray-800 font-bold text-5xl">Bobby</h2>
-            </div>
-            <div
-                class="transition duration-500 ease-in-out flex py-28 px-32 text-center bg-purple-300 hover:bg-purple-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
-                <h2 class="text-gray-800 font-bold text-5xl">Charlie</h2>
+    {% include "shared/nav.html" %}
+    <div class="container">
+        {% block content %}
+        <div class="flex justify-center mt-10">
+            <div class="grid gap-8 grid-cols-3 mt-5">
+                <div
+                    class="transition duration-500 ease-in-out flex py-28 px-32 text-center bg-blue-300 hover:bg-blue-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
+                    <h2 class="text-gray-800 font-bold text-5xl">Audrey</h2>
+                </div>
+                <div
+                    class="transition duration-500 ease-in-out flex py-28 px-32 text-center bg-indigo-300 hover:bg-indigo-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
+                    <h2 class="text-gray-800 font-bold text-5xl">Bobby</h2>
+                </div>
+                <div
+                    class="transition duration-500 ease-in-out flex py-28 px-32 text-center bg-purple-300 hover:bg-purple-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
+                    <h2 class="text-gray-800 font-bold text-5xl">Charlie</h2>
+                </div>
             </div>
         </div>
+        {% endblock %}
     </div>
 </body>
 
