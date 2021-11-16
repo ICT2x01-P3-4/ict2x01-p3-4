@@ -5,7 +5,7 @@ from bson import ObjectId
 class Puzzle():
     def __init__(self, puzzle=None):
         if puzzle is not None:
-            self.id = puzzle["id"]
+            self.id = puzzle["id"] if "id" in puzzle else ""
             self.name = puzzle["name"]
             self.difficulty = puzzle["difficulty"]
             self.puzzle_shape = puzzle["puzzle_shape"]
