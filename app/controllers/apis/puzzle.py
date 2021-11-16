@@ -1,7 +1,112 @@
-from ..models.puzzle import Puzzle
-from ..models.step import Step
-from ..models.user import User
-from flask import jsonify, request, session, render_template
+from flask import jsonify, request, session
+import traceback
+from ...models.puzzle import Puzzle
+from ...models.user import User
+from ...models.step import Step
+
+
+def get_puzzles():
+    """
+    Retrieve all puzzles from database.
+
+    Returns:
+        json: list of puzzles.
+    """
+    try:
+        puzzle = Puzzle()
+        puzzles = puzzle.get_all_puzzles()
+
+        # Convert object id to string
+        for puzzle in puzzles:
+            puzzle["_id"] = str(puzzle["_id"])
+
+        return jsonify(puzzles), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def get_puzzle_by_id(puzzle_id):
+    """
+    Retrieve a puzzle from database.
+
+    Args:
+        puzzle_id (int): puzzle id to be retrieved.
+
+    Returns:
+        json: puzzle object data
+    """
+    try:
+        puzzle = Puzzle()
+        puzzle_data = puzzle.get_puzzle(puzzle_id)
+        puzzle_data["_id"] = str(puzzle_data["_id"])
+
+        return jsonify(puzzle_data), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def create_puzzle():
+    """
+    Creates a new puzzle in database.
+
+    Returns:
+        json: message and status code.
+    """
+    try:
+        data = request.get_json()
+        puzzle = Puzzle(data)
+        puzzle.create_puzzle(puzzle)
+
+        return jsonify({"message": f"{puzzle.get_name()} created successfully"}), 201
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def update_puzzle():
+    """
+    Updates a puzzle in database.
+
+    Returns:
+        json: puzzle data and status code.
+    """
+    try:
+        data = request.get_json()
+        puzzle = Puzzle(data)
+        updated = puzzle.update_puzzle(puzzle)
+
+        if not updated:
+            return jsonify({"message": "Puzzle not found"}), 404
+
+        return jsonify(data), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def delete_puzzle(puzzle_id):
+    """
+    Deletes a puzzle from database.
+
+    Args:
+        puzzle_id (int): puzzle id to be deleted.
+
+    Returns:
+        json: message and status code.
+    """
+    try:
+        puzzle = Puzzle()
+        deleted = puzzle.delete_puzzle(puzzle_id)
+
+        if not deleted:
+            return jsonify({"message": "Puzzle not found"}), 404
+
+        return jsonify({"message": "Puzzle deleted"}), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
 
 
 def execute_steps(steps):
@@ -112,7 +217,7 @@ def solve_puzzle():
 
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
-        print(e)
+        traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -148,9 +253,5 @@ def step_through():
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
-        print(e)
+        traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500
-
-
-def puzzle_mode():
-    return render_template("puzzle_mode.html")
