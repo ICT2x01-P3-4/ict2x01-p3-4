@@ -15,7 +15,7 @@ api_bp.route("/puzzle/create", methods=["POST"])(create_puzzle)
 # /api/puzzle/update
 api_bp.route("/puzzle/update", methods=["PUT"])(update_puzzle)
 
-# /api/puzzle/delete
+# /api/puzzle/delete/<puzzle_id>
 api_bp.route("/puzzle/delete/<puzzle_id>", methods=["DELETE"])(delete_puzzle)
 
 # /api/puzzle/solve
