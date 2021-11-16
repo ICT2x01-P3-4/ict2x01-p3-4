@@ -3,6 +3,7 @@ from flask import Flask, render_template
 
 from .db import mongo
 from .routes.app_bp import app_bp
+from .routes.api_bp import api_bp
 from .routes.admin_bp import admin_bp
 
 # Create Flask app and initialize mongodb connection
@@ -12,6 +13,7 @@ mongo.init_app(app, tlsAllowInvalidCertificates=True)
 
 # Register blueprints
 app.register_blueprint(app_bp, url_prefix="/")
+app.register_blueprint(api_bp, url_prefix="/api")
 app.register_blueprint(admin_bp, url_prefix="/admin")
 
 

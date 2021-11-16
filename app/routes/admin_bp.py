@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint
 from ..controllers.admin import index, profile, puzzle, edit_puzzle, create_puzzle
 
 admin_bp = Blueprint('admin_bp', __name__)
