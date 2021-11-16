@@ -28,6 +28,18 @@ def login_auth():
         if user_found:
             user_valid = user_found['username']
             password_check = user_found['password']
+
+            # compare hashed password in db with password typed
+            if bcrypt.checkpw(password.encode('utf-8'), password_check):
+                session["username"] = user_valid
+                return redirect(url_for("login"))
+
+            else:
+                if "username" in session:
+                    return redirect(url_for("login"))
+                message = 'Wrong Password'
+                return render_template('admin/login.html', message=message)
+
         else:
             message = 'Username is not found'
             return render_template('admin/login.html', message=message)
