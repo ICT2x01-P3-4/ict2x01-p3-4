@@ -18,3 +18,17 @@ def login_auth():
     # if already logged in, start session
     if "username" in session:
         return redirect(url_for("login"))
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        user_found = admins.findone({"username": username})
+        # if username is found inside the database
+        if user_found:
+            user_valid = user_found['username']
+            password_check = user_found['password']
+        else:
+            message = 'Username is not found'
+            return render_template('admin/login.html', message=message)
+        return render_template('admin/login.html', message=message)
