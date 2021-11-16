@@ -19,3 +19,6 @@ def edit_puzzle(puzzle_id):
 
 def create_puzzle():
     return render_template('admin/create_puzzle.html')
+
+def login():
+    return render_template('admin/login.html')

@@ -1,7 +1,10 @@
 from flask import Blueprint
-from ..controllers.admin import index, profile, puzzle, edit_puzzle, create_puzzle
+from ..controllers.admin import index, profile, puzzle, edit_puzzle, create_puzzle, login
 
 admin_bp = Blueprint('admin_bp', __name__)
+
+# /admin/login
+admin_bp.route("/login")(login)
 
 # /admin
 admin_bp.route("/")(index)
