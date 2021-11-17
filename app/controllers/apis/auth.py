@@ -8,12 +8,21 @@ auth = Blueprint('admin_bp', __name__)
 
 
 client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
-db = client.get_database('admins')
-admins = db.register
 
 
-@auth.route('/login', methods=['POST', 'GET'])
-def login_auth():
+def login_auth(db):
+    '''
+    API to authenticate user from the database.
+    The authentication does a HTTP GET request method to get 
+    the information the user typed in, and does a POST request to the database to 
+    verify the user.
+
+    Add-on features: bcrypt encryption for password hashing.  
+    '''
+
+    # Declaration of database
+    db = client.get_database('admins')
+    admins = db.register
     message = 'Please login to your account'
     # if already logged in, start session
     if "username" in session:
