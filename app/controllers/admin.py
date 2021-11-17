@@ -37,7 +37,7 @@ def login():
     message = 'Please login to your account'
     # if already logged in, start session
     if "username" in session:
-        return redirect(url_for("login"))
+        return redirect(url_for("index"))
 
     if request.method == "POST":
         username = request.form.get("username")
