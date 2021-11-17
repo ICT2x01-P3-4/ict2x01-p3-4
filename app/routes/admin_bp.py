@@ -17,3 +17,6 @@ admin_bp.route('/<puzzle_id>')(edit_puzzle)
 
 # /admin/puzzle/create
 admin_bp.route('/create')(create_puzzle)
+
+# /admin/login
+admin_bp.route('/login')
