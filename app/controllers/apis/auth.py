@@ -1,16 +1,10 @@
 from flask import Blueprint, app, render_template, redirect, url_for, request, flash, session
 import bcrypt
-import pymongo
-import os
+from ...db import mongo
 from ...models import user
 
-auth = Blueprint('admin_bp', __name__)
 
-
-client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
-
-
-def login_auth(db):
+def login_auth():
     '''
     API to authenticate user from the database.
     The authentication does a HTTP GET request method to get 
@@ -20,9 +14,7 @@ def login_auth(db):
     Add-on features: bcrypt encryption for password hashing.  
     '''
 
-    # Declaration of database
-    db = client.get_database('admins')
-    admins = db.register
+    admins = mongo.db.users
     message = 'Please login to your account'
     # if already logged in, start session
     if "username" in session:
@@ -33,22 +25,27 @@ def login_auth(db):
         password = request.form.get("password")
 
         user_found = admins.findone({"username": username})
+        admin_verify = admins.find_one({"role": "admin"})
+
         # if username is found inside the database
         if user_found:
-            user_valid = user_found['username']
-            password_check = user_found['password']
+            if admin_verify:
+                user_valid = user_found['username']
+                password_check = user_found['password']
 
-            # compare hashed password in db with password typed
-            if bcrypt.checkpw(password.encode('utf-8'), password_check):
-                session["username"] = user_valid
-                return redirect(url_for("login"))
-
-            else:
-                if "username" in session:
+                # compare hashed password in db with password typed
+                if bcrypt.checkpw(password.encode('utf-8'), password_check):
+                    session["username"] = user_valid
                     return redirect(url_for("login"))
-                message = 'Wrong Password'
-                return render_template('admin/login.html', message=message)
 
+                else:
+                    if "username" in session:
+                        return redirect(url_for("login"))
+                    message = 'Wrong Password'
+                    return render_template('admin/login.html', message=message)
+            else:
+                message = "You are not an admin"
+                return render_template('admin/login.html', message=message)
         else:
             message = 'Username is not found'
             return render_template('admin/login.html', message=message)
