@@ -43,28 +43,24 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        user_found = admins.findone({"username": username})
-        admin_verify = admins.find_one({"role": "admin"})
+        user_found = admins.find_one({"username": username})
 
         # if username is found inside the database
-        if user_found:
-            if admin_verify:
-                user_valid = user_found['username']
-                password_check = user_found['password']
+        if user_found["role"] == "admin":
+            user_valid = user_found['username']
+            password_check = user_found['password']
 
-                # compare hashed password in db with password typed
-                if bcrypt.checkpw(password.encode('utf-8'), password_check):
-                    session["username"] = user_valid
-                    return redirect(url_for("index"))
+            # compare hashed password in db with password typed
+            if bcrypt.checkpw(password.encode('utf-8'), password_check):
+                session["username"] = user_valid
+                return redirect(url_for("index"))
 
-                else:
-                    if "username" in session:
-                        return redirect(url_for("index"))
-                    message = 'Wrong Password'
-                    return render_template('admin/login.html', message=message)
             else:
-                message = "You are not an admin"
+                if "username" in session:
+                    return redirect(url_for("index"))
+                message = 'Wrong Password'
                 return render_template('admin/login.html', message=message)
+
         else:
             message = 'Username is not found'
             return render_template('admin/login.html', message=message)
