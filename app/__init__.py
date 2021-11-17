@@ -8,6 +8,7 @@ from .routes.admin_bp import admin_bp
 
 # Create Flask app and initialize mongodb connection
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 mongo.init_app(app, tlsAllowInvalidCertificates=True)
 
