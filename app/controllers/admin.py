@@ -43,16 +43,16 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        user_found = admins.find_one({"username": username})
+        user_detail = admins.find_one({"username": username})
 
         # if username is found inside the database
-        if user_found["role"] == "admin":
-            user_valid = user_found['username']
-            password_check = user_found['password']
+        if user_detail["role"] == "admin":
+            user_detail = user_detail['username']
+            pwd = user_detail['password']
 
             # compare hashed password in db with password typed
-            if bcrypt.checkpw(password.encode('utf-8'), password_check):
-                session["username"] = user_valid
+            if bcrypt.checkpw(password.encode('utf-8'), pwd):
+                session["username"] = user_detail
                 return redirect(url_for("index"))
 
             else:
