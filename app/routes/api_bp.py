@@ -1,6 +1,7 @@
 from flask import Blueprint
 from ..controllers.apis.puzzle import *
 from ..controllers.apis.auth import *
+import pymongo
 
 api_bp = Blueprint('api_bp', __name__)
 
@@ -24,6 +25,3 @@ api_bp.route("/puzzle/solve", methods=["POST"])(solve_puzzle)
 
 # /api/puzzle/step-through
 api_bp.route("/puzzle/step-through", methods=["POST"])(step_through)
-
-# /api/admin/login
-api_bp.route("/admin/login", methods=['POST'])(login_auth)
