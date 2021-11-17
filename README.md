@@ -50,7 +50,7 @@ export FLASK_ENV=development
 
 `master`: Only codes that are ready to deploy will be merged here.  
 
-`dev`: This is where codes are being developed.
+`dev`: This is where completed features are being merged.
 
 ### Note
 Any development **MUST** be done in the `feature` branches first before merging to the `dev` branch. Merging to `master` branch will only be done when all codes are ready to deploy.
