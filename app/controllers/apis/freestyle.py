@@ -2,7 +2,25 @@ from typing import List
 from ...models.user import User
 from ...models.step import Step
 import traceback
+from typing import List
 from flask import jsonify, request, session
+
+
+def check_steps(steps: List, STEP_LIMIT: int) -> bool:
+    '''
+    Check the amount of steps 
+
+    Args:
+        steps (list): list of steps from the robotic car
+
+    Returns:
+        bool: True if satisfy step limit
+    '''
+
+    if len(steps) <= STEP_LIMIT:
+        return True
+    else:
+        return False
 
 
 def execute_steps(steps: List) -> bool:
