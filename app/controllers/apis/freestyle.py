@@ -26,8 +26,9 @@ def execute_steps(steps: List) -> bool:
     step.create_queue(steps_arr_obj)
 
     # Wait for queue to be emptied
-    while True:
+    queue_flag = True
+    while queue_flag == True:
         if step.get_queue_count() == 0:
-            break
+            queue_flag = False
 
     return True
