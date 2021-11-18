@@ -7,8 +7,9 @@ Do the following to add a new blueprint:
 """
 
 from flask import Blueprint
-from ..controllers.app_controller import index
+from ..controllers.app_controller import index,freestyle
 
 app_bp = Blueprint('app_bp', __name__)
 
 app_bp.route('/')(index)
+app_bp.route('/freestyle_mode.html')(freestyle)

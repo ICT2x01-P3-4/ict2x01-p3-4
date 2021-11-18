@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarStep</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    $(document).ready(function(){
+        $("#option").sortable({
+            connectWith: ".connectedSortable",
+            remove: function (event, ui) {
+                ui.item.clone().appendTo('#option_selected');
+                $(this).sortable('cancel');
+            }
+        }).disableSelection();
+        
+        $("#option_selected").sortable({
+            receive: function(event, ui) {
+                var num = $('#option_selected li').length;
+                if (num>15){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'The maximum step you can input is 15.'
+                    })
+                    $("#option_selected").sortable('cancel');
+                    $("#option_selected li:last-child").remove();
+                } else{
+                    $("#direction_num").text(num+"/15");
+                }
+                
+            }
+        }).disableSelection();
+
+        $('.clear').on('click', function(e){
+            $("#option_selected li").remove();
+            $("#direction_num").text("0/15");
+        });
+
+        $('.execute').on('click', function(e){
+            var idsInOrder = $("#option_selected").sortable("toArray");
+            console.log(idsInOrder);
+            // put the code here to send array to backend
+            Swal.fire({
+                icon: 'success',
+                title: 'Yay, the car is moving now!',
+                text: 'Checkout the car movement physically!'
+            })
+            $("#option_selected li").remove();
+            $("#direction_num").text("0/15");
+        });
+
+    });
+
+    </script>
+</head>
+
+<body>
+    <div class="bg-blue-900 px-3 py-3">
+        <h2 class="text-3xl font-light text-white m-0"><a href="userhome.html">< Back to Home</a></h2>
+    </div>
+    <div class="container p-16">
+        {% block content %}
+        <h2 class="text-2xl font-semibold">Directions:</h2>
+        <ul id="option" class="connectedSortable ml-auto flex items-center -ml-3">
+            <li id="f" class="bg-blue-200 border border-blue-300 p-3 m-3 shadow-lg rounded-lg">Move Forward</li>
+            <li id="b" class="bg-blue-300 bg-opacity-90 border border-blue-400 p-3 m-3 shadow-lg rounded-lg">Move Backward</li>
+            <li id="l" class="bg-indigo-300 bg-opacity-90 border border-indigo-400 p-3 m-3 shadow-lg rounded-lg">Turn Left</li>
+            <li id="r" class="bg-purple-300 bg-opacity-90 border border-purple-400 p-3 m-3 shadow-lg rounded-lg">Turn Right</li>
+        </ul>
+        <p class="mt-8 mb-3 float-left">Drag and drop the directions down here &#8595;</p>
+        <p id="direction_num" class="mt-8 mb-3 float-right">0/15</p>
+        <ul id="option_selected" class="connectedSortable clear-both h-72 w-auto ml-auto flex flex-wrap content-start items-center bg-blue-100 bg-opacity-75 mb-8"></ul>
+        <div class="flex justify-center text-center">
+            <div class="grid grid-cols-2">
+                <button type="button" class="clear flex m-3 pl-10 bg-red-400 bg-opacity-50 hover:bg-red-300 py-4 px-8 shadow-lg rounded-lg">Clear</button>
+                <button type="button" class="execute flex m-3 bg-green-400 bg-opacity-75 hover:bg-green-300 py-4 px-8 shadow-lg rounded-lg">Execute</button>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+
+</html>
