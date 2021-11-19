@@ -125,7 +125,7 @@ def execute_steps(steps):
     # Format steps into list of dicts
     steps_arr = []
     for i, step in enumerate(steps):
-        steps_arr.append(Step({"step_num": i+1, "direction": step}))
+        steps_arr.append({"step_num": i+1, "direction": step})
 
     # Insert steps into queue
     queue = Queue()
