@@ -1,6 +1,6 @@
 import traceback
 from ..models.queue_model import Queue
-from ..models.car_model import Car
+from ..models.car_model import CarModel
 
 
 def get_command():
@@ -31,7 +31,7 @@ def start_car():
         string: Status of the car.
     """
     try:
-        car = Car()
+        car = CarModel()
         started = car.start()
         if not started:
             return "Failed\0"
@@ -49,7 +49,7 @@ def stop_car():
         string: Status of the car.
     """
     try:
-        car = Car()
+        car = CarModel()
         stopped = car.stop()
         if not stopped:
             return "Failed\0"
@@ -67,7 +67,7 @@ def detected_obstacle():
         string: Status of the car.
     """
     try:
-        car = Car()
+        car = CarModel()
         detected_obstacle = car.detected_obstacle()
         if not detected_obstacle:
             return "Failed\0"
