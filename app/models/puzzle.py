@@ -2,7 +2,7 @@ from ..db import mongo
 from bson import ObjectId
 
 
-class Puzzle():
+class Puzzle:
     def __init__(self, puzzle=None):
         if puzzle is not None:
             self.id = puzzle["id"] if "id" in puzzle else ""

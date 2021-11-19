@@ -1,6 +1,6 @@
 from flask import Blueprint
-from ..controllers.apis.puzzle import *
-from ..controllers.apis.car import get_command
+from ..apis.puzzle import *
+from ..apis.car import get_command
 
 api_bp = Blueprint('api_bp', __name__)
 

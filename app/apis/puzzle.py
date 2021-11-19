@@ -1,8 +1,8 @@
 from flask import jsonify, request, session
 import traceback
-from ...models.puzzle import Puzzle
-from ...models.user import User
-from ...models.step import Step
+from ..models.Puzzle import Puzzle
+from ..models.User import User
+from ..models.Step import Step
 
 
 def get_puzzles():
