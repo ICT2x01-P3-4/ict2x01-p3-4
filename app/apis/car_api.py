@@ -1,6 +1,6 @@
 import traceback
-from ..models.Queue import Queue
-from ..models.Car import Car
+from ..models.queue_model import Queue
+from ..models.car_model import Car
 
 
 def get_command():

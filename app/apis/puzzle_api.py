@@ -1,10 +1,10 @@
 from flask import jsonify, request, session
 import traceback
 
-from app.models.Queue import Queue
-from ..models.Puzzle import Puzzle
-from ..models.User import User
-from ..models.Step import Step
+from ..models.queue_model import Queue
+from ..models.puzzle_model import Puzzle
+from ..models.user_model import User
+from ..models.step_model import Step
 
 
 def get_puzzles():

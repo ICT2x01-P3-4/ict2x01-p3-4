@@ -1,6 +1,6 @@
 from flask import Blueprint
-from ..apis.puzzle import *
-from ..apis.car import *
+from ..apis.puzzle_api import *
+from ..apis.car_api import *
 
 api_bp = Blueprint('api_bp', __name__)
 

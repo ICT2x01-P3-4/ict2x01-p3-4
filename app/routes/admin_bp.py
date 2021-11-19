@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..controllers.admin_controller import index, logout, profile, puzzle, edit_puzzle, create_puzzle, login
+from ..controllers.admin_controller import *
 
 admin_bp = Blueprint('admin_bp', __name__)
 
