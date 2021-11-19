@@ -1,48 +1,13 @@
 from ..db import mongo
+from .entities.puzzle_entity import Puzzle
 from bson import ObjectId
 
 
-class Puzzle:
-    def __init__(self, puzzle=None):
-        if puzzle is not None:
-            self.id = puzzle["id"] if "id" in puzzle else ""
-            self.name = puzzle["name"]
-            self.difficulty = puzzle["difficulty"]
-            self.puzzle_shape = puzzle["puzzle_shape"]
-            self.puzzle_steps = puzzle["puzzle_steps"]
+class PuzzleModel:
+    def __init__(self):
         self.puzzle_db = mongo.db.puzzles
 
-    def get_id(self):
-        return self.id
-
-    def set_id(self, id):
-        self.id = id
-
-    def get_name(self):
-        return self.name
-
-    def set_name(self, name):
-        self.name = name
-
-    def get_difficulty(self):
-        return self.difficulty
-
-    def set_difficulty(self, difficulty):
-        self.difficulty = difficulty
-
-    def get_puzzle_shape(self):
-        return self.puzzle_shape
-
-    def set_puzzle_shape(self, puzzle_shape):
-        self.puzzle_shape = puzzle_shape
-
-    def get_puzzle_steps(self):
-        return self.puzzle_steps
-
-    def set_puzzle_steps(self, puzzle_steps):
-        self.puzzle_steps = puzzle_steps
-
-    def create_puzzle(self, puzzle):
+    def create_puzzle(self, data):
         """
         Insert a new puzzle into the database.
 
@@ -52,13 +17,13 @@ class Puzzle:
         Returns:
             string: id of the newly inserted puzzle.
         """
-        result = self.puzzle_db.insert_one({
-            "name": puzzle.name,
-            "difficulty": puzzle.difficulty,
-            "puzzle_shape": puzzle.puzzle_shape,
-            "puzzle_steps": puzzle.puzzle_steps
-        })
-        return result.inserted_id
+        new_puzzle = Puzzle(data["name"], data["difficulty"],
+                            data["puzzle_shape"], data["puzzle_steps"])
+        inserted_id = self.puzzle_db.insert_one(
+            new_puzzle.__dict__).inserted_id
+        new_puzzle.set_id(str(inserted_id))
+        new_puzzle._id = str(inserted_id)
+        return new_puzzle
 
     def get_all_puzzles(self):
         """
@@ -67,7 +32,7 @@ class Puzzle:
         Returns:
             list: all puzzles in the database.
         """
-        return list(self.puzzle_db.find({}))
+        return list(self.puzzle_db.find({}).sort("difficulty", 1))
 
     def get_puzzle(self, id):
         """

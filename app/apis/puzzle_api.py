@@ -1,8 +1,9 @@
 from flask import jsonify, request, session
+import json
 import traceback
 
 from ..models.queue_model import Queue
-from ..models.puzzle_model import Puzzle
+from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import User
 from ..models.step_model import Step
 
@@ -15,7 +16,7 @@ def get_puzzles():
         json: list of puzzles.
     """
     try:
-        puzzle = Puzzle()
+        puzzle = PuzzleModel()
         puzzles = puzzle.get_all_puzzles()
 
         # Convert object id to string
@@ -39,7 +40,7 @@ def get_puzzle_by_id(puzzle_id):
         json: puzzle object data
     """
     try:
-        puzzle = Puzzle()
+        puzzle = PuzzleModel()
         puzzle_data = puzzle.get_puzzle(puzzle_id)
         puzzle_data["_id"] = str(puzzle_data["_id"])
 
@@ -58,10 +59,9 @@ def create_puzzle():
     """
     try:
         data = request.get_json()
-        puzzle = Puzzle(data)
-        puzzle.create_puzzle(puzzle)
-
-        return jsonify({"message": f"{puzzle.get_name()} created successfully"}), 201
+        puzzle_model = PuzzleModel()
+        new_puzzle = puzzle_model.create_puzzle(data)
+        return jsonify(new_puzzle.__dict__), 201
     except Exception as e:
         traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500
@@ -76,7 +76,7 @@ def update_puzzle():
     """
     try:
         data = request.get_json()
-        puzzle = Puzzle(data)
+        puzzle = PuzzleModel(data)
         updated = puzzle.update_puzzle(puzzle)
 
         if not updated:
@@ -99,7 +99,7 @@ def delete_puzzle(puzzle_id):
         json: message and status code.
     """
     try:
-        puzzle = Puzzle()
+        puzzle = PuzzleModel()
         deleted = puzzle.delete_puzzle(puzzle_id)
 
         if not deleted:
@@ -199,7 +199,7 @@ def solve_puzzle():
         data = request.get_json()
 
         # Retrieve puzzle from db
-        puzzle = Puzzle()
+        puzzle = PuzzleModel()
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
 
         # Check answer
@@ -234,7 +234,7 @@ def step_through():
         data = request.get_json()
 
         # Retrieve puzzle from db
-        puzzle = Puzzle()
+        puzzle = PuzzleModel()
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
 
         # Create step object and check answer
