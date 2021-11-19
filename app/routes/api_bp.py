@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..controllers.apis.puzzle import *
+from ..apis.puzzle import *
 import pymongo
 
 api_bp = Blueprint('api_bp', __name__)
