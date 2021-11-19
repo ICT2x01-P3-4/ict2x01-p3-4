@@ -1,5 +1,7 @@
 from flask import jsonify, request, session
 import traceback
+
+from app.models.Queue import Queue
 from ..models.Puzzle import Puzzle
 from ..models.User import User
 from ..models.Step import Step
@@ -121,17 +123,17 @@ def execute_steps(steps):
         boolean: True when queue is emptied.
     """
     # Format steps into list of dicts
-    steps_arr_obj = []
+    steps_arr = []
     for i, step in enumerate(steps):
-        steps_arr_obj.append({"step_num": i+1, "direction": step})
+        steps_arr.append({"step_num": i+1, "direction": step})
 
     # Insert steps into queue
-    step = Step()
-    step.create_queue(steps_arr_obj)
+    queue = Queue()
+    queue.create_queue(steps_arr)
 
     # Wait for queue to be emptied
     while True:
-        if step.get_queue_count() == 0:
+        if queue.get_queue_count() == 0:
             break
 
     return True
@@ -236,8 +238,8 @@ def step_through():
         puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
 
         # Create step object and check answer
-        step_obj = {"step_num": data["step_num"],
-                    "direction": data["direction"]}
+        step_obj = Step({"step_num": data["step_num"],
+                         "direction": data["direction"]})
         is_correct = check_answer(puzzle_obj, step_obj, False)
 
         if not is_correct:

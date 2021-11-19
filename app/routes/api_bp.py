@@ -1,6 +1,6 @@
 from flask import Blueprint
 from ..apis.puzzle import *
-from ..apis.car import get_command
+from ..apis.car import *
 
 api_bp = Blueprint('api_bp', __name__)
 
@@ -27,3 +27,12 @@ api_bp.route("/puzzle/step-through", methods=["POST"])(step_through)
 
 # /api/car/command
 api_bp.route("/car/command")(get_command)
+
+# /api/car/start
+api_bp.route("/car/start")(start_car)
+
+# /api/car/stop
+api_bp.route("/car/stop")(stop_car)
+
+# /api/car/obstacle
+api_bp.route("/car/obstacle")(detected_obstacle)
