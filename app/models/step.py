@@ -29,6 +29,12 @@ class Step:
         """
         self.step_queue_db.insert_many(steps)
 
+    def get_next_step(self):
+        """
+        Retrieve the next step in queue.
+        """
+        return self.step_queue_db.find_one()
+
     def get_queue_count(self):
         """
         Retrieve the number of steps in the queue.

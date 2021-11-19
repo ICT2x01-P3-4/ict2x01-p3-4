@@ -1,6 +1,6 @@
 from flask import Blueprint
 from ..controllers.apis.puzzle import *
-from ..controllers.apis.car import command
+from ..controllers.apis.car import get_command
 
 api_bp = Blueprint('api_bp', __name__)
 
@@ -26,4 +26,4 @@ api_bp.route("/puzzle/solve", methods=["POST"])(solve_puzzle)
 api_bp.route("/puzzle/step-through", methods=["POST"])(step_through)
 
 # /api/car/command
-api_bp.route("/car/command")(command)
+api_bp.route("/car/command")(get_command)
