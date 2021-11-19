@@ -1,6 +1,6 @@
 from flask import Blueprint
-from ..controllers.apis.puzzle import *
-import pymongo
+from ..apis.puzzle import *
+from ..apis.car import get_command
 
 api_bp = Blueprint('api_bp', __name__)
 
@@ -24,3 +24,6 @@ api_bp.route("/puzzle/solve", methods=["POST"])(solve_puzzle)
 
 # /api/puzzle/step-through
 api_bp.route("/puzzle/step-through", methods=["POST"])(step_through)
+
+# /api/car/command
+api_bp.route("/car/command")(get_command)
