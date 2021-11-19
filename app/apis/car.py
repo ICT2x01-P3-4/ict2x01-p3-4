@@ -4,6 +4,12 @@ from ..models.Car import Car
 
 
 def get_command():
+    """
+    Retrieve the first step in queue.
+
+    Returns:
+        string: Command to be executed.
+    """
     try:
         queue = Queue()
         step = queue.get_next_step()
@@ -18,6 +24,12 @@ def get_command():
 
 
 def start_car():
+    """
+    Set the car to start.
+
+    Returns:
+        string: Status of the car.
+    """
     try:
         car = Car()
         started = car.start()
@@ -30,6 +42,12 @@ def start_car():
 
 
 def stop_car():
+    """
+    Set the car to stop.
+
+    Returns:
+        string: Status of the car.
+    """
     try:
         car = Car()
         stopped = car.stop()
@@ -42,6 +60,12 @@ def stop_car():
 
 
 def detected_obstacle():
+    """
+    Set the car detected obstacle status.
+
+    Returns:
+        string: Status of the car.
+    """
     try:
         car = Car()
         detected_obstacle = car.detected_obstacle()

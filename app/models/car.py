@@ -11,6 +11,8 @@ class Car:
             self.move = car["move"]
             self.obstacle = car["obstacle"]
         self.car = mongo.db.car
+        if self.car.find_one({}) is None:
+            self.car.insert_one({"is_moving": False, "obstacle": False})
 
     def get_distance(self):
         return self.distance
@@ -43,16 +45,13 @@ class Car:
         self.obstacle = obstacle
 
     def start(self):
-        result = self.car.find_one_and_update(
-            {}, {"$set": {"is_moving": True, "obstacle": False}})
-        return result.matched_count
+        return self.car.find_one_and_update(
+            {"id": "0"}, {"$set": {"is_moving": True, "obstacle": False}})
 
     def stop(self):
-        result = self.car.find_one_and_update(
+        return self.car.find_one_and_update(
             {}, {"$set": {"is_moving": False, "obstacle": False}})
-        return result.matched_count
 
     def detected_obstacle(self):
-        result = self.car.find_one_and_update(
+        return self.car.find_one_and_update(
             {}, {"$set": {"is_moving": False, "obstacle": True}})
-        return result.matched_count
