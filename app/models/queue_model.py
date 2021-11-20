@@ -18,7 +18,8 @@ class QueueModel:
         """
         Retrieve the next step in queue.
         """
-        return self.queue.find_one()
+        step = self.queue.find_one()
+        return step["direction"]
 
     def get_queue_count(self):
         """

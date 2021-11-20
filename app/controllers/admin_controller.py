@@ -1,6 +1,7 @@
-from flask import render_template, redirect, url_for, request, session
 import bcrypt
 from ..db import mongo
+from ..models.puzzle_model import PuzzleModel
+from flask import render_template, redirect, url_for, request, session
 
 
 def index():
@@ -12,11 +13,13 @@ def profile():
 
 
 def puzzle():
-    return render_template('admin/puzzle.html')
+    puzzle_model = PuzzleModel()
+    return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles())
 
 
 def edit_puzzle(puzzle_id):
-    return render_template('admin/edit_puzzle.html')
+    puzzle_model = PuzzleModel()
+    return render_template('admin/edit_puzzle.html', puzzle=puzzle_model.get_puzzle(puzzle_id))
 
 
 def create_puzzle():
