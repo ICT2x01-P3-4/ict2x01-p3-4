@@ -7,7 +7,7 @@ class UserModel:
     def __init__(self):
         self.user_db = mongo.db.users
 
-    def login_admin(self, username, password):
+    def login_admin(self, username, password) -> bool:
         '''
         API to authenticate user from the database.
         The authentication does a HTTP GET request method to get 
