@@ -1,3 +1,6 @@
+autopep8==1.6.0
+bcrypt==3.2.0
+cffi==1.15.0
 click==8.0.1
 colorama==0.4.4
 dnslib==0.9.16
@@ -9,8 +12,12 @@ itsdangerous==2.0.1
 Jinja2==3.0.2
 MarkupSafe==2.0.1
 protobuf==3.18.1
+pycodestyle==2.8.0
+pycparser==2.21
 pymongo==3.12.1
 python-dotenv==0.19.1
+six==1.16.0
+toml==0.10.2
 typing-extensions==3.10.0.2
 Werkzeug==2.0.2
 zipp==3.6.0

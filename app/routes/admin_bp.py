@@ -1,5 +1,5 @@
 from flask import Blueprint
-from ..controllers.admin import index, profile, puzzle, edit_puzzle, create_puzzle
+from ..controllers.admin_controller import *
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -17,3 +17,9 @@ admin_bp.route('/<puzzle_id>')(edit_puzzle)
 
 # /admin/puzzle/create
 admin_bp.route('/create')(create_puzzle)
+
+# /admin/login
+admin_bp.route('/login', methods=["POST"])(login)
+
+# /admin/logout
+admin_bp.route('/logout')(logout)

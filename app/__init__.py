@@ -2,14 +2,17 @@ import os
 from flask import Flask, render_template
 
 from .db import mongo
+from .dataseeder import seed_data
 from .routes.app_bp import app_bp
 from .routes.api_bp import api_bp
 from .routes.admin_bp import admin_bp
 
 # Create Flask app and initialize mongodb connection
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 mongo.init_app(app, tlsAllowInvalidCertificates=True)
+seed_data()
 
 # Register blueprints
 app.register_blueprint(app_bp, url_prefix="/")

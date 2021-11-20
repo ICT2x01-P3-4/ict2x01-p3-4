@@ -1,24 +1,9 @@
 from ..db import mongo
 
 
-class Step:
-    def __init__(self, step=None):
-        if step is not None:
-            self.step_num = step["step_num"]
-            self.direction = step["direction"]
-        self.step_queue_db = mongo.db.step_queue
-
-    def get_step_num(self):
-        return self.step_num
-
-    def set_step_num(self, step_num):
-        self.step_num = step_num
-
-    def get_direction(self):
-        return self.direction
-
-    def set_direction(self, direction):
-        self.direction = direction
+class QueueModel:
+    def __init__(self):
+        self.queue = mongo.db.queue
 
     def create_queue(self, steps):
         """
@@ -27,7 +12,14 @@ class Step:
         Args:
             steps (list): list of steps to insert into the queue.
         """
-        self.step_queue_db.insert_many(steps)
+        self.queue.insert_many(steps)
+
+    def get_next_step(self):
+        """
+        Retrieve the next step in queue.
+        """
+        step = self.queue.find_one()
+        return step["direction"]
 
     def get_queue_count(self):
         """
@@ -36,7 +28,7 @@ class Step:
         Returns:
             int: number of steps in the queue.
         """
-        return self.step_queue_db.count()
+        return self.queue.count()
 
     def remove_step(self, step_num):
         """
@@ -48,7 +40,7 @@ class Step:
         Returns:
             object: result of the delete operation.
         """
-        return self.step_queue_db.delete_one({"step_num": step_num})
+        return self.queue.delete_one({"step_num": step_num})
 
     def clear_queue(self):
         """
@@ -57,4 +49,4 @@ class Step:
         Returns:
             object: result of the delete operation.
         """
-        return self.step_queue_db.delete_many({})
+        return self.queue.delete_many({})

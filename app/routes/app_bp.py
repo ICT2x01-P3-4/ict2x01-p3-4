@@ -7,9 +7,9 @@ Do the following to add a new blueprint:
 """
 
 from flask import Blueprint
-from ..controllers.app_controller import index, userhome
+from ..controllers.app_controller import index,game_mode
 
 app_bp = Blueprint('app_bp', __name__)
 
 app_bp.route('/')(index)
-app_bp.route('/userhome.html')(userhome)
+app_bp.route('/home')(game_mode)
