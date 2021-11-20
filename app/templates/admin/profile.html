@@ -1,145 +1,142 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarStep</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
-</head>
-
-<body>
-    <div class="flex-col bg-blue-900 justify-between px-3 py-3">
-        <div>
-            <div class="m-auto flex justify-between ">
-                <h2 class="text-3xl text-left font-light text-white m-0"><a href="/admin"> &lt; Back to Home </a></h2>
-                <h2 class="text-3xl text-right font-light text-white m-0">Manage Profile</h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">        
-        <div class="m-auto flex-col items-center justify-center h-screen">
-            <div class="overflow-auto pl-20">
-                <div class="flex-col justify-center h-screen pt-6">
-                    <div class="m-auto flex justify-between pb-3">
-                        <div>
-                        <h1>User Account(s)</h1>
-                        </div>
-                        <div>
-                            <!-- create user button -->
-                        <button class="bg-green-300 hover:bg-green-500 text-black font-semibold py-1 px-2 rounded">Create User</button>
-                        </div>
-                    </div>
-                    <!-- Table for user accounts -->
-                    <table class="min-w-full border-collapse block md:table">
-                        <!-- Table Header -->
-                        <thead class="block md:table-header-group">
-                            <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-                                <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">No.</th>
-                                <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Username</th>
-                                <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Role</th>
-                                <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Game Stage</th>
-                                <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Total Score</th>
-                                <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Actions</th>
-                            </tr>
-                        </thead>                        
-                        <tbody class="block md:table-row-group">
-                            <!-- Table Row For Admin -->
-                            <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>1</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Admin</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>Administrator</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>-</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>-</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <!-- Button for Admin to change their own password or Create User -->
-                                    <button data-swal-template="#adminchangepass" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Change Password</button>
-                                    
-                                </td>
-                            </tr>
-                            <!-- Table Row For User -->
-                            <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>2</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Bob</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>5</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>321</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <!-- Button for Admin to edit or delete User -->
-                                    <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                    <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
-                                </td>
-                            </tr>
-                            <!-- Table Row For User -->
-                            <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>3</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Audrey</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <!-- Button for Admin to edit or delete User -->
-                                    <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                    <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
-                                </td>
-                            </tr>
-                            <!-- Table Row For User -->
-                            <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>4</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <!-- Button for Admin to edit or delete User -->
-                                    <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                    <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
-                                </td>
-                            </tr>
-                            <!-- Table Row For User -->
-                            <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>5</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <!-- Button for Admin to edit or delete User -->
-                                    <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                    <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
-                                </td>
-                            </tr>
-                            <!-- Table Row For User -->
-                            <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>6</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
-                                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                    <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <!-- Button for Admin to edit or delete User -->
-                                    <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                    <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
-                                </td>
-                            </tr>			
-                        </tbody>
-                    </table>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CarStep</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+    </head>
+    <!-- Nav Bar -->
+    <body>
+        <div class="flex-col bg-blue-900 justify-between px-3 py-3">
+            <div>
+                <div class="m-auto flex justify-between ">
+                    <!-- Link to return to Admin Home Page -->
+                    <h2 class="text-3xl text-left font-light text-white m-0"><a href="/admin"> &lt; Back to Home </a></h2>
+                    <h2 class="text-3xl text-right font-light text-white m-0">Manage Profile</h2>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
-    </div>
-</body>
+
+        <div class="container">        
+            <div class="m-auto flex-col items-center justify-center h-screen">
+                <div class="overflow-auto pl-20">
+                    <div class="flex-col justify-center h-screen pt-6">
+                        <div class="m-auto flex justify-between pb-3">
+                            <div>
+                                <h1>User Account(s)</h1>
+                            </div>
+                            <div>
+                                <!-- create user button -->
+                                <button class="bg-green-300 hover:bg-green-500 text-black font-semibold py-1 px-2 rounded">Create User</button>
+                            </div>
+                        </div>
+                        <!-- Table for user accounts -->
+                        <table class="min-w-full border-collapse block md:table">
+                            <!-- Table Header -->
+                            <thead class="block md:table-header-group">
+                                <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">No.</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Username</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Role</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Game Stage</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Total Score</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Actions</th>
+                                </tr>
+                            </thead>                        
+                            <tbody class="block md:table-row-group">
+                                <!-- Table Row For Admin -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>1</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Admin</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>Administrator</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>-</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>-</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to change their own password or Create User -->
+                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Change Password</button>
+                                        
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>2</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Bob</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>5</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>321</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Audrey</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>4</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>5</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>6</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>			
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 
 </html>
