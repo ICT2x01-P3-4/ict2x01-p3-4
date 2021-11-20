@@ -6,6 +6,14 @@ from typing import List
 from flask import jsonify, request, session
 
 
+def ObstacleDetected() -> bool:
+    '''
+    Returns:
+        bool: True if obstacles detected
+    '''
+    pass
+
+
 def check_steps(steps: List, STEP_LIMIT: int) -> bool:
     '''
     Check the amount of steps satisfies the step limit. 

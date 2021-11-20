@@ -29,7 +29,7 @@ class UserModel:
 
         return False
 
-    def login_user(self, user: str):
+    def login_user(self, user: str) -> bool:
         '''
         API to get user into session.
 
@@ -41,8 +41,16 @@ class UserModel:
 
         user_detail = self.user_db.find_one({'name': user})
         if user_detail['role'] == "user":
+            session['name'] = user_detail
             return True
         return False
+
+    def logout_user(self):
+        '''
+        Destroys the session the user is in
+        and redirects back to index back.
+        '''
+        session.pop('user', None)
 
     def logout_admin(self):
         '''
