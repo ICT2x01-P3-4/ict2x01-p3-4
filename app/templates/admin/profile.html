@@ -7,6 +7,70 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CarStep</title>
         <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+        <!-- sweetalert2 -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    $(document).ready(function(){ 
+        //change admin password
+        $('.changepass').on('click', function(e){
+            
+            //code
+            Swal.fire({
+            title: 'Change Password for Admin',
+            html: `
+            <input type="password" id="oldpassword" class="swal2-input" placeholder="Old Password">
+            <input type="password" id="newpassword" class="swal2-input" placeholder="New Password">
+            <input type="password" id="cfmnewpassword" class="swal2-input" placeholder="Confirm New Password">`,
+            confirmButtonText: 'Change Password',
+            focusConfirm: false,
+            showCancelButton: true,
+
+            preConfirm: () => {
+                
+                const oldpassword = Swal.getPopup().querySelector('#oldpassword').value
+                const newpassword = Swal.getPopup().querySelector('#newpassword').value
+                const cfmnewpassword = Swal.getPopup().querySelector('#cfmnewpassword').value
+                
+                if (!oldpassword||newpassword!=cfmnewpassword||!newpassword||!cfmnewpassword) {
+                Swal.showValidationMessage(`Try Again`)
+                }
+                return { password: oldpassword, password: newpassword }
+            }
+            }).then((result) => {
+            Swal.fire(`
+                Old Password: ${result.value.oldpassword}
+                New Password: ${result.value.newpassword}
+            `.trim())
+            })
+
+        });
+        // Delete user
+        $('.deleteuser').on('click', function(e){
+            // put the code here to send array to backend
+            Swal.fire({
+                title: 'Are you sure you want to delete this user?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                    'Deleted!',
+                    'User has been deleted.',
+                    'success'
+                    )
+                }
+            })
+        });
+
+    });
+
+    </script>
     </head>
     <!-- Nav Bar -->
     <body>
@@ -30,7 +94,7 @@
                             </div>
                             <div>
                                 <!-- create user button -->
-                                <button class="bg-green-300 hover:bg-green-500 text-black font-semibold py-1 px-2 rounded">Create User</button>
+                                <button type="button" class="createuser bg-green-300 hover:bg-green-500 text-black font-semibold py-1 px-2 rounded">Create User</button>
                             </div>
                         </div>
                         <!-- Table for user accounts -->
@@ -57,7 +121,7 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to change their own password or Create User -->
-                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Change Password</button>
+                                        <button type="button" class="changepass bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Change Password</button>
                                         
                                     </td>
                                 </tr>
@@ -72,7 +136,7 @@
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to edit or delete User -->
                                         <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
                                     </td>
                                 </tr>
                                 <!-- Table Row For User -->
