@@ -3,6 +3,12 @@ from ..models.user_model import UserModel
 
 
 def index():
+    '''
+    API to authenticate user from the database.
+    The authentication does a HTTP GET request method to get 
+    the information the user typed in, and does a POST request to the database to 
+    verify the user. 
+    '''
     if 'name' in session:
         return redirect(url_for("game_mode"))
     user = UserModel()
@@ -15,6 +21,10 @@ def index():
 
 
 def logout():
+    '''
+    Destroys the session the user is in
+    and redirects back to index back. 
+    '''
     user_model = UserModel()
     user_model.logout_user()
     return render_template("index.html")
