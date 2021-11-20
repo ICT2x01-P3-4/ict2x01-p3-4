@@ -37,3 +37,9 @@ def logout():
 
 def game_mode():
     return render_template("user_home.html")
+
+def freestyle_mode():
+    return render_template("freestyle_mode.html")
+
+def puzzle_mode():
+    return render_template("puzzle_mode.html")
