@@ -1,6 +1,6 @@
 import traceback
-from ..models.Queue import Queue
-from ..models.Car import Car
+from ..models.queue_model import QueueModel
+from ..models.car_model import CarModel
 
 
 def get_command():
@@ -11,13 +11,11 @@ def get_command():
         string: Command to be executed.
     """
     try:
-        queue = Queue()
-        step = queue.get_next_step()
-        command = step["direction"]
-        if command:
-            return f"Command: {command}\0"
-        else:
-            return "None\0"
+        queue_model = QueueModel()
+        direction = queue_model.get_next_step()
+        if direction:
+            return f"Command: {direction}\0"
+        return "None\0"
     except Exception as e:
         traceback.print_exc()
         return "Failed\0"
@@ -31,8 +29,8 @@ def start_car():
         string: Status of the car.
     """
     try:
-        car = Car()
-        started = car.start()
+        car_model = CarModel()
+        started = car_model.start()
         if not started:
             return "Failed\0"
         return "Started\0"
@@ -49,8 +47,8 @@ def stop_car():
         string: Status of the car.
     """
     try:
-        car = Car()
-        stopped = car.stop()
+        car_model = CarModel()
+        stopped = car_model.stop()
         if not stopped:
             return "Failed\0"
         return "Stopped\0"
@@ -67,8 +65,8 @@ def detected_obstacle():
         string: Status of the car.
     """
     try:
-        car = Car()
-        detected_obstacle = car.detected_obstacle()
+        car_model = CarModel()
+        detected_obstacle = car_model.detected_obstacle()
         if not detected_obstacle:
             return "Failed\0"
         return "Detected\0"

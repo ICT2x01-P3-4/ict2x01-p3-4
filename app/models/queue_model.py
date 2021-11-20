@@ -1,7 +1,7 @@
 from ..db import mongo
 
 
-class Queue:
+class QueueModel:
     def __init__(self):
         self.queue = mongo.db.queue
 
@@ -18,7 +18,8 @@ class Queue:
         """
         Retrieve the next step in queue.
         """
-        return self.queue.find_one()
+        step = self.queue.find_one()
+        return step["direction"]
 
     def get_queue_count(self):
         """
