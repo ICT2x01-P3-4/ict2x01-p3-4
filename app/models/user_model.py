@@ -7,7 +7,7 @@ class UserModel:
     def __init__(self):
         self.user_db = mongo.db.users
 
-    def login_admin(self, username, password):
+    def login_admin(self, username, password) -> bool:
         '''
         API to authenticate user from the database.
         The authentication does a HTTP GET request method to get 
@@ -28,6 +28,29 @@ class UserModel:
                 return True
 
         return False
+
+    def login_user(self, user: str) -> bool:
+        '''
+        API to get user into session.
+
+        Args:
+            user(str): name of the user
+        Returns:
+            boolean: True if user is verified as user
+        '''
+
+        user_detail = self.user_db.find_one({'name': user})
+        if user_detail['role'] == "user":
+            session['name'] = user_detail
+            return True
+        return False
+
+    def logout_user(self):
+        '''
+        Destroys the session the user is in
+        and redirects back to index back.
+        '''
+        session.pop('user', None)
 
     def logout_admin(self):
         '''
