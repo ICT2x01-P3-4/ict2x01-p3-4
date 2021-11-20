@@ -14,5 +14,11 @@ def index():
     return redirect(url_for("game_mode"))
 
 
+def logout():
+    user_model = UserModel()
+    user_model.logout_user()
+    return render_template("index.html")
+
+
 def game_mode():
     return render_template("userhome.html")
