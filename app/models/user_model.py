@@ -29,6 +29,21 @@ class UserModel:
 
         return False
 
+    def login_user(self, user: str):
+        '''
+        API to get user into session.
+
+        Args:
+            user(str): name of the user
+        Returns:
+            boolean: True if user is verified as user
+        '''
+
+        user_detail = self.user_db.find_one({'name': user})
+        if user_detail['role'] == "user":
+            return True
+        return False
+
     def logout_admin(self):
         '''
         Destroys the session the user is in
