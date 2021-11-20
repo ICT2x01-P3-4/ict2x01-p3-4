@@ -1,6 +1,5 @@
-import bcrypt
-from ..db import mongo
 from ..models.puzzle_model import PuzzleModel
+from ..models.user_model import UserModel
 from flask import render_template, redirect, url_for, request, session
 
 
@@ -31,14 +30,9 @@ def login():
     API to authenticate user from the database.
     The authentication does a HTTP GET request method to get 
     the information the user typed in, and does a POST request to the database to 
-    verify the user.
-
-    Add-on features: bcrypt encryption for password hashing.  
+    verify the user. 
     '''
 
-    admins = mongo.db.users
-    message = 'Please login to your account'
-    # if already logged in, start session
     if "username" in session:
         return redirect(url_for("index"))
 
@@ -46,28 +40,17 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        user_detail = admins.find_one({"username": username})
+        user_model = UserModel()
+        is_authenticated = user_model.login_admin(username, password)
 
-        # if username is found inside the database
-        if user_detail["role"] == "admin":
-            user_detail = user_detail['username']
-            pwd = user_detail['password']
-
-            # compare hashed password in db with password typed
-            if bcrypt.checkpw(password.encode('utf-8'), pwd):
-                session["username"] = user_detail
-                return redirect(url_for("index"))
-
-            else:
-                if "username" in session:
-                    return redirect(url_for("index"))
-                message = 'Wrong Password'
-                return render_template('admin/login.html', message=message)
-
-        else:
-            message = 'Username is not found'
+        if not is_authenticated:
+            message = 'Wrong Username/Password'
             return render_template('admin/login.html', message=message)
-        return render_template('admin/login.html', message=message)
+
+        return redirect(url_for("index"))
+
+    message = 'Please login to your account'
+    return render_template('admin/login.html', message=message)
 
 
 def logout():
@@ -75,6 +58,6 @@ def logout():
     Destroys the session the user is in
     and redirects back to index back. 
     '''
-    if "username" in session:
-        session.pop("username", None)
+    user_model = UserModel()
+    user_model.logout_admin()
     render_template("admin/index.html")

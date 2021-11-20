@@ -1,10 +1,40 @@
-from .entities.user_entity import User
+import bcrypt
 from ..db import mongo
+from flask import session
 
 
 class UserModel:
     def __init__(self):
         self.user_db = mongo.db.users
+
+    def login_admin(self, username, password):
+        '''
+        API to authenticate user from the database.
+        The authentication does a HTTP GET request method to get 
+        the information the user typed in, and does a POST request to the database to 
+        verify the user.
+
+        Add-on features: bcrypt encryption for password hashing.  
+
+        Returns:
+            boolean: True if user is authenticated, False otherwise.
+        '''
+        user_detail = self.user_db.find_one({'username': username})
+
+        if user_detail["role"] == "admin":
+            # compare hashed password in db with password typed
+            if bcrypt.checkpw(password.encode('utf-8'), user_detail['password']):
+                session["username"] = user_detail
+                return True
+
+        return False
+
+    def logout_admin(self):
+        '''
+        Destroys the session the user is in
+        and redirects back to index back.
+        '''
+        session.pop("username", None)
 
     def update_score(self, name):
         """
