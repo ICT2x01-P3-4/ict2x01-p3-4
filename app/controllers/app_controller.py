@@ -12,3 +12,7 @@ def index():
     if not in_session:
         return render_template("index.html")
     return redirect(url_for("game_mode"))
+
+
+def game_mode():
+    return render_template("userhome.html")
