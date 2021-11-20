@@ -1,5 +1,5 @@
 import traceback
-from ..models.queue_model import Queue
+from ..models.queue_model import QueueModel
 from ..models.car_model import CarModel
 
 
@@ -11,7 +11,7 @@ def get_command():
         string: Command to be executed.
     """
     try:
-        queue = Queue()
+        queue = QueueModel()
         step = queue.get_next_step()
         command = step["direction"]
         if command:

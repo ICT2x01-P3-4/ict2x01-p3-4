@@ -1,31 +1,10 @@
+from .entities.user_entity import User
 from ..db import mongo
 
 
-class User:
-    def __init__(self, user=None):
-        if user is not None:
-            self.name = user['name']
-            self.score = user['score']
-            self.stage = user['stage']
+class UserModel:
+    def __init__(self):
         self.user_db = mongo.db.users
-
-    def get_name(self):
-        return self.name
-
-    def set_name(self, name):
-        self.name = name
-
-    def get_score(self):
-        return self.score
-
-    def set_score(self, score):
-        self.score = score
-
-    def get_stage(self):
-        return self.stage
-
-    def set_stage(self, stage):
-        self.stage = stage
 
     def update_score(self, name):
         """

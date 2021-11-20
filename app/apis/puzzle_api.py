@@ -1,11 +1,7 @@
-from flask import jsonify, request, session
-import json
 import traceback
-
-from ..models.queue_model import Queue
+from flask import jsonify, request, session
 from ..models.puzzle_model import PuzzleModel
-from ..models.user_model import User
-from ..models.step_model import Step
+from ..models.user_model import UserModel
 
 
 def get_puzzles():
@@ -16,12 +12,8 @@ def get_puzzles():
         json: list of puzzles.
     """
     try:
-        puzzle = PuzzleModel()
-        puzzles = puzzle.get_all_puzzles()
-
-        # Convert object id to string
-        for puzzle in puzzles:
-            puzzle["_id"] = str(puzzle["_id"])
+        puzzle_model = PuzzleModel()
+        puzzles = puzzle_model.get_all_puzzles()
 
         return jsonify(puzzles), 200
     except Exception as e:
@@ -40,11 +32,10 @@ def get_puzzle_by_id(puzzle_id):
         json: puzzle object data
     """
     try:
-        puzzle = PuzzleModel()
-        puzzle_data = puzzle.get_puzzle(puzzle_id)
-        puzzle_data["_id"] = str(puzzle_data["_id"])
+        puzzle_model = PuzzleModel()
+        puzzle = puzzle_model.get_puzzle(puzzle_id)
 
-        return jsonify(puzzle_data), 200
+        return jsonify(puzzle), 200
     except Exception as e:
         traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500
@@ -60,24 +51,27 @@ def create_puzzle():
     try:
         data = request.get_json()
         puzzle_model = PuzzleModel()
-        new_puzzle = puzzle_model.create_puzzle(data)
-        return jsonify(new_puzzle.__dict__), 201
+        new_puzzle_id = puzzle_model.create_puzzle(data)
+        return jsonify({"message": f"New puzzle {new_puzzle_id} created"}), 201
     except Exception as e:
         traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
-def update_puzzle():
+def update_puzzle(puzzle_id):
     """
     Updates a puzzle in database.
+
+    Args:
+            puzzle_id (int): puzzle id to be updated.
 
     Returns:
         json: puzzle data and status code.
     """
     try:
         data = request.get_json()
-        puzzle = PuzzleModel(data)
-        updated = puzzle.update_puzzle(puzzle)
+        puzzle_model = PuzzleModel()
+        updated = puzzle_model.update_puzzle(puzzle_id, data)
 
         if not updated:
             return jsonify({"message": "Puzzle not found"}), 404
@@ -111,111 +105,28 @@ def delete_puzzle(puzzle_id):
         return jsonify({"message": "Something went wrong"}), 500
 
 
-def execute_steps(steps):
-    """
-    Inserts steps into queue in db
-    and wait for it to be emptied.
-
-    Args:
-        steps (list): list of steps.
-
-    Returns:
-        boolean: True when queue is emptied.
-    """
-    # Format steps into list of dicts
-    steps_arr = []
-    for i, step in enumerate(steps):
-        steps_arr.append({"step_num": i+1, "direction": step})
-
-    # Insert steps into queue
-    queue = Queue()
-    queue.create_queue(steps_arr)
-
-    # Wait for queue to be emptied
-    while True:
-        if queue.get_queue_count() == 0:
-            break
-
-    return True
-
-
-def at_last_step(puzzle, step):
-    """
-    Checks if user is at last step of puzzle.
-
-    Args:
-        puzzle (object): puzzle object.
-        step (object): step object.
-
-    Returns:
-        boolean: True if current steps is last step of puzzle.
-    """
-    total_steps = len(puzzle["puzzle_steps"])
-    return step["step_num"] == total_steps
-
-
-def check_answer(puzzle, steps, is_solve):
-    """
-    Checks if answer is correct.
-
-    First checks if user is solving or stepping through.
-    Then checks if user's answer is same as solution.
-
-    Args:
-        puzzle (object): puzzle object.
-        steps (list/object): steps to be executed.
-        is_solve (boolean): True if solving puzzle, False if stepping through.
-
-    Returns:
-        boolean: True for correct answer, False for incorrect answer.
-    """
-    answer = puzzle["puzzle_steps"]
-
-    if is_solve:
-        if len(steps) != len(answer):
-            return False
-
-        for i, step in enumerate(steps):
-            if step != answer[i]:
-                return False
-    else:
-        if steps["step_num"] > len(answer):
-            return False
-
-        if steps["direction"] != answer[steps["step_num"]-1]:
-            return False
-
-    return True
-
-
-def solve_puzzle():
+def solve_puzzle(puzzle_id):
     """
     Checks for user's answer and executes all steps if correct.
 
+    Updates user score and stage if answer is correct.
+
+    Args:
+        puzzle_id (string): puzzle id to be solved.
     Returns:
         json response: message and status code.
     """
     try:
         data = request.get_json()
+        puzzle_model = PuzzleModel()
+        done = puzzle_model.solve_puzzle(puzzle_id, data["steps"])
 
-        # Retrieve puzzle from db
-        puzzle = PuzzleModel()
-        puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
-
-        # Check answer
-        steps = data["steps"]
-        is_correct = check_answer(puzzle_obj, steps, True)
-
-        if not is_correct:
+        if not done:
             return jsonify({"message": "Incorrect answer"}), 400
 
-        done = execute_steps(steps)
-
-        # Update user score and stage if completed execution on all steps of puzzle
-        if done:
-            user = User()
-            user.update_score(session["user"])
-            user.update_stage(session["user"])
+        user_model = UserModel()
+        user_model.update_score(session["user"])
+        user_model.update_stage(session["user"])
 
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
@@ -223,33 +134,28 @@ def solve_puzzle():
         return jsonify({"message": "Something went wrong"}), 500
 
 
-def step_through():
+def step_through(puzzle_id):
     """
     Checks for user's answer and executes step.
+
+    Update user score and stage if completed last step of puzzle.
+
+    Args:
+        puzzle_id (string): puzzle id to be stepped through.
 
     Returns:
         json response: message and status code.
     """
     try:
         data = request.get_json()
+        puzzle_model = PuzzleModel()
+        done = puzzle_model.step_through_puzzle(puzzle_id, data)
 
-        # Retrieve puzzle from db
-        puzzle = PuzzleModel()
-        puzzle_obj = puzzle.get_puzzle(data['puzzle_id'])
-
-        # Create step object and check answer
-        step_obj = Step({"step_num": data["step_num"],
-                         "direction": data["direction"]})
-        is_correct = check_answer(puzzle_obj, step_obj, False)
-
-        if not is_correct:
+        if not done:
             return jsonify({"message": "Incorrect answer"}), 400
 
-        done = execute_steps([step_obj])
-
-        # Update user score and stage if completed last step of puzzle
-        if done and at_last_step(puzzle_obj, step_obj):
-            user = User()
+        if puzzle_model.at_last_step(puzzle_id, data):
+            user = UserModel()
             user.update_score(session["user"])
             user.update_stage(session["user"])
 

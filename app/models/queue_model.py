@@ -1,7 +1,7 @@
 from ..db import mongo
 
 
-class Queue:
+class QueueModel:
     def __init__(self):
         self.queue = mongo.db.queue
 
