@@ -1,4 +1,5 @@
 import traceback
+from flask import request
 from ..models.queue_model import QueueModel
 from ..models.car_model import CarModel
 
@@ -12,9 +13,15 @@ def get_command():
     """
     try:
         queue_model = QueueModel()
+        car = CarModel()
+        is_moving = car.is_moving()
         direction = queue_model.get_next_step()
-        if direction:
-            return f"Command: {direction}\0"
+
+        if not direction:
+            car.stop()
+
+        car.start()
+        return f"Command: {direction}\0"
         return "None\0"
     except Exception as e:
         traceback.print_exc()
@@ -73,3 +80,20 @@ def detected_obstacle():
     except Exception as e:
         traceback.print_exc()
         return "None\0"
+
+
+def insert_queue():
+    """
+    Insert the queue.
+
+    Returns:
+        string: Status of the car.
+    """
+    try:
+        step = request.get_json()
+        queue_model = QueueModel()
+        queue_model.insert_to_queue(step)
+        return "Inserted\0"
+    except Exception as e:
+        traceback.print_exc()
+        return "Failed\0"

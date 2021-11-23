@@ -10,12 +10,15 @@ class CarModel:
 
     def start(self):
         return self.car.find_one_and_update(
-            {"id": "0"}, {"$set": {"is_moving": True, "obstacle": False}})
+            {}, {"$set": {"is_moving": True, "obstacle_detected": False}})
 
     def stop(self):
         return self.car.find_one_and_update(
-            {}, {"$set": {"is_moving": False, "obstacle": False}})
+            {}, {"$set": {"is_moving": False, "obstacle_detected": False}})
 
     def detected_obstacle(self):
         return self.car.find_one_and_update(
-            {}, {"$set": {"is_moving": False, "obstacle": True}})
+            {}, {"$set": {"is_moving": False, "obstacle_detected": True}})
+
+    def is_moving(self):
+        return self.car.find_one({})["is_moving"]

@@ -14,11 +14,22 @@ class QueueModel:
         """
         self.queue.insert_many(steps)
 
+    def insert_to_queue(self, step):
+        """
+        Insert a step into the queue.
+
+        Args:
+            step (dict): step to insert into the queue.
+        """
+        self.queue.insert_one(step)
+
     def get_next_step(self):
         """
         Retrieve the next step in queue.
         """
-        step = self.queue.find_one()
+        step = self.queue.find_one({})
+        if not step:
+            return None
         return step["direction"]
 
     def get_queue_count(self):
