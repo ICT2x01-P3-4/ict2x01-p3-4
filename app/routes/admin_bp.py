@@ -3,6 +3,9 @@ from ..controllers.admin_controller import *
 
 admin_bp = Blueprint('admin_bp', __name__)
 
+# /admin/login
+admin_bp.route("/login")(login)
+
 # /admin
 admin_bp.route("/")(index)
 
