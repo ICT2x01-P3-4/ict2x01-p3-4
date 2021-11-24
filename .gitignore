@@ -138,4 +138,4 @@ dmypy.json
 cython_debug/
 
 # Tailwind node module folder
-app/static/node_modules
+node_modules
