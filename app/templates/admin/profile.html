@@ -13,6 +13,7 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     $(document).ready(function(){ 
+
         //change admin password
         $('.changepass').on('click', function(e){
             
@@ -36,7 +37,7 @@
                 if (!oldpassword||newpassword!=cfmnewpassword||!newpassword||!cfmnewpassword) {
                 Swal.showValidationMessage(`Try Again`)
                 }
-                return { password: oldpassword, password: newpassword }
+                return { oldpassword: oldpassword, newpassword: newpassword }
             }
             }).then((result) => {
             Swal.fire(`
@@ -46,6 +47,63 @@
             })
 
         });
+        //create user
+        $('.createuser').on('click', function(e){
+            
+            //code
+            Swal.fire({
+            title: 'Create new user username',
+            html: `
+            <input type="text" id="newuser" class="swal2-input" placeholder="New User Name">`,
+            confirmButtonText: 'Create',
+            focusConfirm: false,
+            showCancelButton: true,
+
+            preConfirm: () => {
+                const newuser = Swal.getPopup().querySelector('#newuser').value
+                
+                if (!newuser) {
+                Swal.showValidationMessage(`Please input a user name`)
+                }
+                return { newuser: newuser}
+            }
+            }).then((result) => {
+            Swal.fire(`
+                New User: ${result.value.newuser} created!
+            `.trim())
+            })
+
+        });
+
+
+        //edit user
+        $('.edituser').on('click', function(e){
+            
+            //code
+            Swal.fire({
+            title: 'Enter new username for user',
+            html: `
+            <input type="text" id="editnewuser" class="swal2-input" placeholder="New User Name">`,
+            confirmButtonText: 'Save',
+            focusConfirm: false,
+            showCancelButton: true,
+
+            preConfirm: () => {
+                const editnewuser = Swal.getPopup().querySelector('#editnewuser').value
+                
+                if (!editnewuser) {
+                Swal.showValidationMessage(`Please input a user name`)
+                }
+                return { editnewuser: editnewuser}
+            }
+            }).then((result) => {
+            Swal.fire(`
+                Username is updated to: ${result.value.editnewuser}!
+            `.trim())
+            })
+
+        });
+
         // Delete user
         $('.deleteuser').on('click', function(e){
             // put the code here to send array to backend
@@ -135,7 +193,7 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to edit or delete User -->
-                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
                                         <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
                                     </td>
                                 </tr>
@@ -149,8 +207,8 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to edit or delete User -->
-                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
                                     </td>
                                 </tr>
                                 <!-- Table Row For User -->
@@ -163,8 +221,8 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to edit or delete User -->
-                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
                                     </td>
                                 </tr>
                                 <!-- Table Row For User -->
@@ -177,8 +235,8 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to edit or delete User -->
-                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
                                     </td>
                                 </tr>
                                 <!-- Table Row For User -->
@@ -191,8 +249,8 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to edit or delete User -->
-                                        <button class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button class="bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
                                     </td>
                                 </tr>			
                             </tbody>
