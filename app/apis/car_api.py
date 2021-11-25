@@ -13,7 +13,6 @@ def get_command():
     """
     try:
         queue = QueueModel()
-        car = CarModel()
         direction = queue.get_next_step()
 
         if not direction:
@@ -36,8 +35,8 @@ def start_car():
         car_model = CarModel()
         started = car_model.start()
         if not started:
-            return "Failed\0"
-        return "Started\0"
+            return 500
+        return 200
     except Exception as e:
         traceback.print_exc()
         return "Failed\0"
