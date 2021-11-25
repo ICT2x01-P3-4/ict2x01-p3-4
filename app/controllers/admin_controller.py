@@ -28,7 +28,13 @@ def create_puzzle():
     return render_template('admin/create_puzzle.html')
 
 
-def login_post():
+def login_post() -> bool:
+    '''
+    Gets request form data and validate admin information
+
+    Returns:
+        boolean: True if admin information is verified and False if not verified 
+    '''
     username = request.form.get('username')
     password = request.form.get('password')
 

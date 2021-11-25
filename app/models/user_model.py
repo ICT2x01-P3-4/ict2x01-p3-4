@@ -32,7 +32,16 @@ class UserModel:
         else:
             return False
 
-    def get_user(self):
+    def get_user(self) -> tuple:
+        '''
+        Get all users data from data base and display it for log in
+        
+        Returns:
+            tuple: tuple of user data. 
+            list[0] = name
+            list[1] = stage
+            list[2] = score 
+        '''
         user_detail = self.user_db.find({'role': 'user'})
         user_detail = list(user_detail)
         name = []

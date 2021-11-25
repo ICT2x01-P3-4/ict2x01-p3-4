@@ -25,6 +25,12 @@ def index():
 
 
 def index_post() -> bool:
+    '''
+    Gets request form data and validate user information
+
+    Returns:
+        boolean: True if user information is verified and False if not verified 
+    '''
     name = request.form.get('name')
     user = UserModel()
     user_details = user.login_user(name)
