@@ -22,7 +22,8 @@ admin_bp.route('/<puzzle_id>')(edit_puzzle)
 admin_bp.route('/create')(create_puzzle)
 
 # /admin/login
-admin_bp.route('/login', methods=["POST"])(login)
+admin_bp.route('/login',  methods=["GET", "POST"])(login)
+
 
 # /admin/logout
 admin_bp.route('/logout')(logout)
