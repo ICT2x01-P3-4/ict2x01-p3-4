@@ -1,7 +1,6 @@
 from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import UserModel
 from flask import render_template, redirect, url_for, request, session, flash
-from ..db import mongo
 
 
 def index():
@@ -48,7 +47,7 @@ def login():
         return render_template('admin/login.html')
     elif request.method == "POST":
         auth = login_post()
-        if auth == True:
+        if auth:
             return redirect(url_for('admin_bp.index'))
         else:
             flash("Please check your Login details and try again")

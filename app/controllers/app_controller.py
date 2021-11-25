@@ -12,7 +12,6 @@ def index():
         name = user.get_user()
         name = name[0]
         len_name = len(name)
-        print(name)
         # for name, 0 index is name, 2nd index is stage, 2nd index is score
         return render_template("index.html", color=colors, colors_hover=colors_hover, 
         name=name, len_name = len_name)
