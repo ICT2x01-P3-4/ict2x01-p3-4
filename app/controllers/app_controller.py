@@ -44,7 +44,7 @@ def logout():
     '''
     user_model = UserModel()
     user_model.logout_user()
-    return render_template("index.html")
+    return redirect(url_for('app_bp.index'))
 
 
 def game_mode():
