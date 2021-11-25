@@ -1,5 +1,7 @@
 import traceback
 from flask import jsonify, request, session
+
+from app.models.queue_model import QueueModel
 from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import UserModel
 
@@ -160,6 +162,15 @@ def step_through(puzzle_id):
             user.update_stage(session["user"])
 
         return jsonify({"message": "Step executed"}), 200
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def check_queue():
+    try:
+        # TODO check if queue is empty
+        pass
     except Exception as e:
         traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500
