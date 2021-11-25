@@ -11,7 +11,7 @@ from ..controllers.app_controller import *
 
 app_bp = Blueprint('app_bp', __name__)
 
-app_bp.route('/')(index)
+app_bp.route('/', methods=["GET", "POST"])(index)
 app_bp.route('/home')(game_mode)
 app_bp.route('/freestyle')(freestyle_mode)
 app_bp.route('/puzzle')(puzzle_mode)

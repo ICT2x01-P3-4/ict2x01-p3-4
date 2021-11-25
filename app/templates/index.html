@@ -3,13 +3,18 @@
 {% block content %}
 {% include "shared/nav.html" %}
 <div class="flex justify-center mt-10">
+    <form action = '/' method="POST">
     <div class="grid gap-8 grid-cols-3 mt-5">
         {% for i in range(len_name) %}
-        <button
-            class="transition duration-500 ease-in-out flex py-28 px-32 text-center {{color[i]}} hover:{{colors_hover[i]}} transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
-            <h2 class="text-gray-800 font-bold text-5xl">{{name[i]}}</h2>
-        </button>
+        <input
+            type="submit"
+            name="name" 
+            id="name" 
+            value="{{name[i]}}"
+            class="transition duration-500 ease-in-out flex py-28 px-32 text-center font-bold text-5xl text-gray-800 {{color[i]}} hover:{{colors_hover[i]}} transform hover:-translate-y-1 hover:scale-110 hover:text-gray-800 hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg"/>
+            <!-- <input type="submit" class="transition duration-500 ease-in-out flex py-28 px-32 text-center {{color[i]}} hover:{{colors_hover[i]}} transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg" name="name" id="name" value="{{name[i]}}">{{name[i]}}/> -->
         {% endfor %}
     </div>
+    </form>
 </div>
 {% endblock %}
