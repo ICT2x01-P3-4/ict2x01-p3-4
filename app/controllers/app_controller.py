@@ -42,7 +42,9 @@ def logout():
 
 
 def game_mode():
-    return render_template("user_home.html")
+    user_session = session['name']
+    print(user_session)
+    return render_template("user_home.html", user = user_session['name'], score = user_session['score'])
 
 
 def freestyle_mode():
