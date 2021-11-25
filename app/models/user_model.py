@@ -1,7 +1,5 @@
 import bcrypt
-from flask import session
-from flask.helpers import url_for
-from werkzeug.utils import redirect
+from flask import session, redirect, url_for
 from ..db import mongo
 
 
@@ -33,6 +31,18 @@ class UserModel:
                 return False
         else:
             return False
+
+    def get_user(self):
+        user_detail = self.user_db.find({'role': 'user'})
+        user_detail = list(user_detail)
+        name = []
+        score = []
+        stage = []
+        for i in range(len(user_detail)):
+            name.append(user_detail[i]['name'])
+            score.append(user_detail[i]['score'])
+            stage.append(user_detail[i]['stage'])
+        return name, stage, score
 
     def login_user(self, user: str) -> bool:
         '''

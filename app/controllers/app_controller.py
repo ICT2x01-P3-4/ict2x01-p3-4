@@ -1,29 +1,26 @@
 from flask import render_template, redirect, url_for, request, session
 from ..models.user_model import UserModel
 
-def index():
-    return render_template("index.html")
 
-"""
 def index():
-    '''
-    API to authenticate user from the database.
-    The authentication does a HTTP GET request method to get 
-    the information the user typed in, and does a POST request to the database to 
-    verify the user. 
-    '''
-    if 'name' in session:
-        return redirect(url_for("game_mode"))
+
+    colors = ['bg-blue-300', 'bg-indigo-300', 'bg-purple-300',
+              'bg-blue-300', 'bg-indigo-300', 'bg-purple-300']
+    colors_hover = ['bg-blue-200', 'bg-indigo-200', 'bg-purple-200',
+                    'bg-blue-200', 'bg-indigo-200', 'bg-purple-200']
     user = UserModel()
-    name = request.form.get('name')
-    
-    in_session = user.login_user(name)
+    name = user.get_user()
+    name = name[0]
+    len_name = len(name)
+    print(name)
+    # for name, 0 index is name, 2nd index is stage, 2nd index is score
+    return render_template("index.html", color=colors, colors_hover=colors_hover, 
+    name=name, len_name = len_name)
 
-    if not in_session:
-        return render_template("index.html")
-    
-    return redirect(url_for("game_mode"))
-"""
+
+def index_post():
+    pass
+
 
 def logout():
     '''
@@ -38,8 +35,10 @@ def logout():
 def game_mode():
     return render_template("user_home.html")
 
+
 def freestyle_mode():
     return render_template("freestyle_mode.html")
+
 
 def puzzle_mode():
     return render_template("puzzle_mode.html")
