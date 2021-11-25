@@ -12,17 +12,14 @@ def get_command():
         string: Command to be executed.
     """
     try:
-        queue_model = QueueModel()
+        queue = QueueModel()
         car = CarModel()
-        is_moving = car.is_moving()
-        direction = queue_model.get_next_step()
+        direction = queue.get_next_step()
 
         if not direction:
-            car.stop()
+            return "None\0"
 
-        car.start()
         return f"Command: {direction}\0"
-        return "None\0"
     except Exception as e:
         traceback.print_exc()
         return "Failed\0"
@@ -55,9 +52,13 @@ def stop_car():
     """
     try:
         car_model = CarModel()
+        queue = QueueModel()
         stopped = car_model.stop()
+
         if not stopped:
             return "Failed\0"
+
+        queue.dequeue()
         return "Stopped\0"
     except Exception as e:
         traceback.print_exc()
@@ -93,7 +94,7 @@ def insert_queue():
         step = request.get_json()
         queue_model = QueueModel()
         queue_model.insert_to_queue(step)
-        return "Inserted\0"
+        return "Inserted"
     except Exception as e:
         traceback.print_exc()
-        return "Failed\0"
+        return "Failed"
