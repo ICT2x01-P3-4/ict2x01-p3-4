@@ -1,6 +1,6 @@
 from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import UserModel
-from flask import render_template, redirect, url_for, request, session
+from flask import render_template, redirect, url_for, request, session, flash
 from ..db import mongo
 
 
@@ -45,7 +45,8 @@ def login():
         if auth == True:
             return redirect(url_for('admin_bp.index'))
         else:
-            return render_template('admin/login.html')
+            flash("Please check your Login details and try again")
+            return redirect(url_for('admin_bp.login'))
 
 
 def logout():
@@ -55,4 +56,4 @@ def logout():
     '''
     user_model = UserModel()
     user_model.logout_admin()
-    render_template("admin/index.html")
+    return redirect(url_for('admin_bp.login'))
