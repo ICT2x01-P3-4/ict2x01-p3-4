@@ -1,6 +1,8 @@
 import bcrypt
-from ..db import mongo
 from flask import session
+from flask.helpers import url_for
+from werkzeug.utils import redirect
+from ..db import mongo
 
 
 class UserModel:
@@ -20,14 +22,17 @@ class UserModel:
             boolean: True if user is authenticated, False otherwise.
         '''
         user_detail = self.user_db.find_one({'username': username})
-
+        if user_detail == None:
+            return redirect(url_for('admin_bp.login'))
         if user_detail["role"] == "admin":
             # compare hashed password in db with password typed
             if bcrypt.checkpw(password.encode('utf-8'), user_detail['password']):
-                session["username"] = user_detail
+                session["username"] = user_detail['username']
                 return True
-
-        return False
+            else:
+                return False
+        else:
+            return False
 
     def login_user(self, user: str) -> bool:
         '''
