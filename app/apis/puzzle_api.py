@@ -126,10 +126,6 @@ def solve_puzzle(puzzle_id):
         if not done:
             return jsonify({"message": "Incorrect answer"}), 400
 
-        user_model = UserModel()
-        user_model.update_score(session["user"])
-        user_model.update_stage(session["user"])
-
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
         traceback.print_exc()
@@ -158,8 +154,8 @@ def step_through(puzzle_id):
 
         if puzzle_model.at_last_step(puzzle_id, data):
             user = UserModel()
-            user.update_score(session["user"])
-            user.update_stage(session["user"])
+            user.update_score(session["name"])
+            user.update_stage(session["name"])
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
@@ -167,10 +163,27 @@ def step_through(puzzle_id):
         return jsonify({"message": "Something went wrong"}), 500
 
 
-def check_queue():
+def check_puzzle_queue():
+    """
+    Increase the user's score and stage when is_solving
+    is set to true and when the queue is empty.
+
+    Else, just check if the queue is empty.
+    """
     try:
-        # TODO check if queue is empty
-        pass
+        queue = QueueModel()
+
+        is_solving = request.args.get("solving")
+        is_empty = queue.is_empty()
+
+        if is_solving and is_empty and "name" in session:
+            user_name = session["name"]["name"]
+            user = UserModel()
+            new_score = user.update_score(user_name)
+            new_stage = user.update_stage(user_name)
+            return jsonify({"new_score": new_score, "new_stage": new_stage}), 200
+
+        return jsonify({"is_empty": queue.is_empty()}), 200
     except Exception as e:
         traceback.print_exc()
         return jsonify({"message": "Something went wrong"}), 500

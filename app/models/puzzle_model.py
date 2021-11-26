@@ -103,7 +103,15 @@ class PuzzleModel:
         if not is_correct:
             return False
 
-        self.execute_steps(steps)
+        # Format steps into list of dicts
+        steps_arr = []
+        for i, step in enumerate(steps):
+            step_obj = Step(i+1, step)
+            steps_arr.append(step_obj.__dict__)
+
+        # Insert steps into queue
+        queue_model = QueueModel()
+        queue_model.create_queue(steps_arr)
 
         return True
 

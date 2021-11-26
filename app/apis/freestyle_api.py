@@ -29,7 +29,7 @@ def check_queue():
     """
     try:
         queue = QueueModel()
-        return jsonify({"is_empty": queue.get_queue_count() == 0}), 200
+        return jsonify({"is_empty": queue.is_empty()}), 200
     except Exception as e:
         print_exc()
         return jsonify({"error": str(e)}), 400

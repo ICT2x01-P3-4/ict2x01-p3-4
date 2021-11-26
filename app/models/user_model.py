@@ -35,7 +35,7 @@ class UserModel:
     def get_user(self) -> tuple:
         '''
         Get all users data from data base and display it for log in
-        
+
         Returns:
             tuple: tuple of user data. 
             list[0] = name
@@ -91,11 +91,12 @@ class UserModel:
             name (string): name of user.
 
         Returns:
-            object: result of update.
+            int: new updated score of user
         """
-        score = self.user_db.find_one({'name': name}, {'score': 1})
-        new_score = score + 10
-        return self.user_db.update_one({'name': name}, {'$set': {'score': new_score}})
+        score = self.user_db.find_one({'name': name}, {'score': 1})["score"]
+        new_score = int(score) + 10
+        self.user_db.update_one({'name': name}, {'$set': {'score': new_score}})
+        return new_score
 
     def update_stage(self, name):
         """
@@ -105,8 +106,9 @@ class UserModel:
             name (string): name of user.
 
         Returns:
-            object: result of update.
+            int: new updated stage of user
         """
-        stage = self.user_db.find_one({'name': name}, {'stage': 1})
-        new_stage = stage + 1
-        return self.user_db.update_one({'name': name}, {'$set': {'stage': new_stage}})
+        stage = self.user_db.find_one({'name': name}, {'stage': 1})["stage"]
+        new_stage = int(stage) + 1
+        self.user_db.update_one({'name': name}, {'$set': {'stage': new_stage}})
+        return new_stage

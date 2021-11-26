@@ -32,15 +32,6 @@ class QueueModel:
             return None
         return step["direction"]
 
-    def get_queue_count(self):
-        """
-        Retrieve the number of steps in the queue.
-
-        Returns:
-            int: number of steps in the queue.
-        """
-        return self.queue.count()
-
     def remove_step(self, step_num):
         """
         Remove a step from the queue.
@@ -68,3 +59,12 @@ class QueueModel:
         """
         if self.get_queue_count() >= 1:
             self.queue.find_one_and_delete({})
+
+    def is_empty(self):
+        """
+        Check if queue is empty.
+
+        Returns:
+            boolean: True if queue is empty, False otherwise.
+        """
+        return self.queue.count() == 0
