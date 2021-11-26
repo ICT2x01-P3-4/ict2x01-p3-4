@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CarStep</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+        <!-- sweetalert2 -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    $(document).ready(function(){ 
+
+        //change admin password
+        $('.changepass').on('click', function(e){
+            
+            //code
+            Swal.fire({
+            title: 'Change Password for Admin',
+            html: `
+            <input type="password" id="oldpassword" class="swal2-input" placeholder="Old Password">
+            <input type="password" id="newpassword" class="swal2-input" placeholder="New Password">
+            <input type="password" id="cfmnewpassword" class="swal2-input" placeholder="Confirm New Password">`,
+            confirmButtonText: 'Change Password',
+            focusConfirm: false,
+            showCancelButton: true,
+
+            preConfirm: () => {
+                
+                const oldpassword = Swal.getPopup().querySelector('#oldpassword').value
+                const newpassword = Swal.getPopup().querySelector('#newpassword').value
+                const cfmnewpassword = Swal.getPopup().querySelector('#cfmnewpassword').value
+                
+                if (!oldpassword||newpassword!=cfmnewpassword||!newpassword||!cfmnewpassword) {
+                Swal.showValidationMessage(`Try Again`)
+                }
+                return { oldpassword: oldpassword, newpassword: newpassword }
+            }
+            }).then((result) => {
+            Swal.fire(`
+                Old Password: ${result.value.oldpassword}
+                New Password: ${result.value.newpassword}
+            `.trim())
+            })
+
+        });
+        //create user
+        $('.createuser').on('click', function(e){
+            
+            //code
+            Swal.fire({
+            title: 'Create new user username',
+            html: `
+            <input type="text" id="newuser" class="swal2-input" placeholder="New User Name">`,
+            confirmButtonText: 'Create',
+            focusConfirm: false,
+            showCancelButton: true,
+
+            preConfirm: () => {
+                const newuser = Swal.getPopup().querySelector('#newuser').value
+                
+                if (!newuser) {
+                Swal.showValidationMessage(`Please input a user name`)
+                }
+                return { newuser: newuser}
+            }
+            }).then((result) => {
+            Swal.fire(`
+                New User: ${result.value.newuser} created!
+            `.trim())
+            })
+
+        });
+
+
+        //edit user
+        $('.edituser').on('click', function(e){
+            
+            //code
+            Swal.fire({
+            title: 'Enter new username for user',
+            html: `
+            <input type="text" id="editnewuser" class="swal2-input" placeholder="New User Name">`,
+            confirmButtonText: 'Save',
+            focusConfirm: false,
+            showCancelButton: true,
+
+            preConfirm: () => {
+                const editnewuser = Swal.getPopup().querySelector('#editnewuser').value
+                
+                if (!editnewuser) {
+                Swal.showValidationMessage(`Please input a user name`)
+                }
+                return { editnewuser: editnewuser}
+            }
+            }).then((result) => {
+            Swal.fire(`
+                Username is updated to: ${result.value.editnewuser}!
+            `.trim())
+            })
+
+        });
+
+        // Delete user
+        $('.deleteuser').on('click', function(e){
+            // put the code here to send array to backend
+            Swal.fire({
+                title: 'Are you sure you want to delete this user?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                    'Deleted!',
+                    'User has been deleted.',
+                    'success'
+                    )
+                }
+            })
+        });
+
+    });
+
+    </script>
+    </head>
+    <!-- Nav Bar -->
+    <body>
+        <div class="flex-col bg-blue-900 justify-between px-3 py-3">
+            <div>
+                <div class="m-auto flex justify-between ">
+                    <!-- Link to return to Admin Home Page -->
+                    <h2 class="text-3xl text-left font-light text-white m-0"><a href="/admin"> &lt; Back to Home </a></h2>
+                    <h2 class="text-3xl text-right font-light text-white m-0">Manage Profile</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">        
+            <div class="m-auto flex-col items-center justify-center h-screen">
+                <div class="overflow-auto pl-20">
+                    <div class="flex-col justify-center h-screen pt-6">
+                        <div class="m-auto flex justify-between pb-3">
+                            <div>
+                                <h1>User Account(s)</h1>
+                            </div>
+                            <div>
+                                <!-- create user button -->
+                                <button type="button" class="createuser bg-green-300 hover:bg-green-500 text-black font-semibold py-1 px-2 rounded">Create User</button>
+                            </div>
+                        </div>
+                        <!-- Table for user accounts -->
+                        <table class="min-w-full border-collapse block md:table">
+                            <!-- Table Header -->
+                            <thead class="block md:table-header-group">
+                                <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">No.</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Username</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Role</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Game Stage</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Total Score</th>
+                                    <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Actions</th>
+                                </tr>
+                            </thead>                        
+                            <tbody class="block md:table-row-group">
+                                <!-- Table Row For Admin -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>1</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Admin</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>Administrator</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>-</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>-</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to change their own password or Create User -->
+                                        <button type="button" class="changepass bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Change Password</button>
+                                        
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>2</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Bob</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>5</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>321</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>Audrey</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>4</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>5</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>
+                                <!-- Table Row For User -->
+                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>6</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Username</span>John</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Role</span>User</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Game Stage</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Total Score</span>123</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                        <!-- Button for Admin to edit or delete User -->
+                                        <button type="button" class="edituser bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
+                                        <button type="button" class="deleteuser bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                    </td>
+                                </tr>			
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

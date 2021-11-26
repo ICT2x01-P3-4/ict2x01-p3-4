@@ -140,5 +140,5 @@ cython_debug/
 # Tailwind node module folder
 node_modules
 
-# Flask session folder
-flask_session
+# Flask Session Cache
+flask_session/

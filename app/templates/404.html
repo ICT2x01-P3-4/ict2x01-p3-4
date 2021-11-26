@@ -1,0 +1,18 @@
+<head>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/404.css')}}">
+</head>
+<body>
+    <section class="notFound">
+        <div class="img">
+        <img src="https://assets.codepen.io/5647096/backToTheHomepage.png" alt="Back to the Homepage"/>
+        <img src="https://assets.codepen.io/5647096/Delorean.png" alt="El Delorean, El Doc y Marti McFly"/>
+        </div>
+        <div class="text">
+        <h1>404</h1>
+        <h2>PAGE NOT FOUND</h2>
+        <h3>BACK TO HOME?</h3>
+        <a href="{{url_for('app_bp.index')}}" class="yes">YES</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">NO</a>
+        </div>
+    </section>
+</body>
