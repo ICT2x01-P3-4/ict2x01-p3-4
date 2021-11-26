@@ -61,3 +61,10 @@ class QueueModel:
             object: result of the delete operation.
         """
         return self.queue.delete_many({})
+
+    def dequeue(self):
+        """
+        Retrieve the next step in queue.
+        """
+        if self.get_queue_count() >= 1:
+            self.queue.find_one_and_delete({})

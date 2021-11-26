@@ -3,6 +3,9 @@ from ..controllers.admin_controller import *
 
 admin_bp = Blueprint('admin_bp', __name__)
 
+# /admin/login
+admin_bp.route("/login")(login)
+
 # /admin
 admin_bp.route("/")(index)
 
@@ -19,7 +22,8 @@ admin_bp.route('/<puzzle_id>')(edit_puzzle)
 admin_bp.route('/create')(create_puzzle)
 
 # /admin/login
-admin_bp.route('/login', methods=["POST"])(login)
+admin_bp.route('/login',  methods=["GET", "POST"])(login)
+
 
 # /admin/logout
 admin_bp.route('/logout')(logout)

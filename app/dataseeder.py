@@ -43,6 +43,33 @@ def insert_admin(db):
         })
 
 
+def insert_user(db):
+    collection = db.users
+    user_exist = collection.find({'role': 'user'})
+    # If the default 3 users not appended, it will seed these data
+    if len(list(user_exist)) < 3:
+        user1 = {
+            'name': 'Audrey',
+            'role': 'user',
+            'stage': 1,
+            'score': 0
+        }
+        user2 = {
+            'name': 'Bobby',
+            'role': 'user',
+            'stage': 3,
+            'score': 30
+        }
+        user3 = {
+            'name': 'Charlie',
+            'role': 'user',
+            'stage': 2,
+            'score': 20
+        }
+        user_list = [user1, user2, user3]
+        collection.insert_many(user_list)
+
+
 def seed_data():
     """
     Seeds a default car object and an admin user in the database.
@@ -50,3 +77,4 @@ def seed_data():
     db = mongo.db
     insert_car(db)
     insert_admin(db)
+    insert_user(db)
