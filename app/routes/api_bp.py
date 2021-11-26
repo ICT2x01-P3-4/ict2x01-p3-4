@@ -1,4 +1,5 @@
 from flask import Blueprint
+import app.apis.freestyle_api as freestyle_api
 import app.apis.puzzle_api as puzzle_api
 import app.apis.car_api as car_api
 
@@ -28,6 +29,13 @@ api_bp.route("/puzzle/solve/<puzzle_id>",
 # /api/puzzle/step-through/<puzzle_id>
 api_bp.route("/puzzle/step-through/<puzzle_id>",
              methods=["POST"])(puzzle_api.step_through)
+
+# /api/freestyle/execute
+api_bp.route("/freestyle/execute", methods=["POST"])(freestyle_api.execute)
+
+# /api/freestyle/check-queue
+api_bp.route("/freestyle/check-queue",
+             methods=["GET"])(freestyle_api.check_queue)
 
 # /api/car/command
 api_bp.route("/car/command")(car_api.get_command)
