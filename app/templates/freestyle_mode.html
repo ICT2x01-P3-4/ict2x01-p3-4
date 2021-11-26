@@ -3,7 +3,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+<script src="{{ url_for('static', filename='js/freestyle.js') }}"></script>
+<!-- <script>
 $(document).ready(function(){
     $("#option").sortable({
         connectWith: ".connectedSortable",
@@ -50,7 +51,7 @@ $(document).ready(function(){
     });
 
 });
-</script>
+</script> -->
 {% endblock %}
     
 {% block content %}

@@ -1,6 +1,7 @@
 from flask import Blueprint
 from ..apis.puzzle_api import *
 from ..apis.car_api import *
+import app.apis.freestyle_api as freestyle_api
 
 api_bp = Blueprint('api_bp', __name__)
 
@@ -25,6 +26,9 @@ api_bp.route("/puzzle/solve/<puzzle_id>", methods=["POST"])(solve_puzzle)
 # /api/puzzle/step-through/<puzzle_id>
 api_bp.route("/puzzle/step-through/<puzzle_id>",
              methods=["POST"])(step_through)
+
+# /api/freestyle/execute
+api_bp.route("/freestyle/execute", methods=["POST"])(freestyle_api.execute)
 
 # /api/car/command
 api_bp.route("/car/command")(get_command)
