@@ -1,7 +1,7 @@
 import traceback
 from flask import jsonify, request, session
 
-from app.models.queue_model import QueueModel
+from ..models.queue_model import QueueModel
 from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import UserModel
 
@@ -165,23 +165,27 @@ def step_through(puzzle_id):
 
 def check_puzzle_queue():
     """
-    Increase the user's score and stage when is_solving
-    is set to true and when the queue is empty.
+    Increase the user's score and stage when 
+    action is "solve" and when the queue is empty.
 
     Else, just check if the queue is empty.
     """
     try:
         queue = QueueModel()
 
-        is_solving = request.args.get("solving")
+        action = request.args.get("action")
         is_empty = queue.is_empty()
 
-        if is_solving and is_empty and "name" in session:
-            user_name = session["name"]["name"]
-            user = UserModel()
-            new_score = user.update_score(user_name)
-            new_stage = user.update_stage(user_name)
-            return jsonify({"new_score": new_score, "new_stage": new_stage}), 200
+        if is_empty and "name" in session:
+            if action == "solve":
+                user_name = session["name"]["name"]
+                user = UserModel()
+                new_score = user.update_score(user_name)
+                new_stage = user.update_stage(user_name)
+                return jsonify({"new_score": new_score, "new_stage": new_stage}), 200
+            elif action == "step":
+                # TODO find way to check if user is in last step of puzzle
+                pass
 
         return jsonify({"is_empty": queue.is_empty()}), 200
     except Exception as e:
