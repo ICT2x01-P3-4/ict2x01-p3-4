@@ -33,6 +33,10 @@ api_bp.route("/puzzle/step-through/<puzzle_id>",
 # /api/freestyle/execute
 api_bp.route("/freestyle/execute", methods=["POST"])(freestyle_api.execute)
 
+# /api/freestyle/check-queue
+api_bp.route("/freestyle/check-queue",
+             methods=["GET"])(freestyle_api.check_queue)
+
 # /api/car/command
 api_bp.route("/car/command")(car_api.get_command)
 
