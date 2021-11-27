@@ -75,9 +75,10 @@ function sendSteps(steps) {
     data: JSON.stringify({ steps }),
     success: function (data, textStatus, jqXHR) {
       Swal.fire({
-        icon: "success",
-        title: "Yay, the car is moving now!",
+        title: "Sending commands to the car...",
         text: "Checkout the car movement physically!",
+        timer: 3000,
+        timerProgressBar: true,
       });
 
       $("#option_selected li").remove();
