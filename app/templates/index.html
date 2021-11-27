@@ -4,7 +4,7 @@
 {% include "shared/nav.html" %}
 <div class="flex justify-center">
     <form action = '/' method="POST">
-        <div class="mt-10">
+        <div class="mt-20">
             <h1 class="text-center text-5xl font-semibold text-gray-700">Please tell me who you are!</h1>
             <div class="grid gap-8 grid-cols-3 mt-10">
             {% for i in range(len_name) %}
@@ -13,7 +13,7 @@
                 name="name" 
                 id="name" 
                 value="{{name[i]}}"
-                class="transition duration-500 ease-in-out flex py-28 px-32 text-center font-bold text-5xl text-gray-800 {{color[i]}} hover:{{colors_hover[i]}} transform hover:-translate-y-1 hover:scale-110 hover:text-gray-800 hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg"/>
+                class="transition duration-500 ease-in-out flex text-center font-bold text-5xl text-gray-800 {{color[i]}} hover:{{colors_hover[i]}} transform hover:-translate-y-1 hover:scale-110 hover:text-gray-800 hover:shadow-none hover:rounded border border-gray-300 h-60 w-60 pl-11 shadow-lg rounded-full shadow"/>
             {% endfor %}
         </div>
     </div>
