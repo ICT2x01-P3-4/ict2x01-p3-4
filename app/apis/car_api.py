@@ -36,7 +36,7 @@ def start_car():
         started = car_model.start()
         if not started:
             return 500
-        return 200
+        return "Car started\0"
     except Exception as e:
         traceback.print_exc()
         return "Failed\0"
