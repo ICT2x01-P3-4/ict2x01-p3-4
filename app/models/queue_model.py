@@ -57,7 +57,7 @@ class QueueModel:
         """
         Retrieve the next step in queue.
         """
-        if self.get_queue_count() >= 1:
+        if self.queue.count() >= 1:
             self.queue.find_one_and_delete({})
 
     def is_empty(self):
