@@ -1,5 +1,7 @@
-import traceback
+from traceback import print_exc
 from flask import jsonify, request, session
+
+from ..models.queue_model import QueueModel
 from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import UserModel
 
@@ -17,7 +19,7 @@ def get_puzzles():
 
         return jsonify(puzzles), 200
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -37,7 +39,7 @@ def get_puzzle_by_id(puzzle_id):
 
         return jsonify(puzzle), 200
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -54,7 +56,7 @@ def create_puzzle():
         new_puzzle_id = puzzle_model.create_puzzle(data)
         return jsonify({"message": f"New puzzle {new_puzzle_id} created"}), 201
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -78,7 +80,7 @@ def update_puzzle(puzzle_id):
 
         return jsonify(data), 200
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -101,7 +103,7 @@ def delete_puzzle(puzzle_id):
 
         return jsonify({"message": "Puzzle deleted"}), 200
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -124,13 +126,9 @@ def solve_puzzle(puzzle_id):
         if not done:
             return jsonify({"message": "Incorrect answer"}), 400
 
-        user_model = UserModel()
-        user_model.update_score(session["user"])
-        user_model.update_stage(session["user"])
-
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
 
 
@@ -156,10 +154,40 @@ def step_through(puzzle_id):
 
         if puzzle_model.at_last_step(puzzle_id, data):
             user = UserModel()
-            user.update_score(session["user"])
-            user.update_stage(session["user"])
+            user.update_score(session["name"])
+            user.update_stage(session["name"])
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def check_puzzle_queue():
+    """
+    Increase the user's score and stage when 
+    action is "solve" and when the queue is empty.
+
+    Else, just check if the queue is empty.
+    """
+    try:
+        queue = QueueModel()
+
+        action = request.args.get("action")
+        is_empty = queue.is_empty()
+
+        if is_empty and "name" in session:
+            if action == "solve":
+                user_name = session["name"]["name"]
+                user = UserModel()
+                new_score = user.update_score(user_name)
+                new_stage = user.update_stage(user_name)
+                return jsonify({"new_score": new_score, "new_stage": new_stage}), 200
+            elif action == "step":
+                # TODO find way to check if user is in last step of puzzle
+                pass
+
+        return jsonify({"is_empty": queue.is_empty()}), 200
+    except Exception as e:
+        print_exc()
         return jsonify({"message": "Something went wrong"}), 500
