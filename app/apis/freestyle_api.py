@@ -9,7 +9,7 @@ def execute():
     """
     try:
         queue = QueueModel()
-        if queue.get_queue_count() > 0:
+        if not queue.is_empty():
             return jsonify({"error": "Queue is not empty"}), 400
 
         steps = request.get_json()["steps"]
