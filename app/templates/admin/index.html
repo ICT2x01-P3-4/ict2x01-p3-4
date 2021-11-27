@@ -1,10 +1,35 @@
 {% extends "shared/base.html" %}
 {% block content %}
-{% include "shared/nav.html" %}
+<!-- {% include "shared/nav.html" %} -->
+    <div class="bg-blue-800 px-3 py-3">
+      <a href="/home">
+          <div class="m-auto flex justify-center">
+            <div class="justify-center">
+              <h2 class="text-4xl font-bold text-white m-0 italic">CarStep</h2>
+            </div>
+            <div class="absolute right-5">
+              <h2 class="text-3xl text-right font-light text-white m-0"><a href="/admin/login">Log Out </a></h2> 
+            </div>
+          </div>
+      </a>
+    </div>
 
     <div class="container">
-        <div class="m-auto flex-col justify-center h-screen">
-          <div class="text-center mb-5 pt-6">
+          <div class="m-auto flex-col justify-center text-center mb-5 pt-6">
+              <div class="pt-6 flex-col justify-center">
+                <p class="text-3xl text-cyan-700 font-bold">Admin Home Page</p>
+                <p class="text-l text-cyan-600 font-semibold">Choose your options!</p>
+              </div>
+              <div class="pt-6">
+                <a href="/admin/puzzle"><button class="p-10 pl-10 pr-10 bg-green-500 text-gray-100 text-lg rounded-lg hover:bg-blue-100 hover:text-gray-100 focus:border-4 border-blue-300">Manage Puzzle</button></a>
+                <a href="/admin/profile"><button class="p-10 pl-10 pr-10 bg-blue-500 text-gray-100 text-lg rounded-lg hover:bg-blue-100 hover:text-gray-100 focus:border-4 border-red-300">Manage Profile</button></a>
+              </div>
+          </div>
+      </div>
+
+      <!-- <div class="container">
+        <div class="flex  text-center justify-center">
+          <div class="flex  text-center mb-5 pt-6 justify-center">
               <div class="pt-6">
                 <p class="text-3xl text-cyan-700 font-bold">Admin Home Page</p>
                 <p class="text-l text-cyan-600 font-semibold">Choose your options!</p>
@@ -16,7 +41,7 @@
           </div>
             
         </div>
-      </div>
+      </div> -->
 
 
 {% endblock %}
