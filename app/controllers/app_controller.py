@@ -47,6 +47,9 @@ def logout():
 
 
 def game_mode():
+    if "name" not in session:
+        return redirect(url_for('app_bp.index'))
+
     user_session = session['name']
     return render_template("user_home.html", user=user_session['name'], score=user_session['score'])
 
