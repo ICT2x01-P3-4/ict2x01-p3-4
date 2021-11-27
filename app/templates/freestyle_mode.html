@@ -7,11 +7,22 @@
 {% endblock %}
     
 {% block content %}
-<div class="bg-blue-800 px-3 py-8">
-    <h2 class="float-left text-3xl font-light text-white -mt-5"><a href="home">< Back to Home</a></h2>
-    <h2 class="float-right text-3xl font-light text-white -mt-5">Freestyle Mode</h2>
+<div class="bg-blue-800 px-3 py-3">
+    <h2 class="float-left text-3xl font-light text-white mt-1">
+        <a href="home">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+        </a>
+    </h2>
+    <a href="/home">
+        <h2 class="text-4xl py-0 font-bold text-white italic text-center">
+            CarStep
+        </h2>
+    </a>
 </div>
 <div class="p-16 clear-both">
+    <h2 class="text-left text-3xl font-semibold text-grag-800 mb-10">Freestyle Mode</h2>
     <h2 class="text-2xl font-semibold">Directions:</h2>
     <ul id="option" class="connectedSortable ml-auto flex items-center -ml-3">
         <li id="F" class="bg-blue-200 border border-blue-300 p-3 m-3 shadow-lg rounded-lg">Move Forward</li>

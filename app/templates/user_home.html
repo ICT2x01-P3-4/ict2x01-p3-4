@@ -2,9 +2,9 @@
 
 {% block content %}
 {% include "shared/nav.html" %}
-<h2 class="text-center text-3xl font-bold"> Welcome {{user}}!</h2>
-<div class="px-3 py-3 mt-12 mb-8">
-    <h2 class="text-3xl text-center">Which game you want to play?</h2>
+<h2 class="text-center text-3xl font-bold mt-12"> Welcome {{user}}!</h2>
+<div class="px-3 py-3  mb-8">
+    <h2 class="text-3xl text-center">Which game mode would you like to play?</h2>
 </div>
 <div class="flex justify-center mt-10">
     <div class="grid gap-8 grid-cols-2 mt-5">
@@ -22,5 +22,5 @@
         </a>
     </div>
 </div>
-<h2 class= "text-center text-3xl font-bold"> Score: {{score}}</h2>
+<!-- <h2 class= "text-center text-3xl font-bold mt-5"> Score: {{score}}</h2> -->
 {% endblock %}
