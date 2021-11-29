@@ -33,6 +33,12 @@ api_bp.route("/puzzle/step-through/<puzzle_id>",
 # /api/puzzle/check-queue
 api_bp.route("/puzzle/check-queue")(puzzle_api.check_puzzle_queue)
 
+# /api/puzzle/update-score
+api_bp.route("/puzzle/update-score", methods=["POST"])(puzzle_api.update_score)
+
+# /api/puzzle/total
+api_bp.route("/puzzle/total")(puzzle_api.get_total_puzzles)
+
 # /api/freestyle/execute
 api_bp.route("/freestyle/execute", methods=["POST"])(freestyle_api.execute)
 

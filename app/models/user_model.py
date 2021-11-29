@@ -53,6 +53,20 @@ class UserModel:
             stage.append(user_detail[i]['stage'])
         return name, stage, score
 
+    def get_user_details(self, name):
+        """
+        Retrieve user details from database.
+
+        Args:
+            name (string): name of user.
+
+        Returns:
+            dict: user details
+        """
+        user_detail = self.user_db.find_one({'name': name})
+        user_detail['_id'] = str(user_detail['_id'])
+        return user_detail
+
     def login_user(self, user: str) -> bool:
         '''
         API to get user into session.

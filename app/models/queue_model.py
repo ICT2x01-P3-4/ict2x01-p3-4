@@ -68,3 +68,16 @@ class QueueModel:
             boolean: True if queue is empty, False otherwise.
         """
         return self.queue.count() == 0
+
+    def get_queue_arr(self):
+        """
+        Retrieve the queue as a list.
+
+        Returns:
+            list: queue as a list.
+        """
+        queue_arr = []
+        queue = self.queue.find({})
+        for step in queue:
+            queue_arr.append(step["direction"])
+        return queue_arr

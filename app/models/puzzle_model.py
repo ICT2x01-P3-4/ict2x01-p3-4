@@ -20,7 +20,7 @@ class PuzzleModel:
             string: id of the newly inserted puzzle.
         """
         new_puzzle = Puzzle(data["name"], data["difficulty"],
-                            data["puzzle_shape"], data["puzzle_steps"])
+                            data["puzzle_shape"], data["puzzle_steps"], data["puzzle_flow"])
         result = self.puzzle_db.insert_one(
             new_puzzle.__dict__)
         return str(result.inserted_id)
@@ -40,6 +40,15 @@ class PuzzleModel:
             puzzle["_id"] = str(puzzle["_id"])
         return puzzles
 
+    def get_puzzles_count(self):
+        """
+        Counts number of puzzles in database.
+
+        Returns:
+            int: number of puzzles in database.
+        """
+        return self.puzzle_db.count_documents({})
+
     def get_puzzle(self, id):
         """
         Return a puzzle from the database.
@@ -54,6 +63,15 @@ class PuzzleModel:
         if puzzle:
             puzzle["_id"] = str(puzzle["_id"])
         return puzzle
+
+    def get_puzzle_by_stage(self, stage):
+        """
+        Retrieve puzzle by stage difficulty
+
+        Args:
+            stage (int)): Stage number
+        """
+        return self.puzzle_db.find_one({"difficulty": stage})
 
     def update_puzzle(self, puzzle_id, puzzle):
         """
