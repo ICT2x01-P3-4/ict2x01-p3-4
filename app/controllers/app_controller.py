@@ -30,7 +30,7 @@ def index_post() -> bool:
     Returns:
         boolean: True if user information is verified and False if not verified 
     '''
-    name = request.form.get('name')
+    name = request.form.get('user')
     user = UserModel()
     user_details = user.login_user(name)
     return user_details
@@ -50,7 +50,7 @@ def game_mode():
     if "name" not in session:
         return redirect(url_for('app_bp.index'))
 
-    user_session = session['name']
+    user_session = session['user']
     return render_template("user_home.html", user=user_session['name'], score=user_session['score'])
 
 

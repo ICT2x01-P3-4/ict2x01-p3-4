@@ -65,7 +65,7 @@ class UserModel:
 
         user_detail = self.user_db.find_one({'name': user})
         if user_detail['role'] == "user":
-            session['name'] = user_detail
+            session['user'] = user_detail
             return True
         return False
 
