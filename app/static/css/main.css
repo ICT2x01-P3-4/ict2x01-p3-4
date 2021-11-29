@@ -178,6 +178,10 @@ table {
   border-color: inherit;
   /* 2 */
 }
+.table-center{
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /*
 Forms
@@ -13194,6 +13198,10 @@ video {
 .border-green-900 {
   --tw-border-opacity: 1;
   border-color: rgba(6, 78, 59, var(--tw-border-opacity));
+}
+
+.customisedgreen {
+    background-color: #cded9d;
 }
 
 .border-blue-50 {
@@ -188388,3 +188396,4 @@ video {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+
