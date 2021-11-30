@@ -1,4 +1,3 @@
-// TODO: need to retrieve puzzle, score, and stage from db (no need answer and flow bcus user can see in javascript)
 const puzzle = [
   [1, 2, 3, 4, 5, 6, 7],
   [8, 9, 10, 11, 12, 13, 14],
@@ -9,19 +8,19 @@ const puzzle = [
   [43, 44, 45, 46, 47, 48, 49],
 ];
 
+// Data from controller
 const answer = data.puzzle_answer;
 const flow = data.puzzle_flow;
-var remainingBoxes = flow.slice(1);
-var remainingSteps = answer.slice(0);
-
-score = data.score;
-stage = data.stage;
-userStage = data.user_stage;
+const score = data.score;
+const stage = data.stage;
+const userStage = data.user_stage;
 
 // For solve puzzle
+var prevBox = {};
 var isCompleted = true;
 var solveInterval = null;
-var prevBox = {};
+var remainingBoxes = flow.slice(1);
+var remainingSteps = answer.slice(0);
 
 // For step through
 var stepCompleted = true;
@@ -67,9 +66,10 @@ $(document).ready(function () {
     clearSteps();
   });
 
-  // TODO: function for processing step button
   $(".step").on("click", function (e) {
     var idsInOrder = $("#option_selected").sortable("toArray");
+
+    // Simple validation
     if (idsInOrder.length == 0) {
       Swal.fire({
         icon: "error",
@@ -86,12 +86,15 @@ $(document).ready(function () {
       return;
     }
 
+    const direction = idsInOrder[0];
+
+    // Check if the user has already completed the puzzle
     currentStep = ++prevStepNum;
     if (currentStep >= answer.length) {
       prevStepNum = 0;
     }
 
-    if (idsInOrder[0] !== answer[currentStep - 1]) {
+    if (direction !== answer[currentStep - 1]) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -101,13 +104,13 @@ $(document).ready(function () {
       return;
     }
 
-    if (idsInOrder[0] === "F" || idsInOrder[0] === "B") {
+    if (direction === "F" || direction === "B") {
       currentBox++;
     }
 
     var step = {
       step_num: currentStep,
-      direction: idsInOrder[0],
+      direction: direction,
     };
 
     stepThrough(step);
@@ -135,6 +138,7 @@ function clearSteps() {
   $("#option_selected li").remove();
   $("#direction_num").text("0/" + answer.length);
 }
+
 /**
  * Check the game stage and display the "step" button if the stage is 1, 2 or 3
  */
@@ -314,6 +318,10 @@ function solvePuzzle(steps) {
   });
 }
 
+/**
+ * Step through funcationality to the database.
+ * @param {Object} step object
+ */
 function stepThrough(step) {
   $.ajax({
     type: "POST",
@@ -342,7 +350,11 @@ function stepThrough(step) {
 }
 
 /**
- * Check if queue is empty
+ * Check if queue is empty.
+ * Update the car waypoint according to the queue.
+ *
+ * If queue is empty, update the user's score and move on to
+ * the next stage.
  */
 function checkQueue() {
   $.ajax({
@@ -371,6 +383,16 @@ function checkQueue() {
   });
 }
 
+/**
+ * Checks if queue is empty to determine
+ * if the car has finished executing.
+ *
+ * If the queue is empty, update the car's waypoint.
+ *
+ * If the car is at the last step of the puzzle, update the score
+ * and navigate to the next stage.
+ *
+ */
 function checkStepQueue() {
   $.ajax({
     type: "GET",
@@ -398,6 +420,10 @@ function checkStepQueue() {
   });
 }
 
+/**
+ * Update the user score and stage
+ * in the database.
+ */
 function updateScore() {
   $.ajax({
     type: "POST",
