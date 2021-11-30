@@ -16,13 +16,13 @@ var remainingSteps = answer.slice(0);
 
 score = data.score;
 stage = data.stage;
+userStage = data.user_stage;
 
 var is_completed = true;
 var interval = null;
 var prevBox = {};
 
 $(document).ready(function () {
-  console.log(getTotalStages());
   $("#option")
     .sortable({
       connectWith: ".connectedSortable",
@@ -88,7 +88,6 @@ $(document).ready(function () {
       steps.push(step);
     }
 
-    // TODO: modify ur send step
     solvePuzzle(idsInOrder);
   });
 
@@ -180,9 +179,9 @@ function openDropdown(event, dropdownID) {
 function displayStageDropdown(stage) {
   document.getElementById("currentStage").innerHTML = stage;
   for (var i = 1; i < 8; i++) {
-    if (i <= stage) {
+    if (i <= userStage) {
       document.getElementById("stageDropdown").innerHTML +=
-        "<a href='#" +
+        "<a href='/puzzle?stage=" +
         i +
         "' class='text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100'>Stage " +
         i +
@@ -218,15 +217,11 @@ window.addEventListener("DOMContentLoaded", function () {
 /**
  * Move the car waypoint according to the signal received from the car
  */
-const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 async function reflect_waypoint(box) {
   var boxNum = box.num;
   var direction = box.direction;
 
-  //   var count = 0;
-  //   for (var x = 0; x < answer.length; x++) {
   if (direction == "F" || direction == "B") {
-    // count++;
     setWaypointPosition("box" + boxNum, "waypoint");
     document.getElementById("box" + boxNum).style.backgroundColor = "#cded9d";
   } else if (direction == "L") {
@@ -234,8 +229,6 @@ async function reflect_waypoint(box) {
   } else if (direction == "R") {
     rotateWaypoint("#waypoint", "rotate(0deg)");
   }
-  // await sleep(2000);
-  //   }
 }
 
 /**
@@ -339,6 +332,10 @@ async function getTotalStages() {
   });
 
   return data?.total;
+}
+
+function changeStage(stage) {
+  console.log(stage);
 }
 
 /**

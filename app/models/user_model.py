@@ -1,6 +1,7 @@
 import bcrypt
 from flask import session, redirect, url_for
 from ..db import mongo
+from ..models.puzzle_model import PuzzleModel
 
 
 class UserModel:
@@ -115,6 +116,7 @@ class UserModel:
     def update_stage(self, name):
         """
         Increment the stage of user by 1.
+        Won't increment stage if user is already in the last stage.
 
         Args:
             name (string): name of user.
@@ -123,6 +125,13 @@ class UserModel:
             int: new updated stage of user
         """
         stage = self.user_db.find_one({'name': name}, {'stage': 1})["stage"]
+
+        puzzle_model = PuzzleModel()
+
+        total_stages = puzzle_model.get_puzzles_count()
+        if stage >= total_stages:
+            return
+
         new_stage = int(stage) + 1
         self.user_db.update_one({'name': name}, {'$set': {'stage': new_stage}})
         return new_stage

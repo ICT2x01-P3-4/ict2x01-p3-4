@@ -70,13 +70,22 @@ def puzzle_mode():
         return redirect(url_for('app_bp.index'))
 
     puzzle_model = PuzzleModel()
-    puzzle = puzzle_model.get_puzzle_by_stage(user["stage"])
+    stage = request.args.get('stage')
+    if not stage:
+        stage = user["stage"]
+        puzzle = puzzle_model.get_puzzle_by_stage(user["stage"])
+    else:
+        stage = int(stage)
+        if stage > user["stage"]:
+            return redirect(url_for('app_bp.index'))
+        puzzle = puzzle_model.get_puzzle_by_stage(stage)
 
     if not puzzle:
         return redirect(url_for('app_bp.game_mode'))
 
     view_model = {
-        "stage": user["stage"],
+        "stage": stage,
+        "user_stage": user["stage"],
         "score": user["score"],
         "puzzle_id": str(puzzle["_id"]),
         "puzzle_flow": puzzle["puzzle_flow"],
