@@ -151,16 +151,27 @@ def step_through(puzzle_id):
     """
     try:
         data = request.get_json()
+        step = data["step"]
+        queue = QueueModel()
+
+        if not queue.is_empty():
+            return jsonify({"message": "Car is still executing!", "icon": "warning"}), 400
+
         puzzle_model = PuzzleModel()
-        done = puzzle_model.step_through_puzzle(puzzle_id, data)
+        done = puzzle_model.step_through_puzzle(puzzle_id, step)
 
         if not done:
             return jsonify({"message": "Incorrect answer"}), 400
 
-        if puzzle_model.at_last_step(puzzle_id, data):
-            user = UserModel()
-            user.update_score(session["name"])
-            user.update_stage(session["name"])
+        # if puzzle_model.at_last_step(puzzle_id, step):
+        #     if not "user" in session:
+        #         return redirect(url_for("app_bp.index"))
+
+        #     user_details = session["user"]
+        #     name = user_details["name"]
+        #     user = UserModel()
+        #     user.update_score(name)
+        #     user.update_stage(name)
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:

@@ -150,8 +150,8 @@ class PuzzleModel:
         if not is_correct:
             return False
 
-        self.execute_steps(step["direction"])
-
+        queue = QueueModel()
+        queue.create_queue([step])
         return True
 
     def check_answer(self, puzzle, steps, is_solve):
@@ -202,12 +202,12 @@ class PuzzleModel:
             steps_arr.append(step_obj.__dict__)
 
         # Insert steps into queue
-        queue_model = QueueModel()
-        queue_model.create_queue(steps_arr)
+        queue = QueueModel()
+        queue.create_queue(steps_arr)
 
         # Wait for queue to be emptied
         while True:
-            if queue_model.get_queue_count() == 0:
+            if queue.is_empty():
                 break
 
     def at_last_step(self, puzzle_id, step):
@@ -222,5 +222,5 @@ class PuzzleModel:
             boolean: True if current steps is last step of puzzle.
         """
         puzzle = self.get_puzzle(puzzle_id)
-        total_steps = len(puzzle.puzzle_steps)
+        total_steps = len(puzzle["puzzle_steps"])
         return step["step_num"] == total_steps

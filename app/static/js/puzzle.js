@@ -18,9 +18,17 @@ score = data.score;
 stage = data.stage;
 userStage = data.user_stage;
 
-var is_completed = true;
-var interval = null;
+// For solve puzzle
+var isCompleted = true;
+var solveInterval = null;
 var prevBox = {};
+
+// For step through
+var stepCompleted = true;
+var stepInterval = null;
+var prevStepNum = 0;
+var currentStep = 0;
+var currentBox = 0;
 
 $(document).ready(function () {
   $("#option")
@@ -55,14 +63,55 @@ $(document).ready(function () {
     })
     .disableSelection();
 
-  //setInterval(checkQueue, 3000);
-
   $(".clear").on("click", function (e) {
     clearSteps();
   });
 
   // TODO: function for processing step button
-  $(".step").on("click", function (e) {});
+  $(".step").on("click", function (e) {
+    var idsInOrder = $("#option_selected").sortable("toArray");
+    if (idsInOrder.length == 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select at least one step.",
+      });
+      return;
+    } else if (idsInOrder.length > 1) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can only step through one step at a time.",
+      });
+      return;
+    }
+
+    currentStep = ++prevStepNum;
+    if (currentStep >= answer.length) {
+      prevStepNum = 0;
+    }
+
+    if (idsInOrder[0] !== answer[currentStep - 1]) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Wrong answer! Please try again.",
+      });
+      currentStep--;
+      return;
+    }
+
+    if (idsInOrder[0] === "F" || idsInOrder[0] === "B") {
+      currentBox++;
+    }
+
+    var step = {
+      step_num: currentStep,
+      direction: idsInOrder[0],
+    };
+
+    stepThrough(step);
+  });
 
   $(".execute").on("click", function (e) {
     var idsInOrder = $("#option_selected").sortable("toArray");
@@ -75,25 +124,13 @@ $(document).ready(function () {
       return;
     }
 
-    // TODO: need to check whether the answer is correct before executing waypoint
-    // reflect_waypoint();
-
-    // Format data nicely to be sent to backend
-    var steps = [];
-    for (var i = 0; i < idsInOrder.length; i++) {
-      var step = {
-        step_number: i + 1,
-        direction: idsInOrder[i],
-      };
-      steps.push(step);
-    }
-
     solvePuzzle(idsInOrder);
   });
-
-  //   setInterval(checkQueue, 3000);
 });
 
+/**
+ * Remove steps from the direction dropbox area.
+ */
 function clearSteps() {
   $("#option_selected li").remove();
   $("#direction_num").text("0/" + answer.length);
@@ -217,7 +254,7 @@ window.addEventListener("DOMContentLoaded", function () {
 /**
  * Move the car waypoint according to the signal received from the car
  */
-async function reflect_waypoint(box) {
+async function reflectWaypoint(box) {
   var boxNum = box.num;
   var direction = box.direction;
 
@@ -264,8 +301,35 @@ function solvePuzzle(steps) {
       });
 
       clearSteps();
-      is_completed = false;
-      interval = setInterval(checkQueue, 3000);
+      isCompleted = false;
+      solveInterval = setInterval(checkQueue, 3000);
+    },
+    error: function (jqXHR) {
+      Swal.fire({
+        icon: jqXHR.responseJSON.icon,
+        title: "Oops...",
+        text: jqXHR.responseJSON.message,
+      });
+    },
+  });
+}
+
+function stepThrough(step) {
+  $.ajax({
+    type: "POST",
+    contentType: "application/json",
+    url: `/api/puzzle/step-through/${data.puzzle_id}`,
+    data: JSON.stringify({ step }),
+    success: function (data, textStatus, jqXHR) {
+      Swal.fire({
+        icon: "success",
+        title: "Your answer is correct!",
+        text: "Sending commands to the car...Checkout the car movement physically!",
+      });
+
+      clearSteps();
+      stepCompleted = false;
+      stepInterval = setInterval(checkStepQueue, 3000);
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -291,9 +355,9 @@ function checkQueue() {
       if (box) {
         reflect_waypoint(box);
       }
-      if (data.is_empty && !is_completed) {
-        is_completed = true;
-        clearInterval(interval);
+      if (data.is_empty && !isCompleted) {
+        isCompleted = true;
+        clearsolveInterval(solveInterval);
 
         await Swal.fire({
           icon: "success",
@@ -302,6 +366,26 @@ function checkQueue() {
         });
 
         updateScore();
+      }
+    },
+  });
+}
+
+function checkStepQueue() {
+  $.ajax({
+    type: "GET",
+    url: "/api/puzzle/check-queue",
+    success: async function (data, textStatus, jqXHR) {
+      var queue = data.queue ?? [];
+      if (queue.length == 0) {
+        var box = {};
+        box.direction = answer[currentStep - 1];
+        // if (box.direction == "F" || box.direction == "B")
+        box.num = flow[currentBox];
+        // else box.num = flow[currentStep - 1];
+        console.log(box);
+        reflectWaypoint(box);
+        clearInterval(stepInterval);
       }
     },
   });
@@ -325,6 +409,12 @@ function updateScore() {
   });
 }
 
+/**
+ * Retrieves total number of stages
+ * from database.
+ *
+ * @returns {number} total stages
+ */
 async function getTotalStages() {
   var data = await $.ajax({
     type: "GET",
