@@ -378,14 +378,21 @@ function checkStepQueue() {
     success: async function (data, textStatus, jqXHR) {
       var queue = data.queue ?? [];
       if (queue.length == 0) {
-        var box = {};
-        box.direction = answer[currentStep - 1];
-        // if (box.direction == "F" || box.direction == "B")
-        box.num = flow[currentBox];
-        // else box.num = flow[currentStep - 1];
-        console.log(box);
+        var box = {
+          num: flow[currentBox],
+          direction: answer[currentStep - 1],
+        };
         reflectWaypoint(box);
         clearInterval(stepInterval);
+
+        if (currentStep === answer.length) {
+          await Swal.fire({
+            icon: "success",
+            title: "Yay, answers are correct!",
+            text: "Moving on to the next stage...",
+          });
+          updateScore();
+        }
       }
     },
   });
@@ -397,7 +404,7 @@ function updateScore() {
     url: "/api/puzzle/update-score",
     success: async function (data, textStatus, jqXHR) {
       var totalStages = await getTotalStages();
-      if (stage <= (await getTotalStages())) location.href = "/puzzle";
+      if (stage <= totalStages) location.href = "/puzzle";
       else {
         await Swal.fire({
           icon: "success",
