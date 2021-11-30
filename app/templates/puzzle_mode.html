@@ -4,6 +4,8 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script type="text/javascript">
     const data = {{ data | safe }};
 </script>
@@ -32,7 +34,7 @@
         <div class="w-18 h-10 px-4 ml-3">
             <button class="bg-blue-800 text-white text-base active:bg-blue-900 font-bold text-xs px-6 py-2 p-0 m-0 rounded shadow hover:bg-blue-600 ease-linear transition-all duration-150"
                 type="button" onclick="openDropdown(event,'stageDropdown')">
-                Stage <span id="currentStage"></span> v
+                Stage <span id="currentStage"></span> <i class="fa fa-caret-down ml-1"></i>
             </button>
             <div id="stageDropdown" class="w-36 hidden bg-white text-base z-50 py-2 list-none text-left rounded shadow-lg">
             </div>
