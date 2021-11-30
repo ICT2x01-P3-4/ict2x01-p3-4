@@ -287,7 +287,7 @@ function checkQueue() {
     success: async function (data, textStatus, jqXHR) {
       var queue = data.queue ?? [];
       var box = getBox(queue);
-      console.log(box);
+
       if (box) {
         reflect_waypoint(box);
       }
@@ -312,6 +312,7 @@ function updateScore() {
     type: "POST",
     url: "/api/puzzle/update-score",
     success: async function (data, textStatus, jqXHR) {
+      var totalStages = await getTotalStages();
       if (stage <= (await getTotalStages())) location.href = "/puzzle";
       else {
         await Swal.fire({
@@ -319,23 +320,18 @@ function updateScore() {
           title: "Congratulations!",
           text: "You have completed all the stages!",
         });
-        location.href = "/home";
       }
     },
   });
 }
 
 async function getTotalStages() {
-  var data = $.ajax({
+  var data = await $.ajax({
     type: "GET",
     url: "/api/puzzle/total",
   });
 
   return data?.total;
-}
-
-function changeStage(stage) {
-  console.log(stage);
 }
 
 /**

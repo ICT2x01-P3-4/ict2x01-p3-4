@@ -1,5 +1,6 @@
 from traceback import print_exc
-from flask import jsonify, request, session
+from flask import jsonify, request, session, redirect
+from flask.helpers import url_for
 
 from ..models.queue_model import QueueModel
 from ..models.puzzle_model import PuzzleModel
@@ -197,10 +198,15 @@ def update_score():
     try:
         if "user" in session:
             user = UserModel()
+            puzzle_model = PuzzleModel()
             name = session["user"]["name"]
             user.update_score(name)
-            user.update_stage(name)
+            new_stage = user.update_stage(name)
             session["user"] = user.get_user_details(name)
+
+            if new_stage == puzzle_model.get_puzzles_count():
+                return redirect(url_for("app_bp.puzzle_mode"))
+
             return jsonify({"message": "Score updated"}), 200
     except Exception as e:
         print_exc()
