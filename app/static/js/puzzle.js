@@ -87,7 +87,6 @@ $(document).ready(function () {
     }
 
     const direction = idsInOrder[0];
-
     // Check if the user has already completed the puzzle
     currentStep = ++prevStepNum;
     if (currentStep >= answer.length) {
@@ -153,7 +152,9 @@ function displayStepButton() {
  * Set the position of the car waypoint based on the grid box position
  */
 function setWaypointPosition(grid_ID, waypoint_ID) {
-  var offset_t = document.getElementById(grid_ID).getBoundingClientRect().top;
+  var offset_t =
+    document.getElementById(grid_ID).getBoundingClientRect().top +
+    window.pageYOffset;
   var offset_l = document.getElementById(grid_ID).getBoundingClientRect().left;
   document.getElementById(waypoint_ID).style.top = offset_t + 5 + "px";
   document.getElementById(waypoint_ID).style.left = offset_l + "px";
@@ -306,7 +307,7 @@ function solvePuzzle(steps) {
 
       clearSteps();
       isCompleted = false;
-      solveInterval = setInterval(checkQueue, 3000);
+      solveInterval = setInterval(checkQueue, 2000);
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -320,6 +321,7 @@ function solvePuzzle(steps) {
 
 /**
  * Step through funcationality to the database.
+ *
  * @param {Object} step object
  */
 function stepThrough(step) {
@@ -337,7 +339,7 @@ function stepThrough(step) {
 
       clearSteps();
       stepCompleted = false;
-      stepInterval = setInterval(checkStepQueue, 3000);
+      stepInterval = setInterval(checkStepQueue, 2000);
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -365,11 +367,12 @@ function checkQueue() {
       var box = getBox(queue);
 
       if (box) {
-        reflect_waypoint(box);
+        reflectWaypoint(box);
       }
+
       if (data.is_empty && !isCompleted) {
         isCompleted = true;
-        clearsolveInterval(solveInterval);
+        clearInterval(solveInterval);
 
         await Swal.fire({
           icon: "success",
@@ -430,8 +433,15 @@ function updateScore() {
     url: "/api/puzzle/update-score",
     success: async function (data, textStatus, jqXHR) {
       var totalStages = await getTotalStages();
-      if (stage <= totalStages) location.href = "/puzzle";
-      else {
+      if (stage + 1 <= totalStages) {
+        await Swal.fire({
+          icon: "success",
+          title: "Yay, you completed the stage!",
+          text: "Moving on to the next stage...",
+        });
+
+        location.href = `/puzzle?stage=${stage + 1}`;
+      } else {
         await Swal.fire({
           icon: "success",
           title: "Congratulations!",
