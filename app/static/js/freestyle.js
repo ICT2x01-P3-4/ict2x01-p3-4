@@ -1,4 +1,5 @@
 var is_completed = true;
+var interval = null
 
 $(document).ready(function () {
   $("#option")
@@ -30,7 +31,6 @@ $(document).ready(function () {
     })
     .disableSelection();
 
-  setInterval(checkQueue, 3000);
 
   $(".clear").on("click", function (e) {
     $("#option_selected li").remove();
@@ -84,6 +84,8 @@ function sendSteps(steps) {
       $("#option_selected li").remove();
       $("#direction_num").text("0/15");
       is_completed = false;
+      interval = setInterval(checkQueue, 3000);
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       Swal.fire({
@@ -111,6 +113,7 @@ function checkQueue() {
         });
 
         is_completed = true;
+        clearInterval(interval);
       }
     },
   });
