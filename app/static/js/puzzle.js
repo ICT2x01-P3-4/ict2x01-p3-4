@@ -179,18 +179,18 @@ function createPuzzleGrid(puzzle) {
           document.getElementById(rowname).innerHTML +=
             "<td id='box" +
             puzzle[i][j] +
-            "' class='customisedgreen border-2 border-gray-500 w-12 h-12'></td>";
+            "' class='customisedgreen border-2 border-gray-500 w-11 h-11'></td>";
         } else {
           document.getElementById(rowname).innerHTML +=
             "<td id='box" +
             puzzle[i][j] +
-            "' class='bg-red-200 border-2 border-gray-500 w-12 h-12'></td>";
+            "' class='bg-red-200 border-2 border-gray-500 w-11 h-11'></td>";
         }
       } else {
         document.getElementById(rowname).innerHTML +=
           "<td id='box" +
           puzzle[i][j] +
-          "' class='bg-gray-100 border-2 border-gray-500 w-12 h-12'></td>";
+          "' class='bg-gray-100 border-2 border-gray-500 w-11 h-11'></td>";
       }
     }
   }
