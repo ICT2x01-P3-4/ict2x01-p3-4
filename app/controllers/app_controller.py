@@ -1,5 +1,7 @@
-from flask import render_template, redirect, url_for, request, session
+import json
 from ..models.user_model import UserModel
+from ..models.puzzle_model import PuzzleModel
+from flask import render_template, redirect, url_for, request, session
 
 
 def index():
@@ -59,4 +61,35 @@ def freestyle_mode():
 
 
 def puzzle_mode():
-    return render_template("puzzle_mode.html")
+    user = None
+    if "user" in session:
+        user_model = UserModel()
+        user = user_model.get_user_details(session['user']['name'])
+
+    if not user:
+        return redirect(url_for('app_bp.index'))
+
+    puzzle_model = PuzzleModel()
+    stage = request.args.get('stage')
+    if not stage:
+        stage = user["stage"]
+        puzzle = puzzle_model.get_puzzle_by_stage(user["stage"])
+    else:
+        stage = int(stage)
+        if stage > user["stage"]:
+            return redirect(url_for('app_bp.index'))
+        puzzle = puzzle_model.get_puzzle_by_stage(stage)
+
+    if not puzzle:
+        return redirect(url_for('app_bp.game_mode'))
+
+    view_model = {
+        "stage": stage,
+        "user_stage": user["stage"],
+        "score": user["score"],
+        "puzzle_id": str(puzzle["_id"]),
+        "puzzle_flow": puzzle["puzzle_flow"],
+        "puzzle_answer": puzzle["puzzle_steps"],
+    }
+
+    return render_template("puzzle_mode.html", data=json.dumps(view_model))

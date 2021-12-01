@@ -1,5 +1,6 @@
 from traceback import print_exc
-from flask import jsonify, request, session
+from flask import jsonify, request, session, redirect
+from flask.helpers import url_for
 
 from ..models.queue_model import QueueModel
 from ..models.puzzle_model import PuzzleModel
@@ -119,12 +120,16 @@ def solve_puzzle(puzzle_id):
         json response: message and status code.
     """
     try:
+        queue = QueueModel()
+        if not queue.is_empty():
+            return jsonify({"message": "Car is still executing!", "icon": "warning"}), 400
+
         data = request.get_json()
         puzzle_model = PuzzleModel()
         done = puzzle_model.solve_puzzle(puzzle_id, data["steps"])
 
         if not done:
-            return jsonify({"message": "Incorrect answer"}), 400
+            return jsonify({"message": "Incorrect answer. Please try again.", "icon": "error"}), 400
 
         return jsonify({"message": "Correct answer"}), 200
     except Exception as e:
@@ -146,16 +151,27 @@ def step_through(puzzle_id):
     """
     try:
         data = request.get_json()
+        step = data["step"]
+        queue = QueueModel()
+
+        if not queue.is_empty():
+            return jsonify({"message": "Car is still executing!", "icon": "warning"}), 400
+
         puzzle_model = PuzzleModel()
-        done = puzzle_model.step_through_puzzle(puzzle_id, data)
+        done = puzzle_model.step_through_puzzle(puzzle_id, step)
 
         if not done:
             return jsonify({"message": "Incorrect answer"}), 400
 
-        if puzzle_model.at_last_step(puzzle_id, data):
-            user = UserModel()
-            user.update_score(session["name"])
-            user.update_stage(session["name"])
+        # if puzzle_model.at_last_step(puzzle_id, step):
+        #     if not "user" in session:
+        #         return redirect(url_for("app_bp.index"))
+
+        #     user_details = session["user"]
+        #     name = user_details["name"]
+        #     user = UserModel()
+        #     user.update_score(name)
+        #     user.update_stage(name)
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
@@ -165,29 +181,56 @@ def step_through(puzzle_id):
 
 def check_puzzle_queue():
     """
-    Increase the user's score and stage when 
-    action is "solve" and when the queue is empty.
+    Checks if queue is empty, if not, return
+    current queue as array.
 
-    Else, just check if the queue is empty.
+    Returns:
+        json: message/array and status code.
     """
     try:
         queue = QueueModel()
+        if queue.is_empty():
+            return jsonify({"is_empty": True}), 200
 
-        action = request.args.get("action")
-        is_empty = queue.is_empty()
+        queue_arr = queue.get_queue_arr()
+        return jsonify({"queue": queue_arr}), 200
+    except Exception as e:
+        print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
 
-        if is_empty and "name" in session:
-            if action == "solve":
-                user_name = session["name"]["name"]
-                user = UserModel()
-                new_score = user.update_score(user_name)
-                new_stage = user.update_stage(user_name)
-                return jsonify({"new_score": new_score, "new_stage": new_stage}), 200
-            elif action == "step":
-                # TODO find way to check if user is in last step of puzzle
-                pass
 
-        return jsonify({"is_empty": queue.is_empty()}), 200
+def update_score():
+    """
+    Increment stage and score of current user.
+
+    Returns:
+        json: message and status code.
+    """
+    try:
+        if "user" in session:
+            user = UserModel()
+            puzzle_model = PuzzleModel()
+            name = session["user"]["name"]
+            user.update_score(name)
+            new_stage = user.update_stage(name)
+            session["user"] = user.get_user_details(name)
+
+            if new_stage == puzzle_model.get_puzzles_count():
+                return redirect(url_for("app_bp.puzzle_mode"))
+
+            return jsonify({"message": "Score updated"}), 200
+    except Exception as e:
+        print_exc()
+        return jsonify({"message": "Something went wrong"}), 500
+
+
+def get_total_puzzles():
+    """
+    Get total number of puzzles.
+    """
+    try:
+        puzzle_model = PuzzleModel()
+        return jsonify({"total": puzzle_model.get_puzzles_count()}), 200
     except Exception as e:
         print_exc()
         return jsonify({"message": "Something went wrong"}), 500
