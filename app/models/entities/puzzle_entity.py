@@ -1,11 +1,12 @@
 class Puzzle:
-    def __init__(self, name, difficulty, puzzle_shape, puzzle_steps, id=None,):
+    def __init__(self, name, difficulty, puzzle_shape, puzzle_steps, puzzle_flow, id=None,):
         if id is not None:
             self.id = id
         self.name = name
         self.difficulty = difficulty
         self.puzzle_shape = puzzle_shape
         self.puzzle_steps = puzzle_steps
+        self.puzzle_flow = puzzle_flow
 
     def get_id(self):
         return self.id

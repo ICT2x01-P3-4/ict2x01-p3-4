@@ -20,7 +20,7 @@ class PuzzleModel:
             string: id of the newly inserted puzzle.
         """
         new_puzzle = Puzzle(data["name"], data["difficulty"],
-                            data["puzzle_shape"], data["puzzle_steps"])
+                            data["puzzle_shape"], data["puzzle_steps"], data["puzzle_flow"])
         result = self.puzzle_db.insert_one(
             new_puzzle.__dict__)
         return str(result.inserted_id)
@@ -40,6 +40,15 @@ class PuzzleModel:
             puzzle["_id"] = str(puzzle["_id"])
         return puzzles
 
+    def get_puzzles_count(self):
+        """
+        Counts number of puzzles in database.
+
+        Returns:
+            int: number of puzzles in database.
+        """
+        return self.puzzle_db.count_documents({})
+
     def get_puzzle(self, id):
         """
         Return a puzzle from the database.
@@ -54,6 +63,15 @@ class PuzzleModel:
         if puzzle:
             puzzle["_id"] = str(puzzle["_id"])
         return puzzle
+
+    def get_puzzle_by_stage(self, stage):
+        """
+        Retrieve puzzle by stage difficulty
+
+        Args:
+            stage (int)): Stage number
+        """
+        return self.puzzle_db.find_one({"difficulty": stage})
 
     def update_puzzle(self, puzzle_id, puzzle):
         """
@@ -132,8 +150,8 @@ class PuzzleModel:
         if not is_correct:
             return False
 
-        self.execute_steps(step["direction"])
-
+        queue = QueueModel()
+        queue.create_queue([step])
         return True
 
     def check_answer(self, puzzle, steps, is_solve):
@@ -184,12 +202,12 @@ class PuzzleModel:
             steps_arr.append(step_obj.__dict__)
 
         # Insert steps into queue
-        queue_model = QueueModel()
-        queue_model.create_queue(steps_arr)
+        queue = QueueModel()
+        queue.create_queue(steps_arr)
 
         # Wait for queue to be emptied
         while True:
-            if queue_model.get_queue_count() == 0:
+            if queue.is_empty():
                 break
 
     def at_last_step(self, puzzle_id, step):
@@ -204,5 +222,5 @@ class PuzzleModel:
             boolean: True if current steps is last step of puzzle.
         """
         puzzle = self.get_puzzle(puzzle_id)
-        total_steps = len(puzzle.puzzle_steps)
+        total_steps = len(puzzle["puzzle_steps"])
         return step["step_num"] == total_steps
