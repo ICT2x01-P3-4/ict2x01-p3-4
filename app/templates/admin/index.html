@@ -2,46 +2,39 @@
 {% block content %}
 <!-- {% include "shared/nav.html" %} -->
     <div class="bg-blue-800 px-3 py-3">
-      <a href="/home">
+      <a href="/admin">
           <div class="m-auto flex justify-center">
             <div class="justify-center">
               <h2 class="text-4xl font-bold text-white m-0 italic">CarStep</h2>
             </div>
             <div class="absolute right-5">
-              <h2 class="text-3xl text-right font-light text-white m-0"><a href="/admin/login">Log Out </a></h2> 
+              <h2 class="text-3xl text-right font-light text-white m-0"><a href="/admin/logout">Log Out </a></h2> 
             </div>
           </div>
       </a>
     </div>
 
-    <div class="container">
-          <div class="m-auto flex-col justify-center text-center mb-5 pt-6">
-              <div class="pt-6 flex-col justify-center">
-                <p class="text-3xl text-cyan-700 font-bold">Admin Home Page</p>
-                <p class="text-l text-cyan-600 font-semibold">Choose your options!</p>
-              </div>
-              <div class="pt-6">
-                <a href="/admin/puzzle"><button class="p-10 pl-10 pr-10 bg-green-500 text-gray-100 text-lg rounded-lg hover:bg-blue-100 hover:text-gray-100 focus:border-4 border-blue-300">Manage Puzzle</button></a>
-                <a href="/admin/profile"><button class="p-10 pl-10 pr-10 bg-blue-500 text-gray-100 text-lg rounded-lg hover:bg-blue-100 hover:text-gray-100 focus:border-4 border-red-300">Manage Profile</button></a>
-              </div>
-          </div>
+<!-- Main Content Body-->
+<h2 class="text-center text-3xl font-bold mt-12">Admin Dashboard</h2>
+<div class="px-3 py-3  mb-8">
+  <h2 class="text-3xl text-center">What would you like to do today?</h2>
+</div>
+
+<div class="flex justify-center mt-10">
+  <div class="grid gap-8 grid-cols-2 mt-5">
+    <!-- Puzzle management admin-->
+    <a href="/admin/puzzle">
+      <div class="transition duration-500 ease-in-out flex py-24 px-24 text-center bg-yellow-300 hover:bg-yellow-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg z-50">
+        <h2 class="text-gray-800 font-bold text-5xl ml-8">Puzzle<br>Management</h2>
       </div>
-
-      <!-- <div class="container">
-        <div class="flex  text-center justify-center">
-          <div class="flex  text-center mb-5 pt-6 justify-center">
-              <div class="pt-6">
-                <p class="text-3xl text-cyan-700 font-bold">Admin Home Page</p>
-                <p class="text-l text-cyan-600 font-semibold">Choose your options!</p>
-              </div>
-              <div class="pt-6">
-                <a href="/admin/puzzle"><button class="p-10 pl-10 pr-10 bg-green-500 text-gray-100 text-lg rounded-lg hover:bg-blue-100 hover:text-gray-100 focus:border-4 border-blue-300">Manage Puzzle</button></a>
-                <a href="/admin/profile"><button class="p-10 pl-10 pr-10 bg-blue-500 text-gray-100 text-lg rounded-lg hover:bg-blue-100 hover:text-gray-100 focus:border-4 border-red-300">Manage Profile</button></a>
-              </div>
-          </div>
-            
-        </div>
-      </div> -->
-
+    </a>
+    <!-- Profile management admin-->
+    <a href="/admin/profile">
+      <div class="transition duration-500 ease-in-out flex py-24 px-24 text-center bg-blue-300 hover:bg-blue-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
+        <h2 class="text-gray-800 font-bold text-5xl">User<br>Management</h2>
+      </div>
+    </a>
+  </div>
+</div>
 
 {% endblock %}
