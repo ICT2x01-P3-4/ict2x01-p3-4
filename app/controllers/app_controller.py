@@ -49,7 +49,7 @@ def logout():
 
 
 def game_mode():
-    if "name" not in session:
+    if "user" not in session:
         return redirect(url_for('app_bp.index'))
 
     user_session = session['user']
