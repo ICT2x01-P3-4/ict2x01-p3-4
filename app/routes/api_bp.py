@@ -2,6 +2,7 @@ from flask import Blueprint
 import app.apis.freestyle_api as freestyle_api
 import app.apis.puzzle_api as puzzle_api
 import app.apis.car_api as car_api
+import app.apis.admin_api as admin_api
 
 api_bp = Blueprint('api_bp', __name__)
 
@@ -58,4 +59,19 @@ api_bp.route("/car/stop")(car_api.stop_car)
 # /api/car/obstacle
 api_bp.route("/car/obstacle")(car_api.detected_obstacle)
 
+# /api/car/insert-queue
 api_bp.route("/car/insert-queue", methods=["POST"])(car_api.insert_queue)
+
+# /api/admin/create-user
+api_bp.route("/admin/create-user", methods=["POST"])(admin_api.create_user)
+
+# /api/admin/update-user
+api_bp.route("/admin/update-user/<name>", methods=["PUT"])(admin_api.edit_user)
+
+# /api/admin/delete-user
+api_bp.route("/admin/delete-user/<name>",
+             methods=["DELETE"])(admin_api.delete_user)
+
+# /api/admin/change-password
+api_bp.route("/admin/change-password",
+             methods=["POST"])(admin_api.change_admin_password)
