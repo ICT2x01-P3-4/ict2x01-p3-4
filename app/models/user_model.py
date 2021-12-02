@@ -11,11 +11,11 @@ class UserModel:
     def login_admin(self, username, password) -> bool:
         '''
         API to authenticate user from the database.
-        The authentication does a HTTP GET request method to get 
-        the information the user typed in, and does a POST request to the database to 
+        The authentication does a HTTP GET request method to get
+        the information the user typed in, and does a POST request to the database to
         verify the user.
 
-        Add-on features: bcrypt encryption for password hashing.  
+        Add-on features: bcrypt encryption for password hashing.
 
         Returns:
             boolean: True if user is authenticated, False otherwise.
@@ -38,10 +38,10 @@ class UserModel:
         Get all users data from data base and display it for log in
 
         Returns:
-            tuple: tuple of user data. 
+            tuple: tuple of user data.
             list[0] = name
             list[1] = stage
-            list[2] = score 
+            list[2] = score
         '''
         user_detail = self.user_db.find({'role': 'user'})
         user_detail = list(user_detail)
@@ -53,6 +53,33 @@ class UserModel:
             score.append(user_detail[i]['score'])
             stage.append(user_detail[i]['stage'])
         return name, stage, score
+
+    def get_all_users(self):
+        """
+        Retrieve all user accounts from database.
+
+        Returns:
+            list: list of all user accounts
+        """
+        user_list = []
+        users = self.user_db.find({"role": "user"})
+        for user in users:
+            user["_id"] = str(user["_id"])
+            user_list.append(user)
+        return user_list
+
+    def get_admin_account(self):
+        """
+        Retrieve admin account from database.
+
+        Returns:
+            object: admin accounts
+        """
+
+        admin = self.user_db.find_one({"role": "admin"})
+        admin["_id"] = str(admin["_id"])
+        print(admin)
+        return admin
 
     def get_user_details(self, name):
         """
@@ -67,6 +94,72 @@ class UserModel:
         user_detail = self.user_db.find_one({'name': name})
         user_detail['_id'] = str(user_detail['_id'])
         return user_detail
+
+    def create_user(self, name):
+        """
+        Create a new user in the database.
+
+        Args:
+            name (string): name of user.
+
+        Returns:
+            boolean: True if user is created
+        """
+        user_detail = self.user_db.find_one({'name': name})
+        if user_detail == None:
+            self.user_db.insert_one(
+                {'name': name, 'score': 0, 'stage': 1, 'role': 'user'})
+            return True
+        return False
+
+    def update_user(self, name, new_name):
+        """
+        Update the name of the user.
+
+        Args:
+            name (string): name of user.
+            new_name (string): new name of user.
+
+        Returns:
+            boolean: True if user is updated
+        """
+        result = self.user_db.update_one(
+            {'name': name}, {'$set': {'name': new_name}})
+        return result.matched_count > 0
+
+    def delete_user(self, name):
+        """
+        Delete the user from the database.
+
+        Args:
+            name (string): name of user.
+
+        Returns:
+            boolean: True if user is deleted
+        """
+        result = self.user_db.delete_one({'name': name})
+        return result.deleted_count > 0
+
+    def change_admin_password(self, old_password, new_password):
+        """
+        Checks if old password is correct and updates the password.
+
+        Args:
+            old_password (string): old password of admin.
+            new_password (string): new password of admin.
+
+        Returns:
+            boolean: True if password is changed
+        """
+        admin = self.user_db.find_one({"role": "admin"})
+        password_matched = bcrypt.checkpw(
+            old_password.encode('utf-8'), admin['password'])
+        if not password_matched:
+            return False
+
+        result = self.user_db.update_one(
+            {'role': 'admin'}, {'$set': {'password': bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())}})
+        return result.matched_count > 0
 
     def login_user(self, user: str) -> bool:
         '''

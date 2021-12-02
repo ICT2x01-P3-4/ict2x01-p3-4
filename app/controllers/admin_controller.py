@@ -4,13 +4,16 @@ from flask import render_template, redirect, url_for, request, session, flash
 
 
 def index():
-    if not session.get('username'):
-        return redirect(url_for('admin_bp.login'))
     return render_template('admin/index.html')
 
 
 def profile():
-    return render_template('admin/profile.html')
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
+    user_model = UserModel()
+    users = user_model.get_all_users()
+    admin = user_model.get_admin_account()
+    return render_template('admin/profile.html', admin=admin, users=users)
 
 
 def puzzle():
