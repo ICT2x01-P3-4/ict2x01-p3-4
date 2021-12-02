@@ -300,9 +300,17 @@ function solvePuzzle(steps) {
     data: JSON.stringify({ steps }),
     success: function (data, textStatus, jqXHR) {
       Swal.fire({
-        icon: "success",
-        title: "Your answer is correct!",
-        text: "Sending commands to the car...Checkout the car movement physically!",
+        title: "Sending commands to the car...",
+        text: "Checkout the car movement physically!",
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector("b");
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 100);
+        },
       });
 
       clearSteps();
@@ -332,9 +340,17 @@ function stepThrough(step) {
     data: JSON.stringify({ step }),
     success: function (data, textStatus, jqXHR) {
       Swal.fire({
-        icon: "success",
-        title: "Your answer is correct!",
-        text: "Sending commands to the car...Checkout the car movement physically!",
+        title: "Sending commands to the car...",
+        text: "Checkout the car movement physically!",
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector("b");
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 100);
+        },
       });
 
       clearSteps();
@@ -411,11 +427,6 @@ function checkStepQueue() {
         clearInterval(stepInterval);
 
         if (currentStep === answer.length) {
-          await Swal.fire({
-            icon: "success",
-            title: "Yay, answers are correct!",
-            text: "Moving on to the next stage...",
-          });
           updateScore();
         }
       }
