@@ -16,11 +16,12 @@ def create_user():
         return jsonify({"message": "Something went wrong"}), 500
 
 
-def edit_user():
+def edit_user(name):
     try:
+        print(name)
         user_model = UserModel()
-        user = request.get_json()["name"]
-        edited = user_model.update_user(user)
+        new_name = request.get_json()["newName"]
+        edited = user_model.update_user(name, new_name)
         if not edited:
             return jsonify({"message": "User not edited"}), 400
         return jsonify({"message": "User edited"}), 201
@@ -29,11 +30,10 @@ def edit_user():
         return jsonify({"message": "Something went wrong"}), 500
 
 
-def delete_user():
+def delete_user(name):
     try:
         user_model = UserModel()
-        user = request.get_json()["name"]
-        deleted = user_model.delete_user(user)
+        deleted = user_model.delete_user(name)
         if not deleted:
             return jsonify({"message": "User not deleted"}), 400
         return jsonify({"message": "User deleted"}), 201
@@ -46,6 +46,7 @@ def change_admin_password():
     try:
         user_model = UserModel()
         data = request.get_json()
+        print(data["old_password"], data["new_password"])
         updated = user_model.change_admin_password(
             data["old_password"], data["new_password"])
         if not updated:

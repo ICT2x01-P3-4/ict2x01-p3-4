@@ -152,6 +152,9 @@ class UserModel:
             boolean: True if password is changed
         """
         admin = self.user_db.find_one({"role": "admin"})
+        if not admin:
+            return False
+
         password_matched = bcrypt.checkpw(
             old_password.encode('utf-8'), admin['password'])
         if not password_matched:

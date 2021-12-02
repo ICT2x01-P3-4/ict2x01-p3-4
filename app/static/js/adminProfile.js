@@ -29,12 +29,7 @@ $(document).ready(function () {
         return { oldpassword: oldpassword, newpassword: newpassword };
       },
     }).then((result) => {
-      Swal.fire(
-        `
-            Old Password: ${result.value.oldpassword}
-            New Password: ${result.value.newpassword}
-        `.trim()
-      );
+      changePassword(result.value.oldpassword, result.value.newpassword);
     });
   });
 
@@ -58,11 +53,7 @@ $(document).ready(function () {
         return { newuser: newuser };
       },
     }).then((result) => {
-      Swal.fire(
-        `
-            New User: ${result.value.newuser} created!
-        `.trim()
-      );
+      createUser(result.value.newuser);
     });
   });
 
@@ -86,11 +77,9 @@ $(document).ready(function () {
         return { editnewuser: editnewuser };
       },
     }).then((result) => {
-      Swal.fire(
-        `
-            Username is updated to: ${result.value.editnewuser}!
-        `.trim()
-      );
+      const oldName = $(this).data("name");
+      const newName = result.value.editnewuser;
+      updateUser(oldName, newName);
     });
   });
 
@@ -107,8 +96,127 @@ $(document).ready(function () {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "User has been deleted.", "success");
+        deleteUser($(this).data("name"));
       }
     });
   });
 });
+
+/**
+ * Ajax call to change admin password
+ *
+ * @param {string} oldPassword
+ * @param {string} newPassword
+ */
+function changePassword(oldPassword, newPassword) {
+  $.ajax({
+    url: "/api/admin/change-password",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      old_password: oldPassword,
+      new_password: newPassword,
+    }),
+    success: function (data, textStatus, jqXHR) {
+      Swal.fire({
+        title: "Password Changed",
+        text: "Your password has been changed",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      Swal.fire({
+        title: "Password Change Failed",
+        text: "Your password has not been changed",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    },
+  });
+}
+
+/**
+ * Ajax call to create a new user
+ */
+function createUser(name) {
+  $.ajax({
+    url: "/api/admin/create-user",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      name: name,
+    }),
+    success: function (data, textStatus, jqXHR) {
+      Swal.fire({
+        title: "User Created",
+        text: "User has been created",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(function () {
+        location.reload();
+      });
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      Swal.fire({
+        title: "User Creation Failed",
+        text: "User has not been created",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    },
+  });
+}
+
+/**
+ * Ajax call to update user name
+ * @param {string} name
+ */
+function updateUser(oldName, newName) {
+  $.ajax({
+    url: `/api/admin/update-user/${oldName}`,
+    type: "PUT",
+    contentType: "application/json",
+    data: JSON.stringify({
+      newName: newName,
+    }),
+    success: function (data, textStatus, jqXHR) {
+      Swal.fire({
+        title: "User Updated",
+        text: "User has been updated",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(function () {
+        location.reload();
+      });
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      Swal.fire({
+        title: "User Update Failed",
+        text: "User has not been updated",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    },
+  });
+}
+
+/**
+ * Ajax call to delete a user
+ */
+function deleteUser(name) {
+  $.ajax({
+    url: `/api/admin/delete-user/${name}`,
+    type: "DELETE",
+    success: function (data, textStatus, jqXHR) {
+      Swal.fire({
+        title: "User Deleted",
+        text: "User has been deleted",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(function () {
+        location.reload();
+      });
+    },
+  });
+}

@@ -66,10 +66,11 @@ api_bp.route("/car/insert-queue", methods=["POST"])(car_api.insert_queue)
 api_bp.route("/admin/create-user", methods=["POST"])(admin_api.create_user)
 
 # /api/admin/update-user
-api_bp.route("/admin/update-user", methods=["PUT"])(admin_api.edit_user)
+api_bp.route("/admin/update-user/<name>", methods=["PUT"])(admin_api.edit_user)
 
 # /api/admin/delete-user
-api_bp.route("/admin/delete-user", methods=["DELETE"])(admin_api.delete_user)
+api_bp.route("/admin/delete-user/<name>",
+             methods=["DELETE"])(admin_api.delete_user)
 
 # /api/admin/change-password
 api_bp.route("/admin/change-password",
