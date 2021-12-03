@@ -66,14 +66,19 @@
     </head>
     <!-- Nav Bar -->
     <body>
-        <div class="flex-col bg-blue-900 justify-between px-3 py-3">
-            <div>
-                <div class="m-auto flex justify-between ">
-                    <!-- Link to return to Admin Home Page -->
-                    <h2 class="text-3xl text-left font-light text-white m-0"><a href="/admin"> &lt; Back to Home </a></h2>
-                    <h2 class="text-3xl text-right font-light text-white m-0">Manage Puzzle</h2>
-                </div>
-            </div>
+        <div class="bg-blue-800 px-3 py-3">
+            <h2 class="float-left text-3xl font-light text-white mt-1">
+                <a href="/admin">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </a>
+            </h2>
+            <a href="/admin">
+                <h2 class="text-4xl py-0 font-bold text-white italic text-center">
+                    CarStep
+                </h2>
+            </a>
         </div>
         <!-- Container for Content -->
         <div class="container">        
@@ -86,11 +91,11 @@
                             </div>
                             <div>
                                 <!-- create puzzle button TODO -->
-                                <a href="/admin/create"><button type="button" class="bg-green-300 hover:bg-green-500 text-black font-semibold py-1 px-2 rounded">Create Puzzle</button></a>
+                                <a href="/admin/create"><button type="button" class="shadow bg-green-300 hover:bg-green-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-outs">Create Puzzle</button></a>
                             </div>
                         </div>
                         <!-- Table for user accounts -->
-                        <table class="min-w-full border-collapse block md:table">
+                        <table class="min-w-full border-collapse block md:table shadow">
                             <!-- Table Header -->
                             <thead class="block md:table-header-group">
                                 <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
@@ -111,9 +116,9 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">View</button>
-                                        <button type="button" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button type="button" class="deletepuzzle bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
+                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
+                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
                                         
                                     </td>
                                 </tr>
@@ -126,9 +131,9 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">View</button>
-                                        <button type="button" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button type="button" class="deletepuzzle bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
+                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
+                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
                                         
                                     </td>
                                 </tr>
@@ -141,9 +146,9 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">View</button>
-                                        <button type="button" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button type="button" class="deletepuzzle bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
+                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
+                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
                                         
                                     </td>
                                 </tr>
@@ -156,9 +161,9 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">View</button>
-                                        <button type="button" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button type="button" class="deletepuzzle bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
+                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
+                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
                                         
                                     </td>
                                 </tr>
@@ -171,9 +176,9 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">View</button>
-                                        <button type="button" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button type="button" class="deletepuzzle bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
+                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
+                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
                                         
                                     </td>
                                 </tr>
@@ -186,9 +191,9 @@
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="bg-yellow-200 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">View</button>
-                                        <button type="button" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-1 px-2 rounded">Edit</button>
-                                        <button type="button" class="deletepuzzle bg-red-300 hover:bg-red-500 text-black font-semibold py-1 px-2 rounded">Delete</button>
+                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
+                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
+                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
                                         
                                     </td>
                                 </tr>			
