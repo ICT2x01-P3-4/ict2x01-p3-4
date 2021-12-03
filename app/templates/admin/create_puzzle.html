@@ -15,21 +15,8 @@
 
 <!-- Script for number counter -->
 <!-- Source: https://tailwindcomponents.com/component/number-input-counter -->
-<style>
-    input[type='number']::-webkit-inner-spin-button,
-    input[type='number']::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  
-    .custom-number-input input:focus {
-      outline: none !important;
-    }
-  
-    .custom-number-input button:focus {
-      outline: none !important;
-    }
-  </style>
+
+
 {% endblock %}
 
 {% block content %}
@@ -64,23 +51,32 @@
 
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-2">
-            <!-- Input Puzzle Name -->
-            <h2 class="text-2xl font-semibold">Name of Puzzle:</h2>
-            <div class="mb-3 pt-0">
-                <input type="text" placeholder="Puzzle Name" class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"/>
-            </div>
             <div class="flex justify-between">
-                <!-- Input Puzzle difficulty -->
+                <!-- Input Puzzle Name -->
+                
+                <div class="flex flex-col mb-3 pt-0">
+                    <h2 class="text-2xl font-semibold">Name of Puzzle:</h2>
+                    <input type="text" placeholder="Puzzle Name" class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"/>
+                </div>
+                
                 <div class="mb-3 pt-0">
-                        
+                    <h2 class="text-2xl font-semibold">Choose Puzzle Grid:</h2>
+                    <input type="number" placeholder="Eg: 31,24,17,18,11" class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"/>
+                </div>
+            </div>
+            
+            <div class="flex justify-between">
+                <!-- Input Puzzle Difficulty -->
+                <div class="mb-3 pt-0">
+                    <!-- Input Buttons -->
                     <h3 class="text-2xl font-semibold mb-2">Difficulty Level:</h3>
                     <div class="flex custom-number-input h-10 w-32">
                         <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                            <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                            <button data-action="decrement" class="shadow bg-yellow-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
                                 <span class="m-auto text-2xl font-thin">−</span>
                             </button>
-                            <input type="number" class="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                            <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                            <input type="number" class="shadow outline-none focus:outline-none text-center w-full bg-yellow-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
+                            <button data-action="increment" class="shadow bg-yellow-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
                             <span class="m-auto text-2xl font-thin">+</span>
                             </button>
                         </div>
@@ -90,13 +86,14 @@
                 <!-- Input Puzzle Steps Required -->
                 <div class="mb-3 pt-0">
                     <h3 class="text-2xl font-semibold mb-2">Steps Required:</h3>
+                    <!-- Input Number Counter -->
                     <div class="flex custom-number-input h-10 w-32">
                         <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                            <button data-action="decrement" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                            <button data-action="decrement" class="shadow bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
                                 <span class="m-auto text-2xl font-thin">−</span>
                             </button>
-                            <input type="number" class="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                            <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                            <input type="number" class="shadow outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
+                            <button data-action="increment" class="shadow bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
                             <span class="m-auto text-2xl font-thin">+</span>
                             </button>
                         </div>
@@ -157,6 +154,78 @@
     </div>
 
 </div>
+
+  <style>
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    .custom-number-input input:focus {
+      outline: none !important;
+    }
+  
+    .custom-number-input button:focus {
+      outline: none !important;
+    }
+  </style>
+  
+  <script>
+    
+    function check(e){
+      const btn = e.target.parentNode.parentElement.querySelector(
+        'button[data-action="decrement"]'
+      );
+      const target = btn.nextElementSibling;
+      let value = Number(target.value);
+      if (value!=0){            
+        value--;
+        target.value = value;
+      }
+    }
+
+    function decrement(e) {
+      const btn = e.target.parentNode.parentElement.querySelector(
+        'button[data-action="decrement"]'
+      );
+      const target = btn.nextElementSibling;
+      let value = Number(target.value);
+      if (value!=0){
+        value--;
+        target.value = value;
+      }
+      
+    }
+  
+    function increment(e) {
+      const btn = e.target.parentNode.parentElement.querySelector(
+        'button[data-action="decrement"]'
+      );
+      const target = btn.nextElementSibling;
+      let value = Number(target.value);
+      value++;
+      target.value = value;
+    }
+  
+    const decrementButtons = document.querySelectorAll(
+      `button[data-action="decrement"]`
+    );
+  
+    const incrementButtons = document.querySelectorAll(
+      `button[data-action="increment"]`
+    );
+  
+    decrementButtons.forEach(btn => {
+      btn.addEventListener("click", decrement);
+    });
+  
+    incrementButtons.forEach(btn => {
+      btn.addEventListener("click", increment);
+    });
+  </script>
+
+
 {% endblock %}
 
 
