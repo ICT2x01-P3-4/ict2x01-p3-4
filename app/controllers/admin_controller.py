@@ -22,7 +22,6 @@ def puzzle():
     if not session.get('username'):
         return redirect(url_for('admin_bp.login'))
     puzzle_model = PuzzleModel()
-    length = len(puzzle_model.get_all_puzzles())
     return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles())
 
 
