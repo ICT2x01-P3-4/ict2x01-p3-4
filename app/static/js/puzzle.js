@@ -144,7 +144,7 @@ function clearSteps() {
 function displayStepButton() {
   if (stage <= 3) {
     document.getElementById("puzzlebutton").innerHTML +=
-      "<button type='button' class='step flex m-3 pl-10 bg-yellow-400 bg-opacity-50 hover:bg-yellow-300 py-4 px-8 shadow-lg rounded-lg'>Step</button>";
+      "<button type='button' class='step m-3 h-12 w-28 bg-yellow-400 bg-opacity-50 hover:bg-yellow-300 shadow-lg rounded-lg'>Step</button>";
   }
 }
 
@@ -306,16 +306,13 @@ function solvePuzzle(steps) {
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector("b");
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-          }, 100);
         },
       });
 
       clearSteps();
       isCompleted = false;
       solveInterval = setInterval(checkQueue, 2000);
+      disableSolve();
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -346,16 +343,13 @@ function stepThrough(step) {
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector("b");
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-          }, 100);
         },
       });
 
       clearSteps();
       stepCompleted = false;
       stepInterval = setInterval(checkStepQueue, 2000);
+      disableStep();
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -389,6 +383,7 @@ function checkQueue() {
       if (data.is_empty && !isCompleted) {
         isCompleted = true;
         clearInterval(solveInterval);
+        enableSolveAndStep();
 
         await Swal.fire({
           icon: "success",
@@ -425,6 +420,7 @@ function checkStepQueue() {
         };
         reflectWaypoint(box);
         clearInterval(stepInterval);
+        enableSolveAndStep();
 
         if (currentStep === answer.length) {
           updateScore();
@@ -503,4 +499,46 @@ function getBox(queue) {
 
   if (box) prevBox = box;
   return box;
+}
+
+/**
+ * Disable solve button
+ */
+function disableSolve() {
+  $solveBtn = $(".execute");
+  $solveBtn.text("Executing...");
+  $solveBtn.attr("disabled", true);
+  $solveBtn.addClass("cursor-not-allowed");
+
+  $stepBtn = $(".step");
+  $stepBtn.attr("disabled", true);
+  $stepBtn.addClass("cursor-not-allowed");
+}
+
+/**
+ * Disable step button
+ */
+function disableStep() {
+  $stepBtn = $(".step");
+  $stepBtn.text("Executing...");
+  $stepBtn.attr("disabled", true);
+  $stepBtn.addClass("cursor-not-allowed");
+
+  $solveBtn = $(".execute");
+  $solveBtn.attr("disabled", true);
+  $solveBtn.addClass("cursor-not-allowed");
+}
+
+/**
+ * Enable solve and step button
+ */
+function enableSolveAndStep() {
+  $solveBtn = $(".execute");
+  $solveBtn.text("Solve");
+  $solveBtn.attr("disabled", false);
+  $solveBtn.removeClass("cursor-not-allowed");
+
+  $stepBtn = $(".step");
+  $stepBtn.attr("disabled", false);
+  $stepBtn.removeClass("cursor-not-allowed");
 }
