@@ -144,7 +144,7 @@ function clearSteps() {
 function displayStepButton() {
   if (stage <= 3) {
     document.getElementById("puzzlebutton").innerHTML +=
-      "<button type='button' class='step m-3 h-12 w-28 bg-yellow-400 bg-opacity-50 hover:bg-yellow-300 shadow-lg rounded-lg'>Step</button>";
+      "<button type='button' class='step flex m-3 pl-10 bg-yellow-400 bg-opacity-50 hover:bg-yellow-300 py-4 px-8 shadow-lg rounded-lg'>Step</button>";
   }
 }
 
@@ -300,19 +300,14 @@ function solvePuzzle(steps) {
     data: JSON.stringify({ steps }),
     success: function (data, textStatus, jqXHR) {
       Swal.fire({
-        title: "Sending commands to the car...",
-        text: "Checkout the car movement physically!",
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+        icon: "success",
+        title: "Your answer is correct!",
+        text: "Sending commands to the car...Checkout the car movement physically!",
       });
 
       clearSteps();
       isCompleted = false;
       solveInterval = setInterval(checkQueue, 2000);
-      disableSolve();
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -337,19 +332,14 @@ function stepThrough(step) {
     data: JSON.stringify({ step }),
     success: function (data, textStatus, jqXHR) {
       Swal.fire({
-        title: "Sending commands to the car...",
-        text: "Checkout the car movement physically!",
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+        icon: "success",
+        title: "Your answer is correct!",
+        text: "Sending commands to the car...Checkout the car movement physically!",
       });
 
       clearSteps();
       stepCompleted = false;
       stepInterval = setInterval(checkStepQueue, 2000);
-      disableStep();
     },
     error: function (jqXHR) {
       Swal.fire({
@@ -383,7 +373,6 @@ function checkQueue() {
       if (data.is_empty && !isCompleted) {
         isCompleted = true;
         clearInterval(solveInterval);
-        enableSolveAndStep();
 
         await Swal.fire({
           icon: "success",
@@ -420,9 +409,13 @@ function checkStepQueue() {
         };
         reflectWaypoint(box);
         clearInterval(stepInterval);
-        enableSolveAndStep();
 
         if (currentStep === answer.length) {
+          await Swal.fire({
+            icon: "success",
+            title: "Yay, answers are correct!",
+            text: "Moving on to the next stage...",
+          });
           updateScore();
         }
       }
@@ -501,44 +494,41 @@ function getBox(queue) {
   return box;
 }
 
-/**
- * Disable solve button
- */
-function disableSolve() {
-  $solveBtn = $(".execute");
-  $solveBtn.text("Executing...");
-  $solveBtn.attr("disabled", true);
-  $solveBtn.addClass("cursor-not-allowed");
+// Script for input number counter component
+ 
 
-  $stepBtn = $(".step");
-  $stepBtn.attr("disabled", true);
-  $stepBtn.addClass("cursor-not-allowed");
+function decrement(e) {
+  const btn = e.target.parentNode.parentElement.querySelector(
+    'button[data-action="decrement"]'
+  );
+  const target = btn.nextElementSibling;
+  let value = Number(target.value);
+  value--;
+  target.value = value;
 }
 
-/**
- * Disable step button
- */
-function disableStep() {
-  $stepBtn = $(".step");
-  $stepBtn.text("Executing...");
-  $stepBtn.attr("disabled", true);
-  $stepBtn.addClass("cursor-not-allowed");
-
-  $solveBtn = $(".execute");
-  $solveBtn.attr("disabled", true);
-  $solveBtn.addClass("cursor-not-allowed");
+function increment(e) {
+  const btn = e.target.parentNode.parentElement.querySelector(
+    'button[data-action="decrement"]'
+  );
+  const target = btn.nextElementSibling;
+  let value = Number(target.value);
+  value++;
+  target.value = value;
 }
 
-/**
- * Enable solve and step button
- */
-function enableSolveAndStep() {
-  $solveBtn = $(".execute");
-  $solveBtn.text("Solve");
-  $solveBtn.attr("disabled", false);
-  $solveBtn.removeClass("cursor-not-allowed");
+const decrementButtons = document.querySelectorAll(
+  `button[data-action="decrement"]`
+);
 
-  $stepBtn = $(".step");
-  $stepBtn.attr("disabled", false);
-  $stepBtn.removeClass("cursor-not-allowed");
-}
+const incrementButtons = document.querySelectorAll(
+  `button[data-action="increment"]`
+);
+
+decrementButtons.forEach(btn => {
+  btn.addEventListener("click", decrement);
+});
+
+incrementButtons.forEach(btn => {
+  btn.addEventListener("click", increment);
+});

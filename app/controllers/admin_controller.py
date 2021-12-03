@@ -10,20 +10,31 @@ def index():
 
 
 def profile():
-    return render_template('admin/profile.html')
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
+    user_model = UserModel()
+    users = user_model.get_all_users()
+    admin = user_model.get_admin_account()
+    return render_template('admin/profile.html', admin=admin, users=users)
 
 
 def puzzle():
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
     puzzle_model = PuzzleModel()
     return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles())
 
 
 def edit_puzzle(puzzle_id):
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
     puzzle_model = PuzzleModel()
     return render_template('admin/edit_puzzle.html', puzzle=puzzle_model.get_puzzle(puzzle_id))
 
 
 def create_puzzle():
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
     return render_template('admin/create_puzzle.html')
 
 

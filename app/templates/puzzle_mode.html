@@ -4,8 +4,6 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <script type="text/javascript">
     const data = {{ data | safe }};
 </script>
@@ -54,13 +52,13 @@
             <p id="direction_num" class="mt-5 mb-2 float-right">0/15</p>
             <ul id="option_selected" class="connectedSortable clear-both h-72 w-auto ml-auto flex flex-wrap content-start items-center bg-blue-200 bg-opacity-75 mb-8"></ul>
             <div id="puzzlebutton" class="flex justify-center text-center -mt-4">
-                <button type="button" class="clear flex m-3 pl-10 bg-red-400 bg-opacity-50 hover:bg-red-300 py-4 px-8 shadow-lg rounded-lg">Clear</button>
-                <button type="button" class="execute flex m-3 bg-green-400 bg-opacity-75 disabled:opacity-50 hover:bg-green-300 py-4 px-8 shadow-lg rounded-lg">Solve</button>
+                <button type="button" class="clear m-3 h-12 w-28 bg-red-400 bg-opacity-50 hover:bg-red-300  shadow-lg rounded-lg">Clear</button>
+                <button type="button" class="execute m-3 h-12 w-28 bg-green-400 bg-opacity-75 disabled:opacity-50 hover:bg-green-300  shadow-lg rounded-lg">Solve</button>
             </div>
         </div>
         <div class="ml-8 text-center">
             <div class="bg-gray-100 p-8">
-                <h2 class="text-2xl font-semibold mb-8">Solve the puzzle!</h2>
+                <h2 class="text-2xl font-semibold mb-1">Solve the puzzle!</h2>
                 <table id="table" class="table-fixed border-collapse table-center">
                     <tbody>
                         <tr id="row1"></tr>
@@ -72,7 +70,6 @@
                         <tr id="row7"></tr>
                     </tbody>
                 </table>
-
                 <h2 class="text-2xl font-semibold mt-8 mb-3">Current Score: <span id="score"></span></h2>
             </div>
             <span id='waypoint' class="absolute text-3xl" ><p class="flippedcar">&#128663;</p></span>

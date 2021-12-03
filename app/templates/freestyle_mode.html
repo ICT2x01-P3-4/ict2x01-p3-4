@@ -9,7 +9,7 @@
 {% block content %}
 <div class="bg-blue-800 px-3 py-3">
     <h2 class="float-left text-3xl font-light text-white mt-1">
-        <a href="home">
+        <a href="/home">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
@@ -34,10 +34,8 @@
     <p id="direction_num" class="mt-5 mb-2 float-right">0/15</p>
     <ul id="option_selected" class="connectedSortable clear-both h-72 w-auto ml-auto flex flex-wrap content-start items-center bg-blue-200 bg-opacity-75 mb-8"></ul>
     <div class="flex justify-center text-center -mt-4">
-        <div class="grid grid-cols-2">
-            <button type="button" class="clear flex m-3 pl-10 bg-red-400 bg-opacity-50 hover:bg-red-300 py-4 px-8 shadow-lg rounded-lg">Clear</button>
-            <button type="button" class="execute flex m-3 bg-green-400 bg-opacity-75 disabled:opacity-50 hover:bg-green-300 py-4 px-8 shadow-lg rounded-lg">Execute</button>
-        </div>
+        <button type="button" class="clear m-3 h-12 w-28 bg-red-400 bg-opacity-50 hover:bg-red-300 shadow-lg rounded-lg">Clear</button>
+        <button type="button" class="execute m-3 h-12 w-28 bg-green-400 bg-opacity-75 disabled:opacity-50 hover:bg-green-300 shadow-lg rounded-lg">Execute</button>
     </div>
 </div>
 {% endblock %}

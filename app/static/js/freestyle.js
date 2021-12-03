@@ -1,5 +1,5 @@
 var is_completed = true;
-var interval = null
+var interval = null;
 
 $(document).ready(function () {
   $("#option")
@@ -30,7 +30,6 @@ $(document).ready(function () {
       },
     })
     .disableSelection();
-
 
   $(".clear").on("click", function (e) {
     $("#option_selected li").remove();
@@ -77,15 +76,22 @@ function sendSteps(steps) {
       Swal.fire({
         title: "Sending commands to the car...",
         text: "Checkout the car movement physically!",
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector("b");
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 100);
+        },
       });
 
       $("#option_selected li").remove();
       $("#direction_num").text("0/15");
+      disableExecute();
       is_completed = false;
-      interval = setInterval(checkQueue, 3000);
-
+      interval = setInterval(checkQueue, 2000);
     },
     error: function (jqXHR, textStatus, errorThrown) {
       Swal.fire({
@@ -114,7 +120,28 @@ function checkQueue() {
 
         is_completed = true;
         clearInterval(interval);
+        enableExecute();
       }
     },
   });
+}
+
+/**
+ * Disable execute button
+ */
+function disableExecute() {
+  $executeBtn = $(".execute");
+  $executeBtn.text("Executing...");
+  $executeBtn.prop("disabled", true);
+  $executeBtn.addClass("cursor-not-allowed");
+}
+
+/**
+ * Enable execute button
+ */
+function enableExecute() {
+  $executeBtn = $(".execute");
+  $executeBtn.text("Execute");
+  $executeBtn.prop("disabled", false);
+  $executeBtn.removeClass("cursor-not-allowed");
 }
