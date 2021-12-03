@@ -1,5 +1,3 @@
-// Script for input number counter component
-
 // TODO: need to retrieve puzzle, score, and stage from db (no need answer and flow bcus user can see in javascript)
 const puzzle = [
   [1,2,3,4,5,6,7],
@@ -50,12 +48,12 @@ for (var i=0; i < puzzle.length; i++){
       var rowname = "row" + (i+1);
       if (flow.includes(puzzle[i][j])){
           if (flow.indexOf(puzzle[i][j]) == 0){
-              document.getElementById(rowname).innerHTML += "<td id='box"+puzzle[i][j]+"' class='customisedgreen border-2 border-gray-500 w-12 h-12'></td>";
+              document.getElementById(rowname).innerHTML += "<td id='box"+puzzle[i][j]+"' class='border-2 border-gray-500 w-12 h-12'>"+puzzle[i][j]+"</td>";
           } else {
-              document.getElementById(rowname).innerHTML += "<td id='box"+puzzle[i][j]+"' class='bg-red-200 border-2 border-gray-500 w-12 h-12'></td>";
+              document.getElementById(rowname).innerHTML += "<td id='box"+puzzle[i][j]+"' class='border-2 border-gray-500 w-12 h-12'>"+puzzle[i][j]+"</td>";
           }
       }else{
-          document.getElementById(rowname).innerHTML += "<td id='box"+puzzle[i][j]+"' class='bg-gray-100 border-2 border-gray-500 w-12 h-12'></td>";
+          document.getElementById(rowname).innerHTML += "<td id='box"+puzzle[i][j]+"' class='border-2 border-gray-500 w-12 h-12'>"+puzzle[i][j]+"</td>";
       }
   }
 }
