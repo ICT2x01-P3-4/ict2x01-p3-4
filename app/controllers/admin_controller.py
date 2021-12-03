@@ -23,7 +23,7 @@ def puzzle():
         return redirect(url_for('admin_bp.login'))
     puzzle_model = PuzzleModel()
     length = len(puzzle_model.get_all_puzzles())
-    return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles(), length = length)
+    return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles())
 
 
 def edit_puzzle(puzzle_id):

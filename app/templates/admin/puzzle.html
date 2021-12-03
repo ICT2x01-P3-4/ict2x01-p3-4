@@ -108,12 +108,12 @@
                             </thead>                        
                             <tbody class="block md:table-row-group">
                                 <!-- Table Row For Puzzle -->
-                                {% for i in range(length) %}
+                                {% for puzzle in puzzles %}
                                 <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>{{i+1}}</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>{{puzzles[i]['_id']}}</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>{{puzzles[i]['name']}}</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>{{puzzles[i]['difficulty']}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>{{loop.index}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>{{puzzle._id}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>{{puzzle.name}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>{{puzzles.difficulty}}</td>
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
