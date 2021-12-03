@@ -89,6 +89,7 @@ function sendSteps(steps) {
 
       $("#option_selected li").remove();
       $("#direction_num").text("0/15");
+      disableExecute();
       is_completed = false;
       interval = setInterval(checkQueue, 2000);
     },
@@ -119,7 +120,28 @@ function checkQueue() {
 
         is_completed = true;
         clearInterval(interval);
+        enableExecute();
       }
     },
   });
+}
+
+/**
+ * Disable execute button
+ */
+function disableExecute() {
+  $executeBtn = $(".execute");
+  $executeBtn.text("Executing...");
+  $executeBtn.prop("disabled", true);
+  $executeBtn.addClass("cursor-not-allowed");
+}
+
+/**
+ * Enable execute button
+ */
+function enableExecute() {
+  $executeBtn = $(".execute");
+  $executeBtn.text("Execute");
+  $executeBtn.prop("disabled", false);
+  $executeBtn.removeClass("cursor-not-allowed");
 }
