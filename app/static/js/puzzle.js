@@ -539,6 +539,7 @@ function enableSolveAndStep() {
   $solveBtn.removeClass("cursor-not-allowed");
 
   $stepBtn = $(".step");
+  $stepBtn.text("Step");
   $stepBtn.attr("disabled", false);
   $stepBtn.removeClass("cursor-not-allowed");
 }
