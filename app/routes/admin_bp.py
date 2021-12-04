@@ -18,6 +18,9 @@ admin_bp.route('/puzzle')(puzzle)
 # /admin/puzzle/<puzzle_id>
 admin_bp.route('/<puzzle_id>')(edit_puzzle)
 
+# /admin/puzzle/<puzzle_id>
+admin_bp.route('/view')(view_puzzle)
+
 # /admin/puzzle/create
 admin_bp.route('/create')(create_puzzle)
 

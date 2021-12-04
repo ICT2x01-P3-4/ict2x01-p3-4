@@ -11,58 +11,7 @@
         <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
         <!-- sweetalert2 -->
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-    $(document).ready(function(){ 
-
-        
-        //create puzzle - TODO
-        $('.createpuzzle').on('click', function(e){
-            
-            //code
-            
-
-        });
-
-
-        //edit puzzle - TODO
-        $('.editpuzzle').on('click', function(e){
-            
-            //code
-            
-        });
-
-        // view puzzle - TODO
-        $('.viewpuzzle').on('click', function(e){
-            
-            //code
-            
-        });
-
-        // Delete puzzle
-        $('.deletepuzzle').on('click', function(e){
-            // put the code here to send array to backend
-            Swal.fire({
-                title: 'Are you sure you want to delete this puzzle?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                    'Deleted!',
-                    'Puzzle has been deleted.',
-                    'success'
-                    )
-                }
-            })
-        });
-
-    });
-
-    </script>
+        <script src="{{url_for('static',filename='js/adminPuzzle.js')}}"></script>
     </head>
     <!-- Nav Bar -->
     <body>
@@ -83,7 +32,7 @@
         <!-- Container for Content -->
         <div class="container">        
             <div class="m-auto flex-col items-center justify-center h-screen">
-                <div class="overflow-auto pl-20">
+                <div class="overflow-auto p-12">
                     <div class="flex-col justify-center h-screen pt-6">
                         <div class="m-auto flex justify-between pb-3">
                             <div>
@@ -108,95 +57,22 @@
                             </thead>                        
                             <tbody class="block md:table-row-group">
                                 <!-- Table Row For Puzzle -->
+                                {% for puzzle in puzzles %}
                                 <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>1</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>P00001</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>L-Shape Puzzle</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>3</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>{{loop.index}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>{{puzzle._id}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>{{puzzle.name}}</td>
+                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>{{puzzle.difficulty}}</td>
                                     <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                         <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
                                         <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
-                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
-                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
+                                        <button type="button" class="viewPuzzle shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out" data-pid="{{puzzle._id}}">View</button>
+                                        <button type="button" class="editPuzzle shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out" data-pid="{{puzzle._id}}">Edit</button>
+                                        <button type="button" class="delPuzzle shadow bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out" data-pid="{{puzzle._id}}">Delete</button>
                                         
                                     </td>
                                 </tr>
-                                <!-- Table Row For Puzzle -->
-                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>2</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>P00002</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>S-Shape Puzzle</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>5</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                        <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
-                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
-                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
-                                        
-                                    </td>
-                                </tr>
-                                <!-- Table Row For Puzzle -->
-                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>3</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>P00001</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>L-Shape Puzzle</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>3</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                        <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
-                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
-                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
-                                        
-                                    </td>
-                                </tr>
-                                <!-- Table Row For Puzzle -->
-                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>4</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>P00001</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>L-Shape Puzzle</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>3</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                        <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
-                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
-                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
-                                        
-                                    </td>
-                                </tr>
-                                <!-- Table Row For Puzzle -->
-                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>5</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>P00001</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>L-Shape Puzzle</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>3</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                        <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
-                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
-                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
-                                        
-                                    </td>
-                                </tr>
-                                <!-- Table Row For Puzzle -->
-                                <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>6</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>P00001</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>L-Shape Puzzle</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>3</td>
-                                    <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                                        <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                        <!-- Button for Admin to View, Edit or Delete Puzzle -->
-                                        <button type="button" class="shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">View</button>
-                                        <button type="button" class="shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Edit</button>
-                                        <button type="button" class="shadow deletepuzzle bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out">Delete</button>
-                                        
-                                    </td>
-                                </tr>			
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
