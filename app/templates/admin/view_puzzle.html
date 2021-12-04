@@ -1,0 +1,57 @@
+{% extends "shared/base.html" %}
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/viewPuzzle.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="bg-blue-800 px-3 py-3">
+    <h2 class="float-left text-3xl font-light text-white mt-1">
+        <a href="/admin/puzzle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+        </a>
+    </h2>
+    <a href="/admin">
+        <h2 class="text-4xl py-0 font-bold text-white italic text-center">
+            CarStep
+        </h2>
+    </a>
+</div>
+
+<div class="pl-16 pr-16 pt-14 clear-both">
+    <h2 class="text-left text-3xl font-semibold text-grag-800 mb-10">View Puzzle</h2>
+    <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
+            <h2 class="text-xl font-semibold -mt-2 mb-10">Name of Puzzle: <span id="puzzleName" class="text-lg font-normal ml-2"></span></h2>
+            <h2 class="text-xl font-semibold -mt-2 mb-10">Difficulty Level: <span id="puzzleLevel" class="text-lg font-normal ml-2"></span></h2>
+            <h2 class="text-xl font-semibold -mt-2 mb-10">Steps Required: <span id="puzzleSteps" class="text-lg font-normal ml-2"></span></h2>
+            <h2 class="text-xl font-semibold -mt-2 mb-3">Puzzle Directions:</h2>
+            <ul id="puzzleDirections" class="connectedSortable clear-both h-72 md:h-72 w-auto ml-auto flex flex-wrap content-start items-center bg-blue-200 bg-opacity-75 mb-8 p-3"></ul>
+            
+        </div>
+        <div class="ml-8 text-center -mt-2">
+            <div class="bg-gray-100 p-8">
+                <h2 class="text-2xl font-semibold mb-8">Puzzle Shape</h2>
+                <table id="table" class="table-fixed border-collapse table-center">
+                    <tbody>
+                        <tr id="row1"></tr>
+                        <tr id="row2"></tr>
+                        <tr id="row3"></tr>
+                        <tr id="row4"></tr>
+                        <tr id="row5"></tr>
+                        <tr id="row6"></tr>
+                        <tr id="row7"></tr>
+                    </tbody>
+                </table>
+                <p class="mt-6">Sequence: <span id="shapeSteps"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

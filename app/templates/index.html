@@ -1,5 +1,10 @@
 {% extends "shared/base.html" %}
-
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url_for('static', filename='js/tutorial.js') }}"></script>
+{% endblock %}
 {% block content %}
 {% include "shared/nav.html" %}
 <div class="flex justify-center">
@@ -18,5 +23,10 @@
         </div>
     </div>
     </form>
+</div>
+<div class="absolute bottom-0 right-0">
+    <button id="tutorial" class="bg-green-500 hover:bg-green-700 text-white font-bold h-12 px-6 m-2 rounded transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
+        Tutorial Video <i class="ml-2 fa fa-play" aria-hidden="true"></i>
+    </button>
 </div>
 {% endblock %}
