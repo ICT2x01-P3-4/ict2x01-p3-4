@@ -12,11 +12,6 @@
 
 <script src="{{ url_for('static', filename='js/createpuzzle.js') }}"></script>
 
-
-<!-- Script for number counter -->
-<!-- Source: https://tailwindcomponents.com/component/number-input-counter -->
-
-
 {% endblock %}
 
 {% block content %}
@@ -54,47 +49,40 @@
                     <h2 class="text-2xl font-semibold">Name of Puzzle:</h2>
                     <input type="text" placeholder="Puzzle Name" class="px-20 py-3 text-center placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"/>
                 </div>
-                
-                <div class="mb-3 pt-0">
-                    <h2 class="text-2xl font-semibold">Choose Puzzle Grid:</h2>
-                    <input type="text" placeholder="Eg: 31,24,17,18,11" class="px-20 py-3 text-center placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"/>
-                </div>
-            </div>
-            
-            <div class="flex justify-between">
                 <!-- Input Puzzle Difficulty -->
                 <div class="mb-3 pt-0">
-                    <!-- Input Buttons -->
-                    <h3 class="text-2xl font-semibold mb-2">Difficulty Level:</h3>
-                    <div class="flex custom-number-input h-10 w-32">
-                        <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                            <button data-action="decrement" class="shadow bg-yellow-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
-                                <span class="m-auto text-2xl font-thin">−</span>
-                            </button>
-                            <input type="number" class="shadow outline-none focus:outline-none text-center w-full bg-yellow-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                            <button data-action="increment" class="shadow bg-yellow-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                            <span class="m-auto text-2xl font-thin">+</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                            
-                <!-- Input Puzzle Steps Required -->
-                <div class="mb-3 pt-0">
-                    <h3 class="text-2xl font-semibold mb-2">Steps Required:</h3>
-                    <!-- Input Number Counter -->
-                    <div class="flex custom-number-input h-10 w-32">
-                        <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                            <button data-action="decrement" class="shadow bg-yellow-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
-                                <span class="m-auto text-2xl font-thin">−</span>
-                            </button>
-                            <input type="number" class="shadow outline-none focus:outline-none text-center w-full bg-yellow-200 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                            <button data-action="increment" class="shadow bg-yellow-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                            <span class="m-auto text-2xl font-thin">+</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                  <!-- Input Number Counter -->
+                  <h3 class="text-2xl font-semibold mb-2">Difficulty Level:</h3>
+                  <div class="flex custom-number-input h-10 w-32">
+                      <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                          <button data-action="decrement" class="shadow bg-yellow-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                              <span class="m-auto text-2xl font-thin">−</span>
+                          </button>
+                          <input type="number" class="shadow outline-none focus:outline-none text-center w-full bg-yellow-100 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="1"></input>
+                          <button data-action="increment" class="shadow bg-yellow-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                          <span class="m-auto text-2xl font-thin">+</span>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+                          
+              <!-- Input Steps Required -->
+              <div class="mb-3 pt-0">
+                  <h3 class="text-2xl font-semibold mb-2">Steps Required:</h3>
+                  <!-- Input Number Counter -->
+                  <div class="flex custom-number-input h-10 w-32">
+                      <div class="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                          <button data-action="decrement2" class="shadow bg-yellow-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                              <span class="m-auto text-2xl font-thin">−</span>
+                          </button>
+                          <input type="number" class="shadow outline-none focus:outline-none text-center w-full bg-yellow-100 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="1"></input>
+                          <button data-action="increment2" class="shadow bg-yellow-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                          <span class="m-auto text-2xl font-thin">+</span>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+                
             </div>
 
             <!-- Input Directions -->
@@ -133,20 +121,21 @@
                         <tr id="row7"></tr>
                     </tbody>
                 </table>
+                <!-- Input Puzzle Grid -->
+                <div class="mb-3 pt-0">
+                  <h2 class="mt-3 text-2xl font-semibold">Choose Puzzle Grid:</h2>
+                  <input type="text" placeholder="Eg: 31,24,17,18,11" class="px-3 py-3 text-center placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"/>
+              </div>
             </div>
             <span id='waypoint' class="absolute text-3xl" ><p class="flippedcar"></p></span>
             <!-- test -->
-            <div class="mt-12">
+            <div class="mt-9">
                 <p>Please input puzzle shape without any spaces and based on this grid format: </p>
-                <p>45,38,31,24,25</p>
+                <p>31,24,17,18,11</p>
                 <P>First number in the list is the starting point.</P>
             </div>
         </div>
-        
-
-
     </div>
-
 </div>
 
   <style>
@@ -166,57 +155,87 @@
   </style>
   
   <script>
-    
-    function check(e){
-      const btn = e.target.parentNode.parentElement.querySelector(
-        'button[data-action="decrement"]'
-      );
-      const target = btn.nextElementSibling;
-      let value = Number(target.value);
-      if (value!=0){            
-        value--;
-        target.value = value;
-      }
-    }
-
+    // Difficulty Level Min 1, Max 7
     function decrement(e) {
-      const btn = e.target.parentNode.parentElement.querySelector(
-        'button[data-action="decrement"]'
-      );
-      const target = btn.nextElementSibling;
-      let value = Number(target.value);
-      if (value!=0){
-        value--;
-        target.value = value;
-      }
-      
-    }
-  
-    function increment(e) {
-      const btn = e.target.parentNode.parentElement.querySelector(
-        'button[data-action="decrement"]'
-      );
-      const target = btn.nextElementSibling;
-      let value = Number(target.value);
-      value++;
-      target.value = value;
-    }
-  
-    const decrementButtons = document.querySelectorAll(
-      `button[data-action="decrement"]`
+    const btn = e.target.parentNode.parentElement.querySelector(
+      'button[data-action="decrement"]'
     );
-  
-    const incrementButtons = document.querySelectorAll(
+    const target = btn.nextElementSibling;
+    let value = Number(target.value);
+	if (value > 1){
+		value--;
+		target.value = value;
+	}
+    
+  }
+
+  function increment(e) {
+    const btn = e.target.parentNode.parentElement.querySelector(
+      'button[data-action="decrement"]'
+    );
+    const target = btn.nextElementSibling;
+    let value = Number(target.value);
+	if (value < 7){
+		value++;
+		target.value = value;
+	}
+  }
+  function decrement2(e) {
+    const btn = e.target.parentNode.parentElement.querySelector(
+      'button[data-action="decrement2"]'
+    );
+    const target = btn.nextElementSibling;
+    let value = Number(target.value);
+	if (value > 1){
+		value--;
+		target.value = value;
+	}
+    
+  }
+  function increment2(e) {
+    const btn = e.target.parentNode.parentElement.querySelector(
+      'button[data-action="decrement2"]'
+    );
+    const target = btn.nextElementSibling;
+    let value = Number(target.value);
+	if (value < 15){
+		value++;
+		target.value = value;
+	}
+  }
+
+  const decrementButton1 = document.querySelectorAll(
+    `button[data-action="decrement"]`
+  );
+
+  const incrementButton1 = document.querySelectorAll( 
       `button[data-action="increment"]`
-    );
-  
-    decrementButtons.forEach(btn => {
-      btn.addEventListener("click", decrement);
-    });
-  
-    incrementButtons.forEach(btn => {
-      btn.addEventListener("click", increment);
-    });
+    ); 
+
+	const decrementButton2 = document.querySelectorAll(
+    `button[data-action="decrement2"]`
+  );
+
+  const incrementButton2 = document.querySelectorAll( 
+      `button[data-action="increment2"]`
+    ); 
+
+  decrementButton1.forEach(btn => {
+    btn.addEventListener("click", decrement);
+  });
+
+  incrementButton1.forEach(btn => {
+    btn.addEventListener("click", increment);
+  });
+ 
+  decrementButton2.forEach(btn => {
+    btn.addEventListener("click", decrement2);
+  });
+
+  incrementButton2.forEach(btn => {
+    btn.addEventListener("click", increment2);
+  });
+
   </script>
 
 
