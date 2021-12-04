@@ -24,12 +24,17 @@ def puzzle():
     puzzle_model = PuzzleModel()
     return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles())
 
-
+"""
 def edit_puzzle(puzzle_id):
     if not session.get('username'):
         return redirect(url_for('admin_bp.login'))
     puzzle_model = PuzzleModel()
     return render_template('admin/edit_puzzle.html', puzzle=puzzle_model.get_puzzle(puzzle_id))
+"""
+def edit_puzzle():
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
+    return render_template('admin/edit_puzzle.html')
 
 
 def create_puzzle():
