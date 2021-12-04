@@ -1,11 +1,3 @@
-/**
-* Function get puzzle name
-*/
-function getPuzzlename() {
-  var x = document.getElementById("puzzle_name").value;
-  print (x);
-}
-
 // TODO: need to retrieve puzzle, score, and stage from db (no need answer and flow bcus user can see in javascript)
 const puzzle = [
   [1,2,3,4,5,6,7],
@@ -66,7 +58,6 @@ for (var i=0; i < puzzle.length; i++){
   }
 }
 }
-
 
 /**
 * Open the stage dropdown button
@@ -180,7 +171,7 @@ $(".clear").on("click", function (e) {
 });
 
 
-$(".create").on("click", function (e) {
+$(".execute").on("click", function (e) {
     var idsInOrder = $("#option_selected").sortable("toArray");
     if (idsInOrder.length == 0) {
     Swal.fire({
@@ -203,7 +194,7 @@ $(".create").on("click", function (e) {
     };
     steps.push(step);
   }
-  getPuzzlename();
+
   // TODO: modify ur send step
   //sendSteps(steps);
 
