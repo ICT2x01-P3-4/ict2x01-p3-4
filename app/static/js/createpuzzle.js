@@ -131,7 +131,7 @@ $(document).ready(function () {
     const countOccurrences = (arr, val) =>
       arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
     var numOfSteps = countOccurrences(puzzleDirections, "F");
-    if (numOfSteps != puzzleFlow.length) {
+    if (numOfSteps + 1 != puzzleFlow.length) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -150,7 +150,7 @@ $(document).ready(function () {
     // Format data nicely to pass to backend
     var data = {
       name: puzzleName,
-      difficulty: puzzleLevel,
+      difficulty: parseInt(puzzleLevel),
       puzzle_steps: puzzleDirections,
       puzzle_flow: puzzleFlow,
     };
