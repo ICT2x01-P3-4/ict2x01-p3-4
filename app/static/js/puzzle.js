@@ -8,13 +8,6 @@ const puzzle = [
   [43, 44, 45, 46, 47, 48, 49],
 ];
 
-// Data from controller
-const answer = data.puzzle_answer;
-const flow = data.puzzle_flow;
-const score = data.score;
-const stage = data.stage;
-const userStage = data.user_stage;
-
 // For solve puzzle
 var prevBox = {};
 var isCompleted = true;
