@@ -37,6 +37,10 @@ def create_puzzle():
         return redirect(url_for('admin_bp.login'))
     return render_template('admin/create_puzzle.html')
 
+def view_puzzle():
+    if not session.get('username'):
+        return redirect(url_for('admin_bp.login'))
+    return render_template('admin/view_puzzle.html')
 
 def login_post() -> bool:
     '''
