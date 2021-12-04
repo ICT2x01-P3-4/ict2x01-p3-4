@@ -20,7 +20,7 @@ class PuzzleModel:
             string: id of the newly inserted puzzle.
         """
         new_puzzle = Puzzle(data["name"], data["difficulty"],
-                            data["puzzle_shape"], data["puzzle_steps"], data["puzzle_flow"])
+                            data["puzzle_steps"], data["puzzle_flow"])
         result = self.puzzle_db.insert_one(
             new_puzzle.__dict__)
         return str(result.inserted_id)
