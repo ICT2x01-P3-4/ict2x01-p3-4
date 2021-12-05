@@ -48,6 +48,9 @@ def create_puzzle():
     """
     Creates a new puzzle in database.
 
+    Check for validation before moving on
+    to creation.
+
     Returns:
         json: message and status code.
     """
@@ -72,6 +75,9 @@ def create_puzzle():
 def update_puzzle(puzzle_id):
     """
     Updates a puzzle in database.
+
+    Checks for validation before moving on
+    to update.
 
     Args:
         puzzle_id (int): puzzle id to be updated.
@@ -122,9 +128,9 @@ def delete_puzzle(puzzle_id):
 
 def solve_puzzle(puzzle_id):
     """
-    Checks for user's answer and executes all steps if correct.
+    Checks for correct answer and insert steps into queue.
 
-    Updates user score and stage if answer is correct.
+    Checks if queue is empty before inserting.
 
     Args:
         puzzle_id (string): puzzle id to be solved.
@@ -151,9 +157,9 @@ def solve_puzzle(puzzle_id):
 
 def step_through(puzzle_id):
     """
-    Checks for user's answer and executes step.
+    Checks for user's answer and insert a step into the queue.
 
-    Update user score and stage if completed last step of puzzle.
+    Checks if queue is empty before inserting.
 
     Args:
         puzzle_id (string): puzzle id to be stepped through.
@@ -229,6 +235,9 @@ def update_score():
 def get_total_puzzles():
     """
     Get total number of puzzles.
+
+    Returns:
+        json: puzzle count.
     """
     try:
         puzzle_model = PuzzleModel()

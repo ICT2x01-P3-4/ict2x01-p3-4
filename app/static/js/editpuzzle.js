@@ -96,13 +96,12 @@ window.addEventListener("DOMContentLoaded", function () {
 /**
  * Count the number of occurrence of an element in an array
  */
-function countOccurrencesInArray(array,element){
-    const countOccurrences = (arr, val) =>
-      arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
-    var result = countOccurrences(array,element);
-    return result;
+function countOccurrencesInArray(array, element) {
+  const countOccurrences = (arr, val) =>
+    arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+  var result = countOccurrences(array, element);
+  return result;
 }
-
 
 var is_completed = true;
 
@@ -177,7 +176,7 @@ $(document).ready(function () {
     // Verify whether the puzzle shape is achievable with the puzzle directions defined
     var numOfSteps = countOccurrencesInArray(puzzleDirections, "F");
     if (numOfSteps + 1 != puzzleFlow.length) {
-        console.log(numOfSteps);
+      console.log(numOfSteps);
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -187,13 +186,13 @@ $(document).ready(function () {
     }
 
     // validate whether the puzzle shape input is in correct format (element should be integer, > 0 and < 50)
-    if(!convertAndValidateArray(puzzleFlow)){
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Please ensure the input format for puzzle shape is correct",
-        });
-        return;
+    if (!convertAndValidateArray(puzzleFlow)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please ensure the input format for puzzle shape is correct",
+      });
+      return;
     }
 
     // Format data nicely to pass to backend
@@ -230,26 +229,25 @@ function increment(e, dataaction, step) {
   }
 }
 
-
 /**
  * Converts items in array into int and validate whether all items in the array is > 0 and < 50
  * @param {Array} arr
  */
 function convertAndValidateArray(arr) {
-    const validatedArray = new Array(arr.length).fill(0);
-    for (var i = 0; i < arr.length; i++) {
-        num = parseInt(arr[i]);
-        if (num!=null && num>0 && num<50) {
-            validatedArray[i]=num;
-        }        
+  const validatedArray = new Array(arr.length).fill(0);
+  for (var i = 0; i < arr.length; i++) {
+    num = parseInt(arr[i]);
+    if (num != null && num > 0 && num < 50) {
+      validatedArray[i] = num;
     }
-    var invalidInput = countOccurrencesInArray(validatedArray, 0);
-    if (invalidInput != 0){
-        return false;
-    } else {
-        arr = validatedArray;
-        return true;
-    }
+  }
+  var invalidInput = countOccurrencesInArray(validatedArray, 0);
+  if (invalidInput != 0) {
+    return false;
+  } else {
+    arr = validatedArray;
+    return true;
+  }
 }
 
 /**
