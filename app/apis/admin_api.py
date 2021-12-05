@@ -46,7 +46,6 @@ def change_admin_password():
     try:
         user_model = UserModel()
         data = request.get_json()
-        print(data["old_password"], data["new_password"])
         updated = user_model.change_admin_password(
             data["old_password"], data["new_password"])
         if not updated:
