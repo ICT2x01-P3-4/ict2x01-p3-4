@@ -19,11 +19,47 @@ class PuzzleModel:
         Returns:
             string: id of the newly inserted puzzle.
         """
-        new_puzzle = Puzzle(data["name"], data["difficulty"],
-                            data["puzzle_steps"], data["puzzle_flow"])
-        result = self.puzzle_db.insert_one(
+        puzzle_name = data["name"]
+        difficulty = data["difficulty"]
+        puzzle_steps = data["puzzle_steps"]
+        puzle_flow = data["puzzle_flow"]
+
+        existed = self.puzzle_db.find_one({"$or": [{"name": puzzle_name}, {"difficulty": difficulty}, {
+                                          "puzzle_steps": puzzle_steps}, {"puzzle_flow": puzle_flow}]})
+        if existed:
+            return False
+
+        new_puzzle = Puzzle(puzzle_name, difficulty, puzzle_steps, puzle_flow)
+        self.puzzle_db.insert_one(
             new_puzzle.__dict__)
-        return str(result.inserted_id)
+
+        return True
+
+    def validate_puzzle(self, data):
+        """
+        Validates data for puzzle creation/update.
+
+        Args:
+            data (Object): Puzzle data to be validated.
+
+        Returns:
+            boolean: True if passed validation, False if not.
+        """
+        puzzle_name = data["name"]
+        difficulty = data["difficulty"]
+        puzzle_steps = data["puzzle_steps"]
+        puzle_flow = data["puzzle_flow"]
+
+        if not puzzle_name or puzzle_name == "":
+            return False
+        if not difficulty or difficulty == 0:
+            return False
+        if not puzzle_steps or len(puzzle_steps) == 0:
+            return False
+        if not puzle_flow or len(puzle_flow) == 0:
+            return False
+
+        return True
 
     def get_all_puzzles(self):
         """

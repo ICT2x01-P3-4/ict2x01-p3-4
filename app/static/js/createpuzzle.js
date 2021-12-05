@@ -231,11 +231,11 @@ function createPuzzle(data) {
       });
       location.href = "/admin/puzzle";
     },
-    error: function (data) {
+    error: function (jqXHR) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong!",
+        text: jqXHR.responseJSON.message,
       });
     },
   });
