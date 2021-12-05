@@ -14,13 +14,20 @@ const level = data.difficulty;
 const step = data.puzzle_steps.length;
 
 /**
+ * Convert string array to int array
+ * @param {*} puzzle 
+ */
+function convertStringToInt(arr){
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = parseInt(arr[i]);      
+    }
+}
+/**
  * Display puzzle grid based on the puzzle details retrieved from database
  */
 function displayPuzzleGrid(puzzle) {
-  var count = 0;
   for (var i = 0; i < puzzle.length; i++) {
     for (var j = 0; j < puzzle[i].length; j++) {
-      count++;
       var rowname = "row" + (i + 1);
       if (flow.includes(puzzle[i][j])) {
         if (puzzle[i][j] == flow[0]) {
@@ -28,14 +35,14 @@ function displayPuzzleGrid(puzzle) {
             "<td id='box" +
             puzzle[i][j] +
             "' class='customisedgreen border-2 border-gray-500 w-12 h-12'>" +
-            count +
+            puzzle[i][j] +
             "</td>";
         } else {
           document.getElementById(rowname).innerHTML +=
             "<td id='box" +
             puzzle[i][j] +
             "' class='bg-red-200 border-2 border-gray-500 w-12 h-12'>" +
-            count +
+            puzzle[i][j] +
             "</td>";
         }
       } else {
@@ -43,7 +50,7 @@ function displayPuzzleGrid(puzzle) {
           "<td id='box" +
           puzzle[i][j] +
           "' class='bg-gray-100 border-2 border-gray-500 w-12 h-12'>" +
-          count +
+          puzzle[i][j] +
           "</td>";
       }
     }
@@ -84,8 +91,10 @@ function displayPuzzleDetails() {
 /**
  * Display puzzle details in the view puzzle page
  */
-window.addEventListener("DOMContentLoaded", function () {
-  displayPuzzleGrid(puzzle);
-  displayPuzzleDirections(answer);
-  displayPuzzleDetails();
+
+window.addEventListener("load", function () {
+    convertStringToInt(flow);
+    displayPuzzleGrid(puzzle);
+    displayPuzzleDirections(answer);
+    displayPuzzleDetails();
 });
