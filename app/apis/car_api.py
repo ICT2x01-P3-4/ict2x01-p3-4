@@ -19,8 +19,6 @@ def get_command():
         if not direction or car.is_moving():
             return "None\0"
 
-        queue.dequeue()
-        car.start()
         return f"Command: {direction}\0"
     except Exception as e:
         traceback.print_exc()
@@ -60,7 +58,7 @@ def stop_car():
         if not stopped:
             return "Failed\0"
 
-        # queue.dequeue()
+        queue.dequeue()
         return "Stopped\0"
     except Exception as e:
         traceback.print_exc()
