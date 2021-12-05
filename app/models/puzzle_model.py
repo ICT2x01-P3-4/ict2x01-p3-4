@@ -20,7 +20,7 @@ class PuzzleModel:
             string: id of the newly inserted puzzle.
         """
         new_puzzle = Puzzle(data["name"], data["difficulty"],
-                            data["puzzle_shape"], data["puzzle_steps"], data["puzzle_flow"])
+                            data["puzzle_steps"], data["puzzle_flow"])
         result = self.puzzle_db.insert_one(
             new_puzzle.__dict__)
         return str(result.inserted_id)
@@ -84,7 +84,7 @@ class PuzzleModel:
             int: number of puzzles updated.
         """
         puzzle = Puzzle(puzzle["name"], puzzle["difficulty"],
-                        puzzle_shape=puzzle["puzzle_shape"], puzzle_steps=puzzle["puzzle_steps"])
+                        puzzle_steps=puzzle["puzzle_steps"], puzzle_flow=puzzle["puzzle_flow"])
         result = self.puzzle_db.update_one({"_id": ObjectId(puzzle_id)}, {
             "$set": puzzle.__dict__
         })

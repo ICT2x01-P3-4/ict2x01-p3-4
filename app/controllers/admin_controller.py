@@ -1,3 +1,4 @@
+import json
 from ..models.puzzle_model import PuzzleModel
 from ..models.user_model import UserModel
 from flask import render_template, redirect, url_for, request, session, flash
@@ -24,6 +25,7 @@ def puzzle():
     puzzle_model = PuzzleModel()
     return render_template('admin/puzzle.html', puzzles=puzzle_model.get_all_puzzles())
 
+
 """
 def edit_puzzle(puzzle_id):
     if not session.get('username'):
@@ -31,10 +33,15 @@ def edit_puzzle(puzzle_id):
     puzzle_model = PuzzleModel()
     return render_template('admin/edit_puzzle.html', puzzle=puzzle_model.get_puzzle(puzzle_id))
 """
-def edit_puzzle():
+
+
+def edit_puzzle(puzzle_id):
     if not session.get('username'):
         return redirect(url_for('admin_bp.login'))
-    return render_template('admin/edit_puzzle.html')
+
+    puzzle_model = PuzzleModel()
+    puzzle = puzzle_model.get_puzzle(puzzle_id)
+    return render_template('admin/edit_puzzle.html', puzzle=json.dumps(puzzle))
 
 
 def create_puzzle():
@@ -42,10 +49,15 @@ def create_puzzle():
         return redirect(url_for('admin_bp.login'))
     return render_template('admin/create_puzzle.html')
 
-def view_puzzle():
+
+def view_puzzle(puzzle_id):
     if not session.get('username'):
         return redirect(url_for('admin_bp.login'))
-    return render_template('admin/view_puzzle.html')
+
+    puzzle_model = PuzzleModel()
+    puzzle = puzzle_model.get_puzzle(puzzle_id)
+    return render_template('admin/view_puzzle.html', puzzle=json.dumps(puzzle))
+
 
 def login_post() -> bool:
     '''
