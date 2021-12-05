@@ -105,8 +105,8 @@ class UserModel:
         Returns:
             boolean: True if user is created
         """
-        user_detail = self.user_db.find_one({'name': name})
-        if user_detail == None:
+        user_exist = self.user_db.find_one({'name': name})
+        if not user_exist:
             self.user_db.insert_one(
                 {'name': name, 'score': 0, 'stage': 1, 'role': 'user'})
             return True
@@ -123,6 +123,10 @@ class UserModel:
         Returns:
             boolean: True if user is updated
         """
+        same_name = self.user_db.find_one({'name': new_name})
+        if same_name:
+            return False
+
         result = self.user_db.update_one(
             {'name': name}, {'$set': {'name': new_name}})
         return result.matched_count > 0
