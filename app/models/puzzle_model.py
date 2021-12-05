@@ -22,14 +22,16 @@ class PuzzleModel:
         puzzle_name = data["name"]
         difficulty = data["difficulty"]
         puzzle_steps = data["puzzle_steps"]
-        puzle_flow = data["puzzle_flow"]
+        puzzle_flow = data["puzzle_flow"]
 
         existed = self.puzzle_db.find_one({"$or": [{"name": puzzle_name}, {"difficulty": difficulty}, {
-                                          "puzzle_steps": puzzle_steps}, {"puzzle_flow": puzle_flow}]})
+                                          "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]}]})
+
         if existed:
             return False
 
-        new_puzzle = Puzzle(puzzle_name, difficulty, puzzle_steps, puzle_flow)
+        new_puzzle = Puzzle(puzzle_name, difficulty,
+                            puzzle_steps, puzzle_flow=puzzle_flow)
         self.puzzle_db.insert_one(
             new_puzzle.__dict__)
 
@@ -119,11 +121,21 @@ class PuzzleModel:
         Returns:
             int: number of puzzles updated.
         """
-        puzzle = Puzzle(puzzle["name"], puzzle["difficulty"],
-                        puzzle_steps=puzzle["puzzle_steps"], puzzle_flow=puzzle["puzzle_flow"])
+        puzzle_name = puzzle["name"]
+        difficulty = puzzle["difficulty"]
+        puzzle_steps = puzzle["puzzle_steps"]
+        puzzle_flow = puzzle["puzzle_flow"]
+
+        existed = self.puzzle_db.find_one({"$or": [{"name": puzzle_name}, {"difficulty": difficulty}, {
+                                          "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]}]})
+        if existed:
+            return False
+
+        puzzle = Puzzle(puzzle_name, difficulty, puzzle_steps, puzzle_flow)
         result = self.puzzle_db.update_one({"_id": ObjectId(puzzle_id)}, {
             "$set": puzzle.__dict__
         })
+
         return result.matched_count
 
     def delete_puzzle(self, id):
