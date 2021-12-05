@@ -119,11 +119,8 @@ class PuzzleModel:
         """
         Updates a puzzle in the database.
 
-        Checks if puzzle already exists in database.
-        puzzle_step and puzzle_flow must be unique when 
-        combined together.
-
         Args:
+            puzzle_id (string): id of the puzzle to be updated.
             puzzle (object): puzzle object to be updated.
 
         Returns:
@@ -133,11 +130,6 @@ class PuzzleModel:
         difficulty = puzzle["difficulty"]
         puzzle_steps = puzzle["puzzle_steps"]
         puzzle_flow = puzzle["puzzle_flow"]
-
-        existed = self.puzzle_db.find_one({"$or": [{"name": puzzle_name}, {"difficulty": difficulty}, {
-                                          "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]}]})
-        if existed:
-            return False
 
         puzzle = Puzzle(puzzle_name, difficulty, puzzle_steps, puzzle_flow)
         result = self.puzzle_db.update_one({"_id": ObjectId(puzzle_id)}, {
