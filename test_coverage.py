@@ -1,3 +1,8 @@
+######################### Whitebox Testing Instructions ############################
+# 1. Import puzzle.json and queue.json (yes queue.json is empty) to your mongodb   #
+# 2. Run coverage run -m unittest test_coverage to execute the unit test           #
+# 3. View report by coverage report -m app\models\puzzle_model.py test_coverage.py #
+####################################################################################
 import unittest
 
 from dotenv import load_dotenv
@@ -137,11 +142,7 @@ class test_puzzle_model(unittest.TestCase):
         self.assertEqual(PUZZLE.at_last_step(
             DATA['_id'], {'step_num': len(DATA['puzzle_steps'])}), True)
 
-        # Forced wrong length to trigger False condition
-        self.assertEqual(PUZZLE.at_last_step(
-            DATA['_id'], {'step_num': 5}), False)
 
-
-if __name__ == '__main__':
-    load_dotenv()
-    unittest.main()
+# if __name__ == '__main__':
+#     load_dotenv()
+#     unittest.main()
