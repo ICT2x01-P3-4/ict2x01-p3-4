@@ -132,6 +132,15 @@ class test_puzzle_model(unittest.TestCase):
         self.assertEqual(PUZZLE.check_answer(
             DATA, {'step_num': len(DATA['puzzle_steps']), 'direction': DATA['puzzle_steps'][0]}, False), True)
 
+    def test_at_last_step(self):
+        # True condition
+        self.assertEqual(PUZZLE.at_last_step(
+            DATA['_id'], {'step_num': len(DATA['puzzle_steps'])}), True)
+
+        # Forced wrong length to trigger False condition
+        self.assertEqual(PUZZLE.at_last_step(
+            DATA['_id'], {'step_num': 5}), False)
+
 
 if __name__ == '__main__':
     load_dotenv()
