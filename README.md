@@ -1,6 +1,6 @@
 # ICT2x01 Team Project
 
-[![Welcome to Project CarStep!, By team P3-4](https://pimp-my-readme.webapp.io/pimp-my-readme/wavy-banner?subtitle=By%20team%20P3-4&title=Welcome%20to%20Project%20CarStep%21)](https://pimp-my-readme.webapp.io)
+[![Welcome to Project CarStep!, By team P3-4](https://pimp-my-readme.webapp.io/pimp-my-readme/wavy-banner?subtitle=By%20team%20P3-4&title=Welcome%20to%20Project%20CarStep%21)](https://github.com/ICT2x01-P3-4/ict2x01-p3-4)
 ## Team Members
 
 | [<img src="https://avatars.githubusercontent.com/u/16801537?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Koh Huan Yin</b></sub>](https://github.com/alphonsekoh)<br/>Team Lead | [<img src="https://avatars.githubusercontent.com/u/19357352?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Ng Han Yi</b></sub>](https://github.com/hanyi97)<br />Fullstack Developer | [<img src="https://avatars.githubusercontent.com/u/61367983?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Lim Shu Fen</b></sub>](https://github.com/shufenlim)<br />Security Specialist | [<img src="https://avatars.githubusercontent.com/u/73699421?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Low Yong Lin</b></sub>](https://github.com/lowyl)<br />Security Specialist |
