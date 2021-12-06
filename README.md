@@ -7,19 +7,28 @@
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ---
+## Table of Contents
+- [How to run](#how-to-run)  
+- [Development Workflow](#dev-workflow)  
+- [User Acceptence Test (UAT)](#uat)
+- [Whitebox Testing](#wb-testing)
+- [References](#references)
 
+---
+<a name="how-to-run"></a>  
 ## How to run
 
 ### Prerequisite
-Please ensure you have installed the following packages before cloning and running this repository.  
-[![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?style=for-the-badge&logo=appveyor&logo=python)](https://www.python.org/downloads/)
+Please ensure you have the following installed before cloning and running this repository.  
+[![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/)
 [![flask](https://img.shields.io/badge/flask-%3E%3D%20v2-blue?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
 [![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?style=for-the-badge&logo=npm)](https://nodejs.org/en/download/)
 [![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?style=for-the-badge&logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
+<a name="how-to-run"></a>  
 ### Clone the repository
 
-1. Navigate to desired directory and open a new terminal window.
+1. Navigate to your desired directory and open a new terminal window.
 2. Run the following command: `git clone https://github.com/ICT2x01-P3-4/ict2x01-p3-4.git`.
 
 ### Configure project and install dependencies
@@ -51,8 +60,87 @@ export FLASK_ENV=development
 2. Execute the command `flask run` in your terminal.
 3. Open the browser and navigate to http://localhost:5000.
 
+
+### Project Structure
+Below is a tree view of the project structure that is generated with the following command:  
+`tree -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`  
+
+```
+.
+├── app
+│   ├── __init__.py
+│   ├── apis
+│   │   ├── admin_api.py
+│   │   ├── car_api.py
+│   │   ├── freestyle_api.py
+│   │   └── puzzle_api.py
+│   ├── controllers
+│   │   ├── admin_controller.py
+│   │   └── app_controller.py
+│   ├── dataseeder.py
+│   ├── db.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── car_model.py
+│   │   ├── entities
+│   │   │   ├── car_entity.py
+│   │   │   ├── puzzle_entity.py
+│   │   │   ├── step_entity.py
+│   │   │   └── user_entity.py
+│   │   ├── puzzle_model.py
+│   │   ├── queue_model.py
+│   │   └── user_model.py
+│   ├── routes
+│   │   ├── admin_bp.py
+│   │   ├── api_bp.py
+│   │   └── app_bp.py
+│   ├── static
+│   │   ├── css
+│   │   │   ├── 404.css
+│   │   │   └── main.css
+│   │   ├── js
+│   │   │   ├── adminProfile.js
+│   │   │   ├── adminPuzzle.js
+│   │   │   ├── createpuzzle.js
+│   │   │   ├── editpuzzle.js
+│   │   │   ├── freestyle.js
+│   │   │   ├── puzzle.js
+│   │   │   ├── tutorial.js
+│   │   │   └── viewPuzzle.js
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   └── src
+│   │       └── tailwind.css
+│   └── templates
+│       ├── 404.html
+│       ├── admin
+│       │   ├── create_puzzle.html
+│       │   ├── edit_puzzle.html
+│       │   ├── index.html
+│       │   ├── login.html
+│       │   ├── profile.html
+│       │   ├── puzzle.html
+│       │   └── view_puzzle.html
+│       ├── freestyle_mode.html
+│       ├── index.html
+│       ├── puzzle_mode.html
+│       ├── shared
+│       │   ├── base.html
+│       │   ├── nav.html
+│       │   └── wave.html
+│       └── user_home.html
+├── carstep.py
+├── config.py
+├── config.py.example
+├── .env
+├── .env.example
+├── requirements.txt
+└── test_coverage.py
+```
+
 ---
 
+<a name="dev-workflow"></a>
 ## Development Workflow
 
 ### Default branches
@@ -77,7 +165,7 @@ Any development **MUST** be done in the `feature` branches first before merging 
 3. The rest of the team members should be assigned as a reviewer for the PR.
 4. PRs should be approved by **AT LEAST ONE** team member before merging.
 
-### Master Branch
+### Master/Release Branches
 
 1. Only **COMPLETED AND DEPLOYABLE** codes from `dev` branch should be merged into the `master` branch.
 2. PRs should be created before any merging takes place.
@@ -126,7 +214,7 @@ git push
 5. The reviewer will then merge the PR into the `dev` branch once all code quality and conventions are satisfied.
 
 ---
-
+<a name="uat"></a>
 ## User Acceptance Test (UAT)
 
 Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.  
@@ -141,11 +229,11 @@ There are some **changes** made to the test cases submitted in M2.
 Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/dev/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
 
 ---
-
+<a name="wb-testing"></a>
 ## Whitebox Testing
 
 ---
-
+<a name="references"></a>
 ## Reference
 
 1. [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/)
