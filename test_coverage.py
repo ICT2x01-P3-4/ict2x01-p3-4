@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from app import get_app_with_config
 from app.models.puzzle_model import PuzzleModel
 from config import TestConfig
+from bson import ObjectId
 
 # Loading Test configuration, so it would not mess with main config
 app, mongodb = get_app_with_config(TestConfig)
@@ -60,6 +61,11 @@ class test_puzzle_model(unittest.TestCase):
         data = {'_id': '61ac6f4b43e8dcd637294a75', 'name': 'Simple Puzzle',
                 'difficulty': 1, 'puzzle_steps': ['F'], 'puzzle_flow': ['38', '31']}
         self.assertEqual(PUZZLE.get_puzzle(_id), data)
+
+    def test_get_puzzle_by_stage(self):
+        data = {'_id': ObjectId('61ac6f4b43e8dcd637294a75'), 'name': 'Simple Puzzle',
+                'difficulty': 1, 'puzzle_steps': ['F'], 'puzzle_flow': ['38', '31']}
+        self.assertEqual(PUZZLE.get_puzzle_by_stage(1), data)
 
 
 if __name__ == '__main__':
