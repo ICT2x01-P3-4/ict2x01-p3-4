@@ -232,6 +232,8 @@ Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2
 <a name="wb-testing"></a>
 ## Whitebox Testing
 
+![Screen Recording 2021-12-07 at 3 02 26 AM](https://user-images.githubusercontent.com/16801537/144906983-081d1ddf-c3eb-4fb9-b723-4fa875437ea3.gif)
+
 ---
 <a name="references"></a>
 ## Reference
