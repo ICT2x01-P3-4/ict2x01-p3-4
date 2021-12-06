@@ -9,13 +9,13 @@ Welcome to Project CarStep! 🚗 🦶🏻
 
 ---
 
-## Requirements:
+## How to run
 
+### Prerequisite
+Please ensure you have installed the following packages before cloning and running this repository.
 - Pip >= 21.x
 - Python >= 3.x
 - Node >= 15.x
-
-## Set up
 
 ### Clone the repository
 
@@ -45,7 +45,6 @@ $env:FLASK_APP = "carstep"
 export FLASK_APP=carstep
 export FLASK_ENV=development
 ```
-
 ### Run the application
 
 1. Navigate to the root directory of the project.
@@ -128,7 +127,17 @@ git push
 
 ---
 
-## User Acceptance Test
+## User Acceptance Test (UAT)
+
+Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.
+<br><br>
+There are some **changes** made to the test cases submitted in M2. 
+1. By referring to the test cases submitted in M2, the test cases ST25 and ST52 are removed. The removal of test case ST25 causes the test case ID from ST25 onwards to be decremented by 1.
+2. By referring to the updated test case ID,
+   1. The test case details for ST36 - ST43 are updated as there are some minor changes to the UI.
+   2. The ST47 and ST48 test cases are swapped to have a better flow on performing the test cases.
+
+Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/dev/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
 
 ---
 
