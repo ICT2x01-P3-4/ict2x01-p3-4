@@ -63,7 +63,7 @@ export FLASK_ENV=development
 
 ### Project Structure
 Below is a tree view of the project structure that is generated with the following command:  
-`tree -C -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`  
+`tree -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`  
 
 ```
 .
