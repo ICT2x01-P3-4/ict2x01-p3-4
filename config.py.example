@@ -1,0 +1,8 @@
+class RunConfig:
+    MONGO_URI = {{MONGO_URI HERE}}}
+    SECRET_KEY = "{{YOUR SECRET KEY}}"
+
+class TestConfig:
+    MONGO_URI = {{YOUR TEST MONGODB HERE}}
+    SECRET_KEY = {{YOUR SECRET KEY}}
+    TESTING = True

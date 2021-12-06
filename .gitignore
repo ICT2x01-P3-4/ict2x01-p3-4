@@ -142,3 +142,6 @@ node_modules
 
 # Flask Session Cache
 flask_session/
+
+#  Configuration Files
+config.py
