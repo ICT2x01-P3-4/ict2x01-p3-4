@@ -25,7 +25,8 @@ Please ensure you have the following installed before cloning and running this r
 [![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?style=for-the-badge&logo=npm)](https://nodejs.org/en/download/)
 [![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?style=for-the-badge&logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
-<a name="how-to-run"></a>### Clone the repository
+<a name="how-to-run"></a>  
+### Clone the repository
 
 1. Navigate to your desired directory and open a new terminal window.
 2. Run the following command: `git clone https://github.com/ICT2x01-P3-4/ict2x01-p3-4.git`.
