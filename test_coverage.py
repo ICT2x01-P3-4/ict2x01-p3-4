@@ -79,6 +79,13 @@ class test_puzzle_model(unittest.TestCase):
         # Reassign back the original values for data consistency
         PUZZLE.update_puzzle(DATA['_id'], DATA)
 
+    def test_delete_puzzle(self):
+        # Insert test data
+        PUZZLE.puzzle_db.insert_one(TEST_DATA)
+        pid = list(PUZZLE.puzzle_db.find({'name': 'test'}))[0]['_id']
+        # Test delete
+        self.assertEqual(PUZZLE.delete_puzzle(pid), 1)
+
 
 if __name__ == '__main__':
     load_dotenv()
