@@ -8,6 +8,7 @@ const puzzle = [
   [43, 44, 45, 46, 47, 48, 49],
 ];
 
+// Retrieve puzzle details from db
 const puzzleId = data._id;
 var dbPuzzleName = data.name;
 var dbPuzzleLevel = data.difficulty;
@@ -106,105 +107,109 @@ function countOccurrencesInArray(array, element) {
 var is_completed = true;
 
 $(document).ready(function () {
-  $("#option")
-    .sortable({
-      connectWith: ".connectedSortable",
-      remove: function (event, ui) {
-        ui.item.clone().appendTo("#option_selected");
-        $(this).sortable("cancel");
-      },
-    })
-    .disableSelection();
+    // Display direction options available for drag and drop 
+    $("#option")
+        .sortable({
+        connectWith: ".connectedSortable",
+        remove: function (event, ui) {
+            ui.item.clone().appendTo("#option_selected");
+            $(this).sortable("cancel");
+        },
+        })
+        .disableSelection();
 
-  $("#option_selected")
-    .sortable({
-      receive: function (event, ui) {
-        var num = $("#option_selected li").length;
-        var maxnum = document.getElementById("steps_required").value;
-        if (num <= maxnum) {
-          $("#direction_num").text(num);
-        } else {
-          Swal.fire({
+    // Display direction options selected by user 
+    $("#option_selected")
+        .sortable({
+        receive: function (event, ui) {
+            var num = $("#option_selected li").length;
+            var maxnum = document.getElementById("steps_required").value;
+            if (num <= maxnum) {
+            $("#direction_num").text(num);
+            } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "You only selected " + maxnum + " steps to create the puzzle",
+            });
+            $("#option_selected").sortable("cancel");
+            $("#option_selected li:last-child").remove();
+            }
+        },
+        })
+        .disableSelection();
+
+    // Clear all the directions user selected
+    $(".clear").on("click", function (e) {
+        $("#option_selected li").remove();
+        $("#direction_num").text("0");
+    });
+
+    // To process after user clicking the "Update" button
+    $(".update").on("click", function (e) {
+        var puzzleDirections = $("#option_selected").sortable("toArray");
+        console.log(puzzleDirections);
+        var puzzleName = document.getElementById("puzzle_name").value;
+        var puzzleLevel = document.getElementById("diff_level").value;
+        var stepsRequired = document.getElementById("steps_required").value;
+        var puzzleFlow = document.getElementById("puzzle_flow").value.split(",");
+
+        // Verify whether all fields are filled in
+        if (
+        puzzleDirections.length == 0 ||
+        puzzleFlow.length == 0 ||
+        puzzleName.length == 0
+        ) {
+        Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "You only selected " + maxnum + " steps to create the puzzle",
-          });
-          $("#option_selected").sortable("cancel");
-          $("#option_selected li:last-child").remove();
+            text: "Please fill in all the input fields.",
+        });
+        return;
         }
-      },
-    })
-    .disableSelection();
 
-  $(".clear").on("click", function (e) {
-    $("#option_selected li").remove();
-    $("#direction_num").text("0");
-  });
+        // Verify whether the number of puzzle direction boxes is the same as the number of steps required
+        if (stepsRequired != $("#option_selected li").length) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please ensure the number of puzzle direction boxes is the same as the number of step required",
+        });
+        return;
+        }
 
-  $(".update").on("click", function (e) {
-    var puzzleDirections = $("#option_selected").sortable("toArray");
-    console.log(puzzleDirections);
-    var puzzleName = document.getElementById("puzzle_name").value;
-    var puzzleLevel = document.getElementById("diff_level").value;
-    var stepsRequired = document.getElementById("steps_required").value;
-    var puzzleFlow = document.getElementById("puzzle_flow").value.split(",");
+        // Verify whether the puzzle shape is achievable with the puzzle directions defined
+        var numOfSteps = countOccurrencesInArray(puzzleDirections, "F");
+        if (numOfSteps + 1 != puzzleFlow.length) {
+        console.log(numOfSteps);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please ensure the puzzle shape is achievable with the puzzle directions defined",
+        });
+        return;
+        }
 
-    // Verify whether all fields are filled in
-    if (
-      puzzleDirections.length == 0 ||
-      puzzleFlow.length == 0 ||
-      puzzleName.length == 0
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please fill in all the input fields.",
-      });
-      return;
-    }
+        // validate whether the puzzle shape input is in correct format (element should be integer, > 0 and < 50)
+        if (!convertAndValidateArray(puzzleFlow)) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please ensure the input format for puzzle shape is correct",
+        });
+        return;
+        }
 
-    // Verify whether the number of puzzle direction boxes is the same as the number of steps required
-    if (stepsRequired != $("#option_selected li").length) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please ensure the number of puzzle direction boxes is the same as the number of step required",
-      });
-      return;
-    }
+        // Format data nicely to pass to backend
+        var data = {
+        name: puzzleName,
+        difficulty: parseInt(puzzleLevel),
+        puzzle_steps: puzzleDirections,
+        puzzle_flow: puzzleFlow,
+        };
 
-    // Verify whether the puzzle shape is achievable with the puzzle directions defined
-    var numOfSteps = countOccurrencesInArray(puzzleDirections, "F");
-    if (numOfSteps + 1 != puzzleFlow.length) {
-      console.log(numOfSteps);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please ensure the puzzle shape is achievable with the puzzle directions defined",
-      });
-      return;
-    }
-
-    // validate whether the puzzle shape input is in correct format (element should be integer, > 0 and < 50)
-    if (!convertAndValidateArray(puzzleFlow)) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please ensure the input format for puzzle shape is correct",
-      });
-      return;
-    }
-
-    // Format data nicely to pass to backend
-    var data = {
-      name: puzzleName,
-      difficulty: parseInt(puzzleLevel),
-      puzzle_steps: puzzleDirections,
-      puzzle_flow: puzzleFlow,
-    };
-
-    updatePuzzle(puzzleId, data);
-  });
+        updatePuzzle(puzzleId, data);
+    });
 });
 
 // Decrement function for number counter

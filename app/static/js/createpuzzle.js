@@ -71,102 +71,106 @@ function displayMaxStep() {
 }
 
 $(document).ready(function () {
-  $("#option")
-    .sortable({
-      connectWith: ".connectedSortable",
-      remove: function (event, ui) {
-        ui.item.clone().appendTo("#option_selected");
-        $(this).sortable("cancel");
-      },
-    })
-    .disableSelection();
+    // Display direction options available for drag and drop 
+    $("#option")
+        .sortable({
+        connectWith: ".connectedSortable",
+        remove: function (event, ui) {
+            ui.item.clone().appendTo("#option_selected");
+            $(this).sortable("cancel");
+        },
+        })
+        .disableSelection();
 
-  $("#option_selected")
-    .sortable({
-      receive: function (event, ui) {
-        var num = $("#option_selected li").length;
-        var maxnum = document.getElementById("steps_required").value;
-        if (num <= maxnum) {
-          $("#direction_num").text(num);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "You only selected " + maxnum + " steps to create the puzzle",
-          });
-          $("#option_selected").sortable("cancel");
-          $("#option_selected li:last-child").remove();
-        }
-      },
-    })
-    .disableSelection();
+    // Display direction options selected by user 
+    $("#option_selected")
+        .sortable({
+        receive: function (event, ui) {
+            var num = $("#option_selected li").length;
+            var maxnum = document.getElementById("steps_required").value;
+            if (num <= maxnum) {
+            $("#direction_num").text(num);
+            } else {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "You only selected " + maxnum + " steps to create the puzzle",
+            });
+            $("#option_selected").sortable("cancel");
+            $("#option_selected li:last-child").remove();
+            }
+        },
+        })
+        .disableSelection();
 
-  $(".clear").on("click", function (e) {
-    $("#option_selected li").remove();
-    $("#direction_num").text("0");
-  });
+    // Clear all the directions user selected
+    $(".clear").on("click", function (e) {
+        $("#option_selected li").remove();
+        $("#direction_num").text("0");
+    });
 
-  $(".create").on("click", function (e) {
-    var puzzleDirections = $("#option_selected").sortable("toArray");
-    var puzzleName = document.getElementById("puzzle_name").value;
-    var puzzleLevel = document.getElementById("diff_level").value;
-    var stepsRequired = document.getElementById("steps_required").value;
-    var puzzleFlow = document.getElementById("puzzle_flow").value.split(",");
+    // To process after user clicking the "Create" button
+    $(".create").on("click", function (e) {
+        var puzzleDirections = $("#option_selected").sortable("toArray");
+        var puzzleName = document.getElementById("puzzle_name").value;
+        var puzzleLevel = document.getElementById("diff_level").value;
+        var stepsRequired = document.getElementById("steps_required").value;
+        var puzzleFlow = document.getElementById("puzzle_flow").value.split(",");
 
-    // Verify whether all fields are filled in
-    if (
-      puzzleDirections.length == 0 ||
-      puzzleFlow.length == 0 ||
-      puzzleName.length == 0
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please fill in all the input fields.",
-      });
-      return;
-    }
-
-    // Verify whether the number of puzzle direction boxes is the same as the number of steps required
-    if (stepsRequired != $("#option_selected li").length) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please ensure the number of puzzle direction boxes is the same as the number of step required",
-      });
-      return;
-    }
-
-    // Verify whether the puzzle shape is achievable with the puzzle directions defined
-    var numOfSteps = countOccurrencesInArray(puzzleDirections, "F");
-    if (numOfSteps + 1 != puzzleFlow.length) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please ensure the puzzle shape is achievable with the directions defined",
-      });
-      return;
-    }
-
-    // validate whether the puzzle shape input is in correct format (element should be integer, > 0 and < 50)
-    if(!convertAndValidateArray(puzzleFlow)){
+        // Verify whether all fields are filled in
+        if (
+        puzzleDirections.length == 0 ||
+        puzzleFlow.length == 0 ||
+        puzzleName.length == 0
+        ) {
         Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Please ensure the input format for puzzle shape is correct",
+            text: "Please fill in all the input fields.",
         });
         return;
-    }
+        }
 
-    // Format data nicely to pass to backend
-    var data = {
-      name: puzzleName,
-      difficulty: parseInt(puzzleLevel),
-      puzzle_steps: puzzleDirections,
-      puzzle_flow: puzzleFlow,
-    };
-    createPuzzle(data);
-  });
+        // Verify whether the number of puzzle direction boxes is the same as the number of steps required
+        if (stepsRequired != $("#option_selected li").length) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please ensure the number of puzzle direction boxes is the same as the number of step required",
+        });
+        return;
+        }
+
+        // Verify whether the puzzle shape is achievable with the puzzle directions defined
+        var numOfSteps = countOccurrencesInArray(puzzleDirections, "F");
+        if (numOfSteps + 1 != puzzleFlow.length) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please ensure the puzzle shape is achievable with the directions defined",
+        });
+        return;
+        }
+
+        // validate whether the puzzle shape input is in correct format (element should be integer, > 0 and < 50)
+        if(!convertAndValidateArray(puzzleFlow)){
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Please ensure the input format for puzzle shape is correct",
+            });
+            return;
+        }
+
+        // Format data nicely to pass to backend
+        var data = {
+        name: puzzleName,
+        difficulty: parseInt(puzzleLevel),
+        puzzle_steps: puzzleDirections,
+        puzzle_flow: puzzleFlow,
+        };
+        createPuzzle(data);
+    });
 });
 
 // Decrement function for number counter

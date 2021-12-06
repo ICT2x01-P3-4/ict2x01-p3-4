@@ -2,63 +2,67 @@ var is_completed = true;
 var interval = null;
 
 $(document).ready(function () {
-  $("#option")
-    .sortable({
-      connectWith: ".connectedSortable",
-      remove: function (event, ui) {
-        ui.item.clone().appendTo("#option_selected");
-        $(this).sortable("cancel");
-      },
-    })
-    .disableSelection();
+    // Display direction options available for drag and drop 
+    $("#option")
+        .sortable({
+        connectWith: ".connectedSortable",
+        remove: function (event, ui) {
+            ui.item.clone().appendTo("#option_selected");
+            $(this).sortable("cancel");
+        },
+        })
+        .disableSelection();
 
-  $("#option_selected")
-    .sortable({
-      receive: function (event, ui) {
-        var num = $("#option_selected li").length;
-        if (num > 15) {
-          Swal.fire({
+    // Display direction options selected by user
+    $("#option_selected")
+        .sortable({
+        receive: function (event, ui) {
+            var num = $("#option_selected li").length;
+            if (num > 15) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "The maximum step you can input is 15.",
+            });
+            $("#option_selected").sortable("cancel");
+            $("#option_selected li:last-child").remove();
+            } else {
+            $("#direction_num").text(num + "/15");
+            }
+        },
+        })
+        .disableSelection();
+
+    // Clear all the directions user selected
+    $(".clear").on("click", function (e) {
+        $("#option_selected li").remove();
+        $("#direction_num").text("0/15");
+    });
+
+    // To process after user clicking the "Execute" button
+    $(".execute").on("click", function (e) {
+        var idsInOrder = $("#option_selected").sortable("toArray");
+        if (idsInOrder.length == 0) {
+        Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "The maximum step you can input is 15.",
-          });
-          $("#option_selected").sortable("cancel");
-          $("#option_selected li:last-child").remove();
-        } else {
-          $("#direction_num").text(num + "/15");
+            text: "Please select at least one step.",
+        });
+        return;
         }
-      },
-    })
-    .disableSelection();
 
-  $(".clear").on("click", function (e) {
-    $("#option_selected li").remove();
-    $("#direction_num").text("0/15");
-  });
+        // Format data nicely to be sent to backend
+        var steps = [];
+        for (var i = 0; i < idsInOrder.length; i++) {
+        var step = {
+            step_number: i + 1,
+            direction: idsInOrder[i],
+        };
+        steps.push(step);
+        }
 
-  $(".execute").on("click", function (e) {
-    var idsInOrder = $("#option_selected").sortable("toArray");
-    if (idsInOrder.length == 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select at least one step.",
-      });
-      return;
-    }
-
-    // Format data nicely to be sent to backend
-    var steps = [];
-    for (var i = 0; i < idsInOrder.length; i++) {
-      var step = {
-        step_number: i + 1,
-        direction: idsInOrder[i],
-      };
-      steps.push(step);
-    }
-
-    sendSteps(steps);
-  });
+        sendSteps(steps);
+    });
 });
 
 /**
