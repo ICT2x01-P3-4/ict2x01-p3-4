@@ -1,7 +1,6 @@
 # ICT2x01 Team Project
 
-Welcome to Project CarStep! 🚗 🦶🏻
-
+[![Welcome to Project CarStep!, By team P3-4](https://pimp-my-readme.webapp.io/pimp-my-readme/wavy-banner?subtitle=By%20team%20P3-4&title=Welcome%20to%20Project%20CarStep%21)](https://github.com/ICT2x01-P3-4/ict2x01-p3-4)
 ## Team Members
 
 | [<img src="https://avatars.githubusercontent.com/u/16801537?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Koh Huan Yin</b></sub>](https://github.com/alphonsekoh)<br/>Team Lead | [<img src="https://avatars.githubusercontent.com/u/19357352?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Ng Han Yi</b></sub>](https://github.com/hanyi97)<br />Fullstack Developer | [<img src="https://avatars.githubusercontent.com/u/61367983?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Lim Shu Fen</b></sub>](https://github.com/shufenlim)<br />Security Specialist | [<img src="https://avatars.githubusercontent.com/u/73699421?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Low Yong Lin</b></sub>](https://github.com/lowyl)<br />Security Specialist |
@@ -12,10 +11,11 @@ Welcome to Project CarStep! 🚗 🦶🏻
 ## How to run
 
 ### Prerequisite
-Please ensure you have installed the following packages before cloning and running this repository.
-- Pip >= 21.x
-- Python >= 3.x
-- Node >= 15.x
+Please ensure you have installed the following packages before cloning and running this repository.  
+[![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?logo=python)](https://www.python.org/downloads/)
+[![flask](https://img.shields.io/badge/flask-%3E%3D%20v2-blue?logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
+[![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?logo=npm)](https://nodejs.org/en/download/)
+[![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
 ### Clone the repository
 
@@ -129,8 +129,9 @@ git push
 
 ## User Acceptance Test (UAT)
 
-Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.
-<br><br>
+Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.  
+[![UAT video](https://j.gifs.com/jYO96B.gif)](https://www.youtube.com/watch?v=oxKbCnN34Fg)  
+<br>
 There are some **changes** made to the test cases submitted in M2. 
 1. By referring to the test cases submitted in M2, the test cases ST25 and ST52 are removed. The removal of test case ST25 causes the test case ID from ST25 onwards to be decremented by 1.
 2. By referring to the updated test case ID,
