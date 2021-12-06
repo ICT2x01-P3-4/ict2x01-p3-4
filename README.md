@@ -132,6 +132,8 @@ Below is a tree view of the project structure that is generated with the followi
 ├── carstep.py
 ├── config.py
 ├── config.py.example
+├── .env
+├── .env.example
 ├── requirements.txt
 └── test_coverage.py
 ```
