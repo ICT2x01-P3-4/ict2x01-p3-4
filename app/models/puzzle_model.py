@@ -102,8 +102,7 @@ class PuzzleModel:
             object: puzzle object from the database.
         """
         puzzle = self.puzzle_db.find_one({"_id": ObjectId(id)})
-        if puzzle:
-            puzzle["_id"] = str(puzzle["_id"])
+        puzzle["_id"] = str(puzzle["_id"])
         return puzzle
 
     def get_puzzle_by_stage(self, stage):
