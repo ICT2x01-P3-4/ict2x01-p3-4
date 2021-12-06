@@ -22,6 +22,31 @@ class test_puzzle_model(unittest.TestCase):
         # A reinsertion, when puzzle already exist
         self.assertEqual(PUZZLE.create_puzzle(DATA), False)
 
+    def test_validate_puzzle(self):
+        # True Conditions
+        self.assertEqual(PUZZLE.validate_puzzle(DATA), True)
+
+        # False Conditions
+        # Invalid name
+        data = {'name': '', 'difficulty': 5,
+                'puzzle_steps': '', 'puzzle_flow': ''}
+        self.assertEqual(PUZZLE.validate_puzzle(data), False)
+
+        # Invalid difficulty level
+        data = {'name': 'test', 'difficulty': 0,
+                'puzzle_steps': '', 'puzzle_flow': ''}
+        self.assertEqual(PUZZLE.validate_puzzle(data), False)
+
+        # Invalid steps list length
+        data = {'name': 'test', 'difficulty': 5,
+                'puzzle_steps': '', 'puzzle_flow': ''}
+        self.assertEqual(PUZZLE.validate_puzzle(data), False)
+
+        # Invalid Puzzle Flow list length
+        data = {'name': 'test', 'difficulty': 5,
+                'puzzle_steps': '1', 'puzzle_flow': ''}
+        self.assertEqual(PUZZLE.validate_puzzle(data), False)
+
 
 if __name__ == '__main__':
     load_dotenv()
