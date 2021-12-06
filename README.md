@@ -11,15 +11,15 @@
 ## How to run
 
 ### Prerequisite
-Please ensure you have installed the following packages before cloning and running this repository.  
-[![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?style=for-the-badge&logo=appveyor&logo=python)](https://www.python.org/downloads/)
+Please ensure you have the following installed before cloning and running this repository.  
+[![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/)
 [![flask](https://img.shields.io/badge/flask-%3E%3D%20v2-blue?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
 [![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?style=for-the-badge&logo=npm)](https://nodejs.org/en/download/)
 [![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?style=for-the-badge&logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
 ### Clone the repository
 
-1. Navigate to desired directory and open a new terminal window.
+1. Navigate to your desired directory and open a new terminal window.
 2. Run the following command: `git clone https://github.com/ICT2x01-P3-4/ict2x01-p3-4.git`.
 
 ### Configure project and install dependencies
@@ -84,7 +84,7 @@ Any development **MUST** be done in the `feature` branches first before merging 
 3. The rest of the team members should be assigned as a reviewer for the PR.
 4. PRs should be approved by **AT LEAST ONE** team member before merging.
 
-### Master Branch
+### Master/Release Branches
 
 1. Only **COMPLETED AND DEPLOYABLE** codes from `dev` branch should be merged into the `master` branch.
 2. PRs should be created before any merging takes place.
