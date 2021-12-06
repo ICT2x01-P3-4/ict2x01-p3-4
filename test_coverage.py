@@ -70,6 +70,7 @@ class test_puzzle_model(unittest.TestCase):
 
     def test_get_puzzle(self):
         self.assertEqual(PUZZLE.get_puzzle(DATA['_id']), DATA)
+        self.assertEqual(PUZZLE.get_puzzle('61ac6f4b43e8dcd637294a76'), None)
 
     def test_get_puzzle_by_stage(self):
         data = {'_id': ObjectId('61ac6f4b43e8dcd637294a75'), 'name': 'Simple Puzzle',
