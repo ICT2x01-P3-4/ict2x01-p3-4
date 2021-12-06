@@ -113,6 +113,25 @@ class test_puzzle_model(unittest.TestCase):
         self.assertEqual(PUZZLE.step_through_puzzle(
             DATA['_id'], {'step_num': 0, 'direction': 'L'}), False)
 
+    def test_check_answer(self):
+        # Wrong step length to trigger False condition
+        self.assertEqual(PUZZLE.check_answer(DATA, ['F', 'F'], True), False)
+
+        # Wrong step to trigger False condition
+        self.assertEqual(PUZZLE.check_answer(DATA, ['L'], True), False)
+
+        # [Step-through] Wrong step length to trigger False condition
+        self.assertEqual(PUZZLE.check_answer(
+            DATA, {'step_num': 5, 'direction': 'F'}, False), False)
+
+        # [Step-through] Wrong step to trigger False condition
+        self.assertEqual(PUZZLE.check_answer(
+            DATA, {'step_num': 1, 'direction': 'L'}, False), False)
+
+        # True Condition
+        self.assertEqual(PUZZLE.check_answer(
+            DATA, {'step_num': len(DATA['puzzle_steps']), 'direction': DATA['puzzle_steps'][0]}, False), True)
+
 
 if __name__ == '__main__':
     load_dotenv()
