@@ -53,7 +53,13 @@ class test_puzzle_model(unittest.TestCase):
         self.assertEqual(PUZZLE.validate_puzzle(data), False)
 
     def test_get_puzzles_count(self):
-        self.assertEqual(PUZZLE.get_puzzles_count(), 4)
+        self.assertEqual(PUZZLE.get_puzzles_count(), 3)
+
+    def test_get_puzzle(self):
+        _id = '61ac6f4b43e8dcd637294a75'
+        data = {'_id': '61ac6f4b43e8dcd637294a75', 'name': 'Simple Puzzle',
+                'difficulty': 1, 'puzzle_steps': ['F'], 'puzzle_flow': ['38', '31']}
+        self.assertEqual(PUZZLE.get_puzzle(_id), data)
 
 
 if __name__ == '__main__':
