@@ -15,7 +15,7 @@
 - [References](#references)
 
 ---
-<a name="how-to-run"></a>
+<a name="how-to-run"></a>  
 ## How to run
 
 ### Prerequisite
@@ -64,7 +64,76 @@ export FLASK_ENV=development
 Below is a tree view of the project structure that is generated with the following command:  
 `tree -C -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`  
 
-![project structure](https://i.imgur.com/z8vjOYv.jpg)
+```
+.
+├── app
+│   ├── __init__.py
+│   ├── apis
+│   │   ├── admin_api.py
+│   │   ├── car_api.py
+│   │   ├── freestyle_api.py
+│   │   └── puzzle_api.py
+│   ├── controllers
+│   │   ├── admin_controller.py
+│   │   └── app_controller.py
+│   ├── dataseeder.py
+│   ├── db.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── car_model.py
+│   │   ├── entities
+│   │   │   ├── car_entity.py
+│   │   │   ├── puzzle_entity.py
+│   │   │   ├── step_entity.py
+│   │   │   └── user_entity.py
+│   │   ├── puzzle_model.py
+│   │   ├── queue_model.py
+│   │   └── user_model.py
+│   ├── routes
+│   │   ├── admin_bp.py
+│   │   ├── api_bp.py
+│   │   └── app_bp.py
+│   ├── static
+│   │   ├── css
+│   │   │   ├── 404.css
+│   │   │   └── main.css
+│   │   ├── js
+│   │   │   ├── adminProfile.js
+│   │   │   ├── adminPuzzle.js
+│   │   │   ├── createpuzzle.js
+│   │   │   ├── editpuzzle.js
+│   │   │   ├── freestyle.js
+│   │   │   ├── puzzle.js
+│   │   │   ├── tutorial.js
+│   │   │   └── viewPuzzle.js
+│   │   ├── package-lock.json
+│   │   ├── package.json
+│   │   └── src
+│   │       └── tailwind.css
+│   └── templates
+│       ├── 404.html
+│       ├── admin
+│       │   ├── create_puzzle.html
+│       │   ├── edit_puzzle.html
+│       │   ├── index.html
+│       │   ├── login.html
+│       │   ├── profile.html
+│       │   ├── puzzle.html
+│       │   └── view_puzzle.html
+│       ├── freestyle_mode.html
+│       ├── index.html
+│       ├── puzzle_mode.html
+│       ├── shared
+│       │   ├── base.html
+│       │   ├── nav.html
+│       │   └── wave.html
+│       └── user_home.html
+├── carstep.py
+├── config.py
+├── config.py.example
+├── requirements.txt
+└── test_coverage.py
+```
 
 ---
 
