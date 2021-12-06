@@ -1,31 +1,38 @@
 # ICT2x01 Team Project
 
 [![Welcome to Project CarStep!, By team P3-4](https://pimp-my-readme.webapp.io/pimp-my-readme/wavy-banner?subtitle=By%20team%20P3-4&title=Welcome%20to%20Project%20CarStep%21)](https://github.com/ICT2x01-P3-4/ict2x01-p3-4)
+
 ## Team Members
 
 | [<img src="https://avatars.githubusercontent.com/u/16801537?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Koh Huan Yin</b></sub>](https://github.com/alphonsekoh)<br/>Team Lead | [<img src="https://avatars.githubusercontent.com/u/19357352?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Ng Han Yi</b></sub>](https://github.com/hanyi97)<br />Fullstack Developer | [<img src="https://avatars.githubusercontent.com/u/61367983?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Lim Shu Fen</b></sub>](https://github.com/shufenlim)<br />Security Specialist | [<img src="https://avatars.githubusercontent.com/u/73699421?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Low Yong Lin</b></sub>](https://github.com/lowyl)<br />Security Specialist |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ---
+
 ## Table of Contents
-- [How to run](#how-to-run)  
-- [Development Workflow](#dev-workflow)  
+
+- [How to run](#how-to-run)
+- [Development Workflow](#dev-workflow)
 - [User Acceptence Test (UAT)](#uat)
 - [Whitebox Testing](#wb-testing)
 - [References](#references)
 
 ---
-<a name="how-to-run"></a>  
+
+<a name="how-to-run"></a>
+
 ## How to run
 
 ### Prerequisite
+
 Please ensure you have the following installed before cloning and running this repository.  
 [![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?style=for-the-badge&logo=python)](https://www.python.org/downloads/)
 [![flask](https://img.shields.io/badge/flask-%3E%3D%20v2-blue?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
 [![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?style=for-the-badge&logo=npm)](https://nodejs.org/en/download/)
 [![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?style=for-the-badge&logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
-<a name="how-to-run"></a>  
+<a name="how-to-run"></a>
+
 ### Clone the repository
 
 1. Navigate to your desired directory and open a new terminal window.
@@ -54,16 +61,17 @@ $env:FLASK_APP = "carstep"
 export FLASK_APP=carstep
 export FLASK_ENV=development
 ```
+
 ### Run the application
 
 1. Navigate to the root directory of the project.
 2. Execute the command `flask run` in your terminal.
 3. Open the browser and navigate to http://localhost:5000.
 
-
 ### Project Structure
+
 Below is a tree view of the project structure that is generated with the following command:  
-`tree -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`  
+`tree -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`
 
 ```
 .
@@ -141,6 +149,7 @@ Below is a tree view of the project structure that is generated with the followi
 ---
 
 <a name="dev-workflow"></a>
+
 ## Development Workflow
 
 ### Default branches
@@ -214,26 +223,39 @@ git push
 5. The reviewer will then merge the PR into the `dev` branch once all code quality and conventions are satisfied.
 
 ---
+
 <a name="uat"></a>
+
 ## User Acceptance Test (UAT)
 
 Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.  
 [![UAT video](https://j.gifs.com/jYO96B.gif)](https://www.youtube.com/watch?v=oxKbCnN34Fg)  
 <br>
-There are some **changes** made to the test cases submitted in M2. 
+There are some **changes** made to the test cases submitted in M2.
+
 1. By referring to the test cases submitted in M2, the test cases ST25 and ST52 are removed. The removal of test case ST25 causes the test case ID from ST25 onwards to be decremented by 1.
 2. By referring to the updated test case ID,
    1. The test case details for ST36 - ST43 are updated as there are some minor changes to the UI.
    2. The ST47 and ST48 test cases are swapped to have a better flow on performing the test cases.
 
-Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/dev/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
+Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/master/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
 
 ---
+
 <a name="wb-testing"></a>
+
 ## Whitebox Testing
 
+For Whitebox Testing, we covered code coverage and branch coverage using `coverage.py`, `unittest` and, `pytest` libraries.</br>
+The project's test coverage codes can be found at `test_coverage.py`
+To run the coverage tests, in your terminal execute `coverage run -m --branch pytest -v` </br>
+To generate your coverage test report that you have just done, execute `coverage report -m test_coverage.py app/models/puzzle_model.py` </br>
+![Screen Recording 2021-12-07 at 3 02 26 AM](https://user-images.githubusercontent.com/16801537/144906983-081d1ddf-c3eb-4fb9-b723-4fa875437ea3.gif)
+
 ---
+
 <a name="references"></a>
+
 ## Reference
 
 1. [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/)
