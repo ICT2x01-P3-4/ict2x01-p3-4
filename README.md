@@ -51,6 +51,13 @@ export FLASK_ENV=development
 2. Execute the command `flask run` in your terminal.
 3. Open the browser and navigate to http://localhost:5000.
 
+
+### Project Structure
+Below is a tree view of the project structure that is generated with the following command:  
+`tree -C -I 'env*|__pycache__|flask_session*|test_data|node_modules*|docs*|*.md'`  
+
+![project structure](https://i.imgur.com/z8vjOYv.jpg)
+
 ---
 
 ## Development Workflow
