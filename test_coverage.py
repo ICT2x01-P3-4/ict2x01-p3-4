@@ -3,6 +3,7 @@ import unittest
 from dotenv import load_dotenv
 from app import get_app_with_config
 from app.models.puzzle_model import PuzzleModel
+from app.models.queue_model import QueueModel
 from config import TestConfig
 from bson import ObjectId
 
@@ -10,6 +11,7 @@ from bson import ObjectId
 app, mongodb = get_app_with_config(TestConfig)
 
 PUZZLE = PuzzleModel()
+QUEUE = QueueModel()
 TEST_DATA = {'name': 'test',
              'difficulty': 5,
              'puzzle_flow': '0',
@@ -83,8 +85,21 @@ class test_puzzle_model(unittest.TestCase):
         # Insert test data
         PUZZLE.puzzle_db.insert_one(TEST_DATA)
         pid = list(PUZZLE.puzzle_db.find({'name': 'test'}))[0]['_id']
+
         # Test delete
         self.assertEqual(PUZZLE.delete_puzzle(pid), 1)
+
+    def test_solve_puzzle(self):
+        # Wrong step to trigger False Condition
+        wrong_step = ['L']
+        self.assertEqual(PUZZLE.solve_puzzle(DATA['_id'], wrong_step), False)
+
+        # True Condition
+        self.assertEqual(PUZZLE.solve_puzzle(
+            DATA['_id'], DATA['puzzle_steps']), True)
+
+        # Clear Queue
+        QUEUE.queue.delete_one({'direction': DATA['puzzle_steps'][0]})
 
 
 if __name__ == '__main__':
