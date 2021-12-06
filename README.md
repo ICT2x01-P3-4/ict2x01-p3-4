@@ -136,7 +136,8 @@ git push
 ## User Acceptance Test (UAT)
 
 Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oxKbCnN34Fg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![UAT video](https://i3.ytimg.com/vi/oxKbCnN34Fg/maxresdefault.jpg)](https://www.youtube.com/watch?v=oxKbCnN34Fg)
+
 <br><br>
 There are some **changes** made to the test cases submitted in M2. 
 1. By referring to the test cases submitted in M2, the test cases ST25 and ST52 are removed. The removal of test case ST25 causes the test case ID from ST25 onwards to be decremented by 1.
