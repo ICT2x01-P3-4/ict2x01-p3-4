@@ -101,6 +101,18 @@ class test_puzzle_model(unittest.TestCase):
         # Clear Queue
         QUEUE.queue.delete_one({'direction': DATA['puzzle_steps'][0]})
 
+    def test_step_through_puzzle(self):
+        # True Condition
+        self.assertEqual(PUZZLE.step_through_puzzle(DATA['_id'], {'step_num': len(
+            DATA['puzzle_steps']), 'direction': DATA['puzzle_steps'][0]}), True)
+
+        # Clear Queue
+        QUEUE.queue.delete_one({'direction': DATA['puzzle_steps'][0]})
+
+        # Wrong step_num or direction to trigger False Condition
+        self.assertEqual(PUZZLE.step_through_puzzle(
+            DATA['_id'], {'step_num': 0, 'direction': 'L'}), False)
+
 
 if __name__ == '__main__':
     load_dotenv()
