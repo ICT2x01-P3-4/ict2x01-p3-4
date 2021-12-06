@@ -26,7 +26,7 @@ class PuzzleModel:
         puzzle_name = data["name"]
         difficulty = data["difficulty"]
         puzzle_steps = data["puzzle_steps"]
-        puzzle_flow = data["puzzle_flow"]
+        puzzle_flow = [int(x) for x in data["puzzle_flow"]]
 
         existed = self.puzzle_db.find_one({"$or": [{"name": puzzle_name}, {"difficulty": difficulty}, {
                                           "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]}]})
@@ -129,7 +129,7 @@ class PuzzleModel:
         puzzle_name = puzzle["name"]
         difficulty = puzzle["difficulty"]
         puzzle_steps = puzzle["puzzle_steps"]
-        puzzle_flow = puzzle["puzzle_flow"]
+        puzzle_flow = [int(x) for x in puzzle["puzzle_flow"]]
 
         existed = self.puzzle_db.find_one({
                                           "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]})
