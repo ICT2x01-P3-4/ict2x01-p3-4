@@ -12,9 +12,10 @@
 
 ### Prerequisite
 Please ensure you have installed the following packages before cloning and running this repository.  
-[![pip](https://img.shields.io/badge/pip-v21.x%20and%20up-brightgreen)](https://pip.pypa.io/en/stable/cli/pip_download/)
-[![flask](https://img.shields.io/badge/python-v3.x%20and%20up-blue)](https://www.python.org/downloads/)
-[![node](https://img.shields.io/badge/node-v15.x%20and%20up-green)](https://nodejs.org/en/download/)
+[![python](https://img.shields.io/badge/python-%3E%3D%20v3-blue?style=plastic&logo=python)](https://www.python.org/downloads/)
+[![flask](https://img.shields.io/badge/flask-%3E%3D%20v2-blue?style=plastic&logo=flask)](https://flask.palletsprojects.com/en/2.0.x/)
+[![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?style=plastic&logo=npm)](https://nodejs.org/en/download/)
+[![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?style=plastic&logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
 ### Clone the repository
 
