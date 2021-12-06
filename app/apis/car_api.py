@@ -13,9 +13,10 @@ def get_command():
     """
     try:
         queue = QueueModel()
+        car = CarModel()
         direction = queue.get_next_step()
 
-        if not direction:
+        if not direction or car.is_moving():
             return "None\0"
 
         return f"Command: {direction}\0"
