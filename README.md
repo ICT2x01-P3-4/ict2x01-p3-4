@@ -7,7 +7,15 @@
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ---
+## Table of Contents
+- [How to run](#how-to-run)  
+- [Development Workflow](#dev-workflow)  
+- [User Acceptence Test (UAT)](#uat)
+- [Whitebox Testing](#wb-testing)
+- [References](#references)
 
+---
+<a name="how-to-run"></a>
 ## How to run
 
 ### Prerequisite
@@ -17,7 +25,7 @@ Please ensure you have the following installed before cloning and running this r
 [![npm](https://img.shields.io/badge/npm-%3E%3D%20v15-blue?style=for-the-badge&logo=npm)](https://nodejs.org/en/download/)
 [![pip](https://img.shields.io/badge/pip-%3E%3D%20v21-blue?style=for-the-badge&logo=python)](https://pip.pypa.io/en/stable/cli/pip_download/)
 
-### Clone the repository
+<a name="how-to-run"></a>### Clone the repository
 
 1. Navigate to your desired directory and open a new terminal window.
 2. Run the following command: `git clone https://github.com/ICT2x01-P3-4/ict2x01-p3-4.git`.
@@ -60,6 +68,7 @@ Below is a tree view of the project structure that is generated with the followi
 
 ---
 
+<a name="dev-workflow"></a>
 ## Development Workflow
 
 ### Default branches
@@ -133,7 +142,7 @@ git push
 5. The reviewer will then merge the PR into the `dev` branch once all code quality and conventions are satisfied.
 
 ---
-
+<a name="uat"></a>
 ## User Acceptance Test (UAT)
 
 Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.  
@@ -148,11 +157,11 @@ There are some **changes** made to the test cases submitted in M2.
 Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/dev/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
 
 ---
-
+<a name="wb-testing"></a>
 ## Whitebox Testing
 
 ---
-
+<a name="references"></a>
 ## Reference
 
 1. [Flask Documentation](https://flask.palletsprojects.com/en/2.0.x/)
