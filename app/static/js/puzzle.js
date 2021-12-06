@@ -30,104 +30,109 @@ var currentStep = 0;
 var currentBox = 0;
 
 $(document).ready(function () {
-  $("#option")
-    .sortable({
-      connectWith: ".connectedSortable",
-      remove: function (event, ui) {
-        ui.item.clone().appendTo("#option_selected");
-        $(this).sortable("cancel");
-      },
-    })
-    .disableSelection();
+    // Display direction options available for drag and drop 
+    $("#option")
+        .sortable({
+        connectWith: ".connectedSortable",
+        remove: function (event, ui) {
+            ui.item.clone().appendTo("#option_selected");
+            $(this).sortable("cancel");
+        },
+        })
+        .disableSelection();
 
-  $("#option_selected")
-    .sortable({
-      receive: function (event, ui) {
-        var num = $("#option_selected li").length;
-        if (num > answer.length) {
-          Swal.fire({
+    // Display direction options selected by user 
+    $("#option_selected")
+        .sortable({
+        receive: function (event, ui) {
+            var num = $("#option_selected li").length;
+            if (num > answer.length) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text:
+                "You only need " +
+                answer.length +
+                " steps to complete this puzzle!",
+            });
+            $("#option_selected").sortable("cancel");
+            $("#option_selected li:last-child").remove();
+            } else {
+            $("#direction_num").text(num + "/" + answer.length);
+            }
+        },
+        })
+        .disableSelection();
+
+    // Clear all the directions user selected
+    $(".clear").on("click", function (e) {
+        clearSteps();
+    });
+
+    // To process after user clicking the "Step" button
+    $(".step").on("click", function (e) {
+        var idsInOrder = $("#option_selected").sortable("toArray");
+
+        // Simple validation
+        if (idsInOrder.length == 0) {
+        Swal.fire({
             icon: "error",
             title: "Oops...",
-            text:
-              "You only need " +
-              answer.length +
-              " steps to complete this puzzle!",
-          });
-          $("#option_selected").sortable("cancel");
-          $("#option_selected li:last-child").remove();
-        } else {
-          $("#direction_num").text(num + "/" + answer.length);
+            text: "Please select at least one step.",
+        });
+        return;
+        } else if (idsInOrder.length > 1) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "You can only step through one step at a time.",
+        });
+        return;
         }
-      },
-    })
-    .disableSelection();
 
-  $(".clear").on("click", function (e) {
-    clearSteps();
-  });
+        const direction = idsInOrder[0];
+        // Check if the user has already completed the puzzle
+        currentStep = ++prevStepNum;
+        if (currentStep >= answer.length) {
+        prevStepNum = 0;
+        }
 
-  $(".step").on("click", function (e) {
-    var idsInOrder = $("#option_selected").sortable("toArray");
+        if (direction !== answer[currentStep - 1]) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Wrong answer! Please try again.",
+        });
+        currentStep--;
+        return;
+        }
 
-    // Simple validation
-    if (idsInOrder.length == 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select at least one step.",
-      });
-      return;
-    } else if (idsInOrder.length > 1) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "You can only step through one step at a time.",
-      });
-      return;
-    }
+        if (direction === "F" || direction === "B") {
+        currentBox++;
+        }
 
-    const direction = idsInOrder[0];
-    // Check if the user has already completed the puzzle
-    currentStep = ++prevStepNum;
-    if (currentStep >= answer.length) {
-      prevStepNum = 0;
-    }
+        var step = {
+        step_num: currentStep,
+        direction: direction,
+        };
 
-    if (direction !== answer[currentStep - 1]) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Wrong answer! Please try again.",
-      });
-      currentStep--;
-      return;
-    }
+        stepThrough(step);
+    });
 
-    if (direction === "F" || direction === "B") {
-      currentBox++;
-    }
+    // To process after user clicking the "Execute" button
+    $(".execute").on("click", function (e) {
+        var idsInOrder = $("#option_selected").sortable("toArray");
+        if (idsInOrder.length == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please select at least one step.",
+        });
+        return;
+        }
 
-    var step = {
-      step_num: currentStep,
-      direction: direction,
-    };
-
-    stepThrough(step);
-  });
-
-  $(".execute").on("click", function (e) {
-    var idsInOrder = $("#option_selected").sortable("toArray");
-    if (idsInOrder.length == 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select at least one step.",
-      });
-      return;
-    }
-
-    solvePuzzle(idsInOrder);
-  });
+        solvePuzzle(idsInOrder);
+    });
 });
 
 /**

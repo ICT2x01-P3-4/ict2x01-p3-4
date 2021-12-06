@@ -29,6 +29,7 @@
 <div class="pl-16 pr-16 pt-14 clear-both">
     <div class="flex">
         <h2 class="text-left text-3xl font-semibold text-grag-800 mb-10">Puzzle Mode</h2>
+        <!-- display dropdown button for stages -->
         <div class="w-18 h-10 px-4 ml-3">
             <button class="bg-blue-800 text-white text-base active:bg-blue-900 font-bold text-xs px-6 py-2 p-0 m-0 rounded shadow hover:bg-blue-600 ease-linear transition-all duration-150"
                 type="button" onclick="openDropdown(event,'stageDropdown')">
@@ -40,6 +41,7 @@
     </div>
 
     <div class="grid grid-cols-3 gap-4">
+        <!-- display drag and drop options for puzzle directions -->
         <div class="col-span-2">
             <h2 class="text-2xl font-semibold -mt-2">Directions:</h2>
             <ul id="option" class="connectedSortable ml-auto flex items-center -ml-3">
@@ -58,6 +60,7 @@
         </div>
         <div class="ml-8 text-center">
             <div class="bg-gray-100 p-8">
+                <!-- display puzzle grid with car waypoint and current score -->
                 <h2 class="text-2xl font-semibold mb-1">Solve the puzzle!</h2>
                 <table id="table" class="table-fixed border-collapse table-center">
                     <tbody>
