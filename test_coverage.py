@@ -52,6 +52,9 @@ class test_puzzle_model(unittest.TestCase):
                 'puzzle_steps': '1', 'puzzle_flow': ''}
         self.assertEqual(PUZZLE.validate_puzzle(data), False)
 
+    def test_get_puzzles_count(self):
+        self.assertEqual(PUZZLE.get_puzzles_count(), 4)
+
 
 if __name__ == '__main__':
     load_dotenv()
