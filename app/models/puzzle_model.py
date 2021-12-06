@@ -1,6 +1,8 @@
 ########## This is for Whitebox Testing purposes ##########
-try: from ..db import mongo
-except: from app.db import mongo
+try:
+    from ..db import mongo
+except:
+    from app.db import mongo
 # To resolve relative import error
 ###########################################################
 from .queue_model import QueueModel
