@@ -136,3 +136,12 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Tailwind node module folder
+node_modules
+
+# Flask Session Cache
+flask_session/
+
+#  Configuration Files
+config.py

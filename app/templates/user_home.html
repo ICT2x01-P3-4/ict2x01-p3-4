@@ -1,0 +1,25 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+{% include "shared/nav.html" %}
+<h2 class="text-center text-3xl font-bold mt-12"> Welcome {{user}}!</h2>
+<div class="px-3 py-3  mb-8">
+    <h2 class="text-3xl text-center">Which game mode would you like to play?</h2>
+</div>
+<div class="flex justify-center mt-10">
+    <div class="grid gap-8 grid-cols-2 mt-5">
+        <a href="puzzle">
+        <div
+            class="transition duration-500 ease-in-out flex py-24 px-24 text-center bg-yellow-300 hover:bg-yellow-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg z-50">
+            <h2 class="text-gray-800 font-bold text-5xl ml-8">Puzzle<br>Mode</h2>
+        </div>
+        </a>
+        <a href="freestyle">
+        <div
+            class="transition duration-500 ease-in-out flex py-24 px-24 text-center bg-blue-300 hover:bg-blue-200 transform hover:-translate-y-1 hover:scale-110 hover:text-white hover:shadow-none hover:rounded border border-gray-300 shadow-lg rounded-lg">
+            <h2 class="text-gray-800 font-bold text-5xl">Freestyle<br>Mode</h2>
+        </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "shared/base.html" %}
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
+<script>
+    const data = {{ data | safe }};
+</script>
+<script src="{{ url_for('static', filename='js/puzzle.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="bg-blue-800 px-3 py-3">
+    <h2 class="float-left text-3xl font-light text-white mt-1">
+        <a href="home">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+        </a>
+    </h2>
+    <a href="/home">
+        <h2 class="text-4xl py-0 font-bold text-white italic text-center">
+            CarStep
+        </h2>
+    </a>
+</div>
+
+<div class="pl-16 pr-16 pt-14 clear-both">
+    <div class="flex">
+        <h2 class="text-left text-3xl font-semibold text-grag-800 mb-10">Puzzle Mode</h2>
+        <!-- display dropdown button for stages -->
+        <div class="w-18 h-10 px-4 ml-3">
+            <button class="bg-blue-800 text-white text-base active:bg-blue-900 font-bold text-xs px-6 py-2 p-0 m-0 rounded shadow hover:bg-blue-600 ease-linear transition-all duration-150"
+                type="button" onclick="openDropdown(event,'stageDropdown')">
+                Stage <span id="currentStage"></span> <i class="fa fa-caret-down ml-1"></i>
+            </button>
+            <div id="stageDropdown" class="w-36 hidden bg-white text-base z-50 py-2 list-none text-left rounded shadow-lg">
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4">
+        <!-- display drag and drop options for puzzle directions -->
+        <div class="col-span-2">
+            <h2 class="text-2xl font-semibold -mt-2">Directions:</h2>
+            <ul id="option" class="connectedSortable ml-auto flex items-center -ml-3">
+                <li id="F" class="bg-blue-300 bg-opacity-60 border border-blue-400 p-3 m-3 shadow-lg rounded-lg">Move Forward</li>
+                <li id="B" class="bg-blue-400 bg-opacity-60 border border-blue-400 p-3 m-3 shadow-lg rounded-lg">Move Backward</li>
+                <li id="L" class="bg-indigo-300 bg-opacity-90 border border-indigo-400 p-3 m-3 shadow-lg rounded-lg">Turn Left</li>
+                <li id="R" class="bg-purple-300 bg-opacity-90 border border-purple-400 p-3 m-3 shadow-lg rounded-lg">Turn Right</li>
+            </ul>
+            <p class="mt-5 mb-2 float-left">Drag and drop the directions down here &#8595;</p>
+            <p id="direction_num" class="mt-5 mb-2 float-right">0/15</p>
+            <ul id="option_selected" class="connectedSortable clear-both h-72 w-auto ml-auto flex flex-wrap content-start items-center bg-blue-200 bg-opacity-75 mb-8"></ul>
+            <div id="puzzlebutton" class="flex justify-center text-center -mt-4">
+                <button type="button" class="clear m-3 h-12 w-28 bg-red-400 bg-opacity-50 hover:bg-red-300  shadow-lg rounded-lg">Clear</button>
+                <button type="button" class="execute m-3 h-12 w-28 bg-green-400 bg-opacity-75 disabled:opacity-50 hover:bg-green-300  shadow-lg rounded-lg">Solve</button>
+            </div>
+        </div>
+        <div class="ml-8 text-center">
+            <div class="bg-gray-100 p-8">
+                <!-- display puzzle grid with car waypoint and current score -->
+                <h2 class="text-2xl font-semibold mb-1">Solve the puzzle!</h2>
+                <table id="table" class="table-fixed border-collapse table-center">
+                    <tbody>
+                        <tr id="row1"></tr>
+                        <tr id="row2"></tr>
+                        <tr id="row3"></tr>
+                        <tr id="row4"></tr>
+                        <tr id="row5"></tr>
+                        <tr id="row6"></tr>
+                        <tr id="row7"></tr>
+                    </tbody>
+                </table>
+                <h2 class="text-2xl font-semibold mt-8 mb-3">Current Score: <span id="score"></span></h2>
+            </div>
+            <span id='waypoint' class="absolute text-3xl" ><p class="flippedcar">&#128663;</p></span>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

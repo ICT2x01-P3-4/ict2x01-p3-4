@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "61a5231b5100a6f340360af7"
+  },
+  "name": "Medium Puzzle",
+  "difficulty": 2,
+  "puzzle_shape": [
+    [
+      0,
+      1,
+      0
+    ]
+  ],
+  "puzzle_steps": [
+    "F",
+    "F"
+  ],
+  "puzzle_flow": [
+    31,
+    24,
+    17
+  ]
+},{
+  "_id": {
+    "$oid": "61ac6f4b43e8dcd637294a75"
+  },
+  "name": "Simple Puzzle",
+  "difficulty": 1,
+  "puzzle_steps": [
+    "F"
+  ],
+  "puzzle_flow": [
+    38,
+    31
+  ]
+},{
+  "_id": {
+    "$oid": "61acc83913486876d6f20f36"
+  },
+  "name": "old puzzle",
+  "difficulty": 4,
+  "puzzle_steps": [
+    "F",
+    "R",
+    "F",
+    "F",
+    "F",
+    "F"
+  ],
+  "puzzle_flow": [
+    38,
+    31,
+    32,
+    33,
+    34,
+    35
+  ]
+},{
+  "_id": {
+    "$oid": "61adbd45defed91778187579"
+  },
+  "name": "Level 3 Puzzle",
+  "difficulty": 3,
+  "puzzle_steps": [
+    "F",
+    "F",
+    "L",
+    "F"
+  ],
+  "puzzle_flow": [
+    46,
+    39,
+    32,
+    31
+  ]
+}]

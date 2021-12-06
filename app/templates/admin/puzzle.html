@@ -1,0 +1,72 @@
+{% extends "shared/base.html" %}
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{url_for('static',filename='js/adminPuzzle.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="bg-blue-800 px-3 py-3">
+    <h2 class="float-left text-3xl font-light text-white mt-1">
+        <a href="/admin">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+        </a>
+    </h2>
+    <a href="/admin">
+        <h2 class="text-4xl py-0 font-bold text-white italic text-center">
+            CarStep
+        </h2>
+    </a>
+</div>
+<!-- Container for Content -->    
+    <div class="m-auto flex-col items-center justify-center h-screen">
+        <div class="overflow-auto p-12">
+            <div class="flex-col justify-center h-screen pt-6">
+                <div class="m-auto flex justify-between pb-3">
+                    <div>
+                        <h1>Puzzle(s) Found</h1>
+                    </div>
+                    <div>
+                        <!-- create puzzle button TODO -->
+                        <a href="/admin/create"><button type="button" class="shadow bg-green-300 hover:bg-green-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-outs">Create Puzzle</button></a>
+                    </div>
+                </div>
+                <!-- Table for user accounts -->
+                <table class="min-w-full border-collapse block md:table shadow">
+                    <!-- Table Header -->
+                    <thead class="block md:table-header-group">
+                        <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                            <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">No.</th>
+                            <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Puzzle ID</th>
+                            <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Puzzle Name</th>
+                            <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Difficulty level</th>
+                            <th class="bg-blue-300 p-2 text-black font-semibold md:border md:border-grey-500 text-left block md:table-cell">Actions</th>
+                        </tr>
+                    </thead>                        
+                    <tbody class="block md:table-row-group">
+                        <!-- Table Row For Puzzle -->
+                        {% for puzzle in puzzles %}
+                        <tr class="bg-blue-100 border border-grey-500 md:border-none block md:table-row">
+                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">No.</span>{{loop.index}}</td>
+                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle ID</span>{{puzzle._id}}</td>
+                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Puzzle Name</span>{{puzzle.name}}</td>
+                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Difficulty Level</span>{{puzzle.difficulty}}</td>
+                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                                <!-- Button for Admin to View, Edit or Delete Puzzle -->
+                                <a href="/admin/view/{{puzzle._id}}" class="viewPuzzle shadow bg-indigo-300 hover:bg-indigo-400 text-black font-semibold py-2 px-3 rounded transition transition-colors duration-300 ease-in-out" data-pid="{{puzzle._id}}">View</a>
+                                <a href="/admin/edit/{{puzzle._id}}" class="editPuzzle shadow bg-yellow-200 hover:bg-yellow-300 text-black font-semibold py-2 px-3 rounded transition transition-colors duration-300 ease-in-out" data-pid="{{puzzle._id}}">Edit</a>
+                                <button type="button" class="delPuzzle shadow bg-red-300 hover:bg-red-400 text-black font-semibold py-1 px-2 rounded transition transition-colors duration-300 ease-in-out" data-pid="{{puzzle._id}}">Delete</button>
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+{% endblock %}
