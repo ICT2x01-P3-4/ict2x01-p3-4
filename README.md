@@ -1,7 +1,6 @@
 # ICT2x01 Team Project
 
-<h2 style="color:#e6397e;">Welcome to Project CarStep! 🚗 🦶🏻</h2>
-
+[![Welcome to Project CarStep!, By team P3-4](https://pimp-my-readme.webapp.io/pimp-my-readme/wavy-banner?subtitle=By%20team%20P3-4&title=Welcome%20to%20Project%20CarStep%21)](https://pimp-my-readme.webapp.io)
 ## Team Members
 
 | [<img src="https://avatars.githubusercontent.com/u/16801537?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Koh Huan Yin</b></sub>](https://github.com/alphonsekoh)<br/>Team Lead | [<img src="https://avatars.githubusercontent.com/u/19357352?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Ng Han Yi</b></sub>](https://github.com/hanyi97)<br />Fullstack Developer | [<img src="https://avatars.githubusercontent.com/u/61367983?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Lim Shu Fen</b></sub>](https://github.com/shufenlim)<br />Security Specialist | [<img src="https://avatars.githubusercontent.com/u/73699421?v=4" style="border-radius: 50%" width="75px;"/><br /><sub><b>Low Yong Lin</b></sub>](https://github.com/lowyl)<br />Security Specialist |
@@ -12,10 +11,17 @@
 ## How to run
 
 ### Prerequisite
-Please ensure you have installed the following packages before cloning and running this repository.
-- Pip >= 21.x
-- Python >= 3.x
-- Node >= 15.x
+Please ensure you have installed the following packages before cloning and running this repository.  
+
+<a href="https://pip.pypa.io/en/stable/cli/pip_download/">
+<img src="https://img.shields.io/badge/pip-v21.x%20and%20up-brightgreen"></img>
+</a>
+<a href="https://www.python.org/downloads/">
+<img src="https://img.shields.io/badge/python-v3.x%20and%20up-blue"></img>
+</a>
+<a href="https://nodejs.org/en/download/">
+<img src="https://img.shields.io/badge/node-v15.x%20and%20up-green"></img>
+</a>  
 
 ### Clone the repository
 
@@ -130,6 +136,7 @@ git push
 ## User Acceptance Test (UAT)
 
 Please refer to the [UAT video](https://www.youtube.com/watch?v=oxKbCnN34Fg) for the test cases.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oxKbCnN34Fg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <br><br>
 There are some **changes** made to the test cases submitted in M2. 
 1. By referring to the test cases submitted in M2, the test cases ST25 and ST52 are removed. The removal of test case ST25 causes the test case ID from ST25 onwards to be decremented by 1.
