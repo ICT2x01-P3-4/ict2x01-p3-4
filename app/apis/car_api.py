@@ -1,4 +1,4 @@
-import traceback
+from traceback import print_exc
 from flask import request
 from ..models.queue_model import QueueModel
 from ..models.car_model import CarModel
@@ -21,7 +21,7 @@ def get_command():
 
         return f"Command: {direction}\0"
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return "Failed\0"
 
 
@@ -33,13 +33,13 @@ def start_car():
         string: Status of the car.
     """
     try:
-        car_model = CarModel()
-        started = car_model.start()
+        car = CarModel()
+        started = car.start()
         if not started:
             return 500
         return "Car started\0"
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return "Failed\0"
 
 
@@ -51,9 +51,9 @@ def stop_car():
         string: Status of the car.
     """
     try:
-        car_model = CarModel()
+        car = CarModel()
         queue = QueueModel()
-        stopped = car_model.stop()
+        stopped = car.stop()
 
         if not stopped:
             return "Failed\0"
@@ -61,7 +61,7 @@ def stop_car():
         queue.dequeue()
         return "Stopped\0"
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return "None\0"
 
 
@@ -73,13 +73,13 @@ def detected_obstacle():
         string: Status of the car.
     """
     try:
-        car_model = CarModel()
-        detected_obstacle = car_model.detected_obstacle()
+        car = CarModel()
+        detected_obstacle = car.detected_obstacle()
         if not detected_obstacle:
             return "Failed\0"
         return "Detected\0"
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return "None\0"
 
 
@@ -92,9 +92,9 @@ def insert_queue():
     """
     try:
         step = request.get_json()
-        queue_model = QueueModel()
-        queue_model.insert_to_queue(step)
+        queue = QueueModel()
+        queue.insert_to_queue(step)
         return "Inserted"
     except Exception as e:
-        traceback.print_exc()
+        print_exc()
         return "Failed"
