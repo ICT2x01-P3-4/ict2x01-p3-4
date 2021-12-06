@@ -1,6 +1,6 @@
 # ICT2x01 Team Project
 
-Welcome to Project CarStep! 🚗 🦶🏻
+<h2 style="color:#e6397e;">Welcome to Project CarStep! 🚗 🦶🏻</h2>
 
 ## Team Members
 
