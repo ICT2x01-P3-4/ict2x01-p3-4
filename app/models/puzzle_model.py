@@ -13,17 +13,59 @@ class PuzzleModel:
         """
         Insert a new puzzle into the database.
 
+        Checks if puzzle already exists in database.
+        puzzle_step and puzzle_flow must be unique when
+        combined together.
+
         Args:
             puzzle (dict): puzzle object to be inserted into the database.
 
         Returns:
-            string: id of the newly inserted puzzle.
+            boolean: True if puzzle inserted, False if not.
         """
-        new_puzzle = Puzzle(data["name"], data["difficulty"],
-                            data["puzzle_shape"], data["puzzle_steps"], data["puzzle_flow"])
-        result = self.puzzle_db.insert_one(
+        puzzle_name = data["name"]
+        difficulty = data["difficulty"]
+        puzzle_steps = data["puzzle_steps"]
+        puzzle_flow = data["puzzle_flow"]
+
+        existed = self.puzzle_db.find_one({"$or": [{"name": puzzle_name}, {"difficulty": difficulty}, {
+                                          "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]}]})
+
+        if existed:
+            return False
+
+        new_puzzle = Puzzle(puzzle_name, difficulty,
+                            puzzle_steps, puzzle_flow=puzzle_flow)
+        self.puzzle_db.insert_one(
             new_puzzle.__dict__)
-        return str(result.inserted_id)
+
+        return True
+
+    def validate_puzzle(self, data):
+        """
+        Validates data for puzzle creation/update.
+
+        Args:
+            data (Object): Puzzle data to be validated.
+
+        Returns:
+            boolean: True if passed validation, False if not.
+        """
+        puzzle_name = data["name"]
+        difficulty = data["difficulty"]
+        puzzle_steps = data["puzzle_steps"]
+        puzle_flow = data["puzzle_flow"]
+
+        if not puzzle_name or puzzle_name == "":
+            return False
+        if not difficulty or difficulty == 0:
+            return False
+        if not puzzle_steps or len(puzzle_steps) == 0:
+            return False
+        if not puzle_flow or len(puzle_flow) == 0:
+            return False
+
+        return True
 
     def get_all_puzzles(self):
         """
@@ -78,17 +120,29 @@ class PuzzleModel:
         Updates a puzzle in the database.
 
         Args:
+            puzzle_id (string): id of the puzzle to be updated.
             puzzle (object): puzzle object to be updated.
 
         Returns:
-            int: number of puzzles updated.
+            boolean: True if puzzle updated, False if not.
         """
-        puzzle = Puzzle(puzzle["name"], puzzle["difficulty"],
-                        puzzle_shape=puzzle["puzzle_shape"], puzzle_steps=puzzle["puzzle_steps"])
+        puzzle_name = puzzle["name"]
+        difficulty = puzzle["difficulty"]
+        puzzle_steps = puzzle["puzzle_steps"]
+        puzzle_flow = puzzle["puzzle_flow"]
+
+        existed = self.puzzle_db.find_one({
+                                          "$and": [{"puzzle_steps": puzzle_steps}, {"puzzle_flow": puzzle_flow}]})
+
+        if existed:
+            return False
+
+        puzzle = Puzzle(puzzle_name, difficulty, puzzle_steps, puzzle_flow)
         result = self.puzzle_db.update_one({"_id": ObjectId(puzzle_id)}, {
             "$set": puzzle.__dict__
         })
-        return result.matched_count
+
+        return result.matched_count > 0
 
     def delete_puzzle(self, id):
         """
@@ -107,6 +161,9 @@ class PuzzleModel:
         """
         Solve a puzzle in the database.
 
+        Checks if answer is correct.
+        Format and insert steps into queue if answer is correct.
+
         Args:
             puzzle_id (string): id of the puzzle to be solved.
             steps (list): steps to be executed.
@@ -121,13 +178,11 @@ class PuzzleModel:
         if not is_correct:
             return False
 
-        # Format steps into list of dicts
         steps_arr = []
         for i, step in enumerate(steps):
             step_obj = Step(i+1, step)
             steps_arr.append(step_obj.__dict__)
 
-        # Insert steps into queue
         queue_model = QueueModel()
         queue_model.create_queue(steps_arr)
 
@@ -186,29 +241,6 @@ class PuzzleModel:
                 return False
 
         return True
-
-    def execute_steps(self, steps):
-        """
-        Inserts steps into queue in db
-        and wait for it to be emptied.
-
-        Args:
-            steps (list): list of steps.
-        """
-        # Format steps into list of dicts
-        steps_arr = []
-        for i, step in enumerate(steps):
-            step_obj = Step(i+1, step)
-            steps_arr.append(step_obj.__dict__)
-
-        # Insert steps into queue
-        queue = QueueModel()
-        queue.create_queue(steps_arr)
-
-        # Wait for queue to be emptied
-        while True:
-            if queue.is_empty():
-                break
 
     def at_last_step(self, puzzle_id, step):
         """

@@ -48,14 +48,25 @@ def create_puzzle():
     """
     Creates a new puzzle in database.
 
+    Check for validation before moving on
+    to creation.
+
     Returns:
         json: message and status code.
     """
     try:
         data = request.get_json()
         puzzle_model = PuzzleModel()
-        new_puzzle_id = puzzle_model.create_puzzle(data)
-        return jsonify({"message": f"New puzzle {new_puzzle_id} created"}), 201
+
+        validated = puzzle_model.validate_puzzle(data)
+        if not validated:
+            return jsonify({"message": "Invalid puzzle data"}), 400
+
+        created = puzzle_model.create_puzzle(data)
+        if not created:
+            return jsonify({"message": "Puzzle already exists"}), 400
+
+        return jsonify({"message": "Puzzle created"}), 201
     except Exception as e:
         print_exc()
         return jsonify({"message": "Something went wrong"}), 500
@@ -65,8 +76,11 @@ def update_puzzle(puzzle_id):
     """
     Updates a puzzle in database.
 
+    Checks for validation before moving on
+    to update.
+
     Args:
-            puzzle_id (int): puzzle id to be updated.
+        puzzle_id (int): puzzle id to be updated.
 
     Returns:
         json: puzzle data and status code.
@@ -74,8 +88,12 @@ def update_puzzle(puzzle_id):
     try:
         data = request.get_json()
         puzzle_model = PuzzleModel()
-        updated = puzzle_model.update_puzzle(puzzle_id, data)
 
+        validated = puzzle_model.validate_puzzle(data)
+        if not validated:
+            return jsonify({"message": "Invalid puzzle data"}), 400
+
+        updated = puzzle_model.update_puzzle(puzzle_id, data)
         if not updated:
             return jsonify({"message": "Puzzle not found"}), 404
 
@@ -110,9 +128,9 @@ def delete_puzzle(puzzle_id):
 
 def solve_puzzle(puzzle_id):
     """
-    Checks for user's answer and executes all steps if correct.
+    Checks for correct answer and insert steps into queue.
 
-    Updates user score and stage if answer is correct.
+    Checks if queue is empty before inserting.
 
     Args:
         puzzle_id (string): puzzle id to be solved.
@@ -139,9 +157,9 @@ def solve_puzzle(puzzle_id):
 
 def step_through(puzzle_id):
     """
-    Checks for user's answer and executes step.
+    Checks for user's answer and insert a step into the queue.
 
-    Update user score and stage if completed last step of puzzle.
+    Checks if queue is empty before inserting.
 
     Args:
         puzzle_id (string): puzzle id to be stepped through.
@@ -162,16 +180,6 @@ def step_through(puzzle_id):
 
         if not done:
             return jsonify({"message": "Incorrect answer"}), 400
-
-        # if puzzle_model.at_last_step(puzzle_id, step):
-        #     if not "user" in session:
-        #         return redirect(url_for("app_bp.index"))
-
-        #     user_details = session["user"]
-        #     name = user_details["name"]
-        #     user = UserModel()
-        #     user.update_score(name)
-        #     user.update_stage(name)
 
         return jsonify({"message": "Step executed"}), 200
     except Exception as e:
@@ -227,6 +235,9 @@ def update_score():
 def get_total_puzzles():
     """
     Get total number of puzzles.
+
+    Returns:
+        json: puzzle count.
     """
     try:
         puzzle_model = PuzzleModel()

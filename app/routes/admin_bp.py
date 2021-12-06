@@ -16,10 +16,11 @@ admin_bp.route("/profile")(profile)
 admin_bp.route('/puzzle')(puzzle)
 
 # /admin/puzzle/<puzzle_id>
-admin_bp.route('/<puzzle_id>')(edit_puzzle)
+# admin_bp.route('/<puzzle_id>')(edit_puzzle)
+admin_bp.route('/edit/<puzzle_id>')(edit_puzzle)
 
 # /admin/puzzle/<puzzle_id>
-admin_bp.route('/view')(view_puzzle)
+admin_bp.route('/view/<puzzle_id>')(view_puzzle)
 
 # /admin/puzzle/create
 admin_bp.route('/create')(create_puzzle)

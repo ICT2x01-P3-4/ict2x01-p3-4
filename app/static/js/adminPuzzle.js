@@ -1,6 +1,6 @@
 $(document).ready(function () {
- // Delete Puzzle
- $(".delPuzzle").on("click", function (e) {
+  // Delete Puzzle
+  $(".delPuzzle").on("click", function (e) {
     // put the code here to send array to backend
     Swal.fire({
       title: "Are you sure you want to delete this Puzzle?",
@@ -18,22 +18,22 @@ $(document).ready(function () {
   });
 });
 
-/** 
-* Ajax call to delete a puzzle
-**/
+/**
+ * Ajax call to delete a puzzle
+ **/
 function deletePuzzle(_id) {
- $.ajax({
-   url: `/api/puzzle/delete/${_id}`,
-   type: "DELETE",
-   success: function (data, textStatus, jqXHR) {
-     Swal.fire({
-       title: "User Deleted",
-       text: "Puzzle has been deleted",
-       icon: "success",
-       confirmButtonText: "OK",
-     }).then(function () {
-       location.reload();
-     });
-   },
- });
+  $.ajax({
+    url: `/api/puzzle/delete/${_id}`,
+    type: "DELETE",
+    success: function (data, textStatus, jqXHR) {
+      Swal.fire({
+        title: "Puzzle Deleted",
+        text: "Puzzle has been deleted",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(function () {
+        location.reload();
+      });
+    },
+  });
 }

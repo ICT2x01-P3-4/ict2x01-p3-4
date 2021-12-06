@@ -8,6 +8,13 @@ const puzzle = [
   [43, 44, 45, 46, 47, 48, 49],
 ];
 
+const puzzleId = data._id;
+var dbPuzzleName = data.name;
+var dbPuzzleLevel = data.difficulty;
+var dbPuzzleStep = data.puzzle_steps.length;
+answer = data.puzzle_steps;
+flow = data.puzzle_flow;
+
 /**
  * Create puzzle grid
  */
@@ -15,8 +22,8 @@ function createPuzzleGrid(puzzle) {
   for (var i = 0; i < puzzle.length; i++) {
     for (var j = 0; j < puzzle[i].length; j++) {
       var rowname = "row" + (i + 1);
-      if (puzzle.includes(puzzle[i][j])) {
-        if (puzzle.indexOf(puzzle[i][j]) == 0) {
+      if (flow.includes(puzzle[i][j])) {
+        if (flow.indexOf(puzzle[i][j]) == 0) {
           document.getElementById(rowname).innerHTML +=
             "<td id='box" +
             puzzle[i][j] +
@@ -44,13 +51,25 @@ function createPuzzleGrid(puzzle) {
 }
 
 /**
- * Create the puzzle grid when DOM is loaded
+ * Display puzzle directions based on the puzzle details retrieved from database
  */
-window.addEventListener("DOMContentLoaded", function () {
-  createPuzzleGrid(puzzle);
-});
-
-var is_completed = true;
+function displayPuzzleDirections(answer) {
+  for (var i = 0; i < answer.length; i++) {
+    if (answer[i] == "F") {
+      document.getElementById("option_selected").innerHTML +=
+        "<li id='F' class='bg-blue-300 bg-opacity-60 border border-blue-400 p-3 m-3 shadow-lg rounded-lg'>Move Forward</li>";
+    } else if (answer[i] == "B") {
+      document.getElementById("option_selected").innerHTML +=
+        "<li id='B' class='bg-blue-400 bg-opacity-60 border border-blue-400 p-3 m-3 shadow-lg rounded-lg'>Move Backward</li>";
+    } else if (answer[i] == "L") {
+      document.getElementById("option_selected").innerHTML +=
+        "<li id='L' class='bg-indigo-300 bg-opacity-90 border border-indigo-400 p-3 m-3 shadow-lg rounded-lg'>Turn Left</li>";
+    } else {
+      document.getElementById("option_selected").innerHTML +=
+        "<li id='R' class='bg-purple-300 bg-opacity-90 border border-purple-400 p-3 m-3 shadow-lg rounded-lg'>Turn Right</li>";
+    }
+  }
+}
 
 /**
  * Display the maximum step for the puzzle direction according to the user input for steps required
@@ -61,14 +80,30 @@ function displayMaxStep() {
 }
 
 /**
+ * Display current puzzle details
+ */
+window.addEventListener("DOMContentLoaded", function () {
+  createPuzzleGrid(puzzle);
+  displayPuzzleDirections(answer);
+  document.getElementById("puzzle_name").value = dbPuzzleName;
+  document.getElementById("diff_level").value = dbPuzzleLevel;
+  document.getElementById("steps_required").value = dbPuzzleStep;
+  document.getElementById("puzzle_flow").value = flow.toString();
+  document.getElementById("direction_num").innerHTML = answer.length;
+  displayMaxStep();
+});
+
+/**
  * Count the number of occurrence of an element in an array
  */
- function countOccurrencesInArray(array,element){
-    const countOccurrences = (arr, val) =>
-      arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
-    var result = countOccurrences(array,element);
-    return result;
+function countOccurrencesInArray(array, element) {
+  const countOccurrences = (arr, val) =>
+    arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+  var result = countOccurrences(array, element);
+  return result;
 }
+
+var is_completed = true;
 
 $(document).ready(function () {
   $("#option")
@@ -106,8 +141,9 @@ $(document).ready(function () {
     $("#direction_num").text("0");
   });
 
-  $(".create").on("click", function (e) {
+  $(".update").on("click", function (e) {
     var puzzleDirections = $("#option_selected").sortable("toArray");
+    console.log(puzzleDirections);
     var puzzleName = document.getElementById("puzzle_name").value;
     var puzzleLevel = document.getElementById("diff_level").value;
     var stepsRequired = document.getElementById("steps_required").value;
@@ -140,22 +176,23 @@ $(document).ready(function () {
     // Verify whether the puzzle shape is achievable with the puzzle directions defined
     var numOfSteps = countOccurrencesInArray(puzzleDirections, "F");
     if (numOfSteps + 1 != puzzleFlow.length) {
+      console.log(numOfSteps);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Please ensure the puzzle shape is achievable with the directions defined",
+        text: "Please ensure the puzzle shape is achievable with the puzzle directions defined",
       });
       return;
     }
 
     // validate whether the puzzle shape input is in correct format (element should be integer, > 0 and < 50)
-    if(!convertAndValidateArray(puzzleFlow)){
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Please ensure the input format for puzzle shape is correct",
-        });
-        return;
+    if (!convertAndValidateArray(puzzleFlow)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please ensure the input format for puzzle shape is correct",
+      });
+      return;
     }
 
     // Format data nicely to pass to backend
@@ -165,7 +202,8 @@ $(document).ready(function () {
       puzzle_steps: puzzleDirections,
       puzzle_flow: puzzleFlow,
     };
-    createPuzzle(data);
+
+    updatePuzzle(puzzleId, data);
   });
 });
 
@@ -191,51 +229,50 @@ function increment(e, dataaction, step) {
   }
 }
 
-
 /**
  * Converts items in array into int and validate whether all items in the array is > 0 and < 50
  * @param {Array} arr
  */
- function convertAndValidateArray(arr) {
-    const validatedArray = new Array(arr.length).fill(0);
-    for (var i = 0; i < arr.length; i++) {
-        num = parseInt(arr[i]);
-        if (num!=null && num>0 && num<50) {
-            validatedArray[i]=num;
-        }        
+function convertAndValidateArray(arr) {
+  const validatedArray = new Array(arr.length).fill(0);
+  for (var i = 0; i < arr.length; i++) {
+    num = parseInt(arr[i]);
+    if (num != null && num > 0 && num < 50) {
+      validatedArray[i] = num;
     }
-    var invalidInput = countOccurrencesInArray(validatedArray, 0);
-    if (invalidInput != 0){
-        return false;
-    } else {
-        arr = validatedArray;
-        return true;
-    }
+  }
+  var invalidInput = countOccurrencesInArray(validatedArray, 0);
+  if (invalidInput != 0) {
+    return false;
+  } else {
+    arr = validatedArray;
+    return true;
+  }
 }
 
-
 /**
- * Ajax call to server to create a new puzzle
+ * Ajax call to update puzzle
+ * @param {Object} data
  */
-function createPuzzle(data) {
+function updatePuzzle(id, data) {
   $.ajax({
-    type: "POST",
-    url: "/api/puzzle/create",
+    type: "PUT",
+    url: `/api/puzzle/update/${id}`,
     contentType: "application/json",
     data: JSON.stringify(data),
     success: async function (data) {
       await Swal.fire({
         icon: "success",
         title: "Success",
-        text: "Puzzle created successfully",
+        text: "Puzzle updated successfully",
       });
       location.href = "/admin/puzzle";
     },
-    error: function (jqXHR) {
+    error: function (data) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: jqXHR.responseJSON.message,
+        text: "Something went wrong!",
       });
     },
   });
