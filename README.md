@@ -238,7 +238,7 @@ There are some **changes** made to the test cases submitted in M2.
    1. The test case details for ST36 - ST43 are updated as there are some minor changes to the UI.
    2. The ST47 and ST48 test cases are swapped to have a better flow on performing the test cases.
 
-Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/dev/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
+Please refer to [M3_Updated_Test_Cases.pdf](https://github.com/ICT2x01-P3-4/ict2x01-p3-4/blob/master/docs/M3_Updated_Test_Cases.pdf) for the updated test case details.
 
 ---
 
